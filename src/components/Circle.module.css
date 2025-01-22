@@ -1,0 +1,14 @@
+.bgcolor {
+  background: rgb(0, 0, 0);
+  background: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 17%,
+    var(--color1) 17%,
+    var(--color1) 35%,
+    var(--color2) 35%,
+    var(--color2) 53%,
+    var(--color3) 53%,
+    var(--color3) 100%
+  );
+}
