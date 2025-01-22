@@ -26,7 +26,7 @@ export const Circle = ({
       '--color3': color3,
     }}
     className={clsx(
-      `top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 absolute rounded-full`,
+      `top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 absolute rounded-full border border-slate-500`,
       classes.bgcolor,
       className
     )}
