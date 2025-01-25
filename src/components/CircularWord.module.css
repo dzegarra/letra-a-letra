@@ -1,5 +1,6 @@
 .ring {
   position: relative;
+  transform: rotate(var(--rotation, 0deg));
 }
 .ring [style*='--index'] {
   font-size: calc(var(--font-size) * 1rem);

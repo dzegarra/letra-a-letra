@@ -9,6 +9,8 @@ type ConfirmFormProps = {
   onClose: () => void;
 } & ComponentProps<"div">;
 
+const randomRotaionDeg = () => Math.floor(Math.random() * 360);
+
 export const ConfirmForm = ({ className, card, onClose, onUpdate, ...props }: ConfirmFormProps) => {
   const [cardCopy, setCardCopy] = useState(card);
 
@@ -16,7 +18,7 @@ export const ConfirmForm = ({ className, card, onClose, onUpdate, ...props }: Co
     setCardCopy((cardCopy) => {
       const newWords = [...cardCopy.words];
       const color = newWords[index].color;
-      newWords.splice(index, 1, { word, color });
+      newWords.splice(index, 1, { word, color, rotationDeg: randomRotaionDeg() });
       return { ...cardCopy, words: newWords };
     });
   }, []);

@@ -8,6 +8,7 @@ type CircularWordProps = {
   fontSize?: number;
   width?: string;
   height?: string;
+  rotationDeg?: number;
 };
 
 export const CircularWord = ({
@@ -17,21 +18,23 @@ export const CircularWord = ({
   height,
   fontSize = 1,
   radius = 5,
+  rotationDeg = 0,
 }: CircularWordProps) => (
   <span
     className={clsx(classes.ring, className)}
     style={
       {
-        '--total': word.length,
-        '--font-size': fontSize,
-        '--radius': radius,
+        "--total": word.length,
+        "--font-size": fontSize,
+        "--radius": radius,
+        "--rotation": `${rotationDeg}deg`,
         width,
         height,
       } as any
     }
   >
-    {word.split('').map((letter, i) => (
-      <span key={i} style={{ '--index': i } as any}>
+    {word.split("").map((letter, i) => (
+      <span key={i} style={{ "--index": i } as any}>
         {letter}
       </span>
     ))}

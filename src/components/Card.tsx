@@ -22,9 +22,9 @@ export const Card = ({ card, onUpdate, onDelete }: CardProps) => {
         })}
       >
         <Circle size="500px" color1={card.words[0].color} color2={card.words[1].color} color3={card.words[2].color} />
-        <CircularWord word={card.words[0].word} radius={8.6} fontSize={3} />
-        <CircularWord word={card.words[1].word} radius={6.1} fontSize={3} />
-        <CircularWord word={card.words[2].word} radius={3.5} fontSize={3} />
+        <CircularWord word={card.words[0].word} radius={8.6} fontSize={3} rotationDeg={card.words[0].rotationDeg} />
+        <CircularWord word={card.words[1].word} radius={6.1} fontSize={3} rotationDeg={card.words[1].rotationDeg} />
+        <CircularWord word={card.words[2].word} radius={3.5} fontSize={3} rotationDeg={card.words[2].rotationDeg} />
       </div>
 
       {editVisible ? (
