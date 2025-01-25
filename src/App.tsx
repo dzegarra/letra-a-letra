@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import { Card } from "./components/Card";
 import { Word } from "./types";
 
@@ -19,6 +20,7 @@ const defaultWords: Word[] = [
 
 function App() {
   const initialLoadRef = useRef(true);
+  const lastCardsCountRef = useRef(0);
   const [cards, setCards] = useState<Word[][]>([]);
 
   const restore = useCallback((showConfirmation = true) => {
@@ -46,7 +48,6 @@ function App() {
   }, [cards]);
 
   const updateCard = useCallback((words: Word[], index: number) => {
-    console.log("cards changed", words, index);
     setCards((cards) => {
       const newCards = [...cards];
       newCards.splice(index, 1, words);
@@ -68,6 +69,13 @@ function App() {
       restore(false);
     }
   }, [restore, cards]);
+
+  useEffect(() => {
+    if (cards.length > lastCardsCountRef.current) {
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+    lastCardsCountRef.current = cards.length;
+  }, [cards]);
 
   return (
     <div className="flex flex-col gap-5 p-4">
@@ -93,14 +101,19 @@ function App() {
       </div>
 
       <div className="flex flex-wrap gap-5 mt-[80px]">
-        {cards.map((words, index) => (
-          <Card
-            key={index}
-            words={words}
-            onUpdate={(words) => updateCard(words, index)}
-            onDelete={() => deleteCard(index)}
-          />
-        ))}
+        <AnimatePresence>
+          {cards.map((words, index) => (
+            <motion.ul
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ type: "spring", bounce: 0.25, duration: 0.4 }}
+              exit={{ opacity: 0, scale: 0.5 }}
+              key={index}
+            >
+              <Card words={words} onUpdate={(words) => updateCard(words, index)} onDelete={() => deleteCard(index)} />
+            </motion.ul>
+          ))}
+        </AnimatePresence>
       </div>
     </div>
   );
