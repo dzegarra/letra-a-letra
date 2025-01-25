@@ -1,49 +1,58 @@
 import { ComponentProps, useCallback, useState } from 'react'
 import clsx from 'clsx'
-import { Word } from "../types"
+import { Card as CardType } from "../types";
 import { ConfigWordFieldGroup } from './ConfigWordFieldGroup'
 
 type ConfirmFormProps = {
-    words: Word[],
-    onChangeWords: (words: Word[]) => void,
-    onClose: () => void,
-} & ComponentProps<'div'>
+  card: CardType;
+  onUpdate: (card: CardType) => void;
+  onClose: () => void;
+} & ComponentProps<"div">;
 
-export const ConfirmForm = ({ className, words, onClose, onChangeWords, ...props }: ConfirmFormProps) => {
-    const [wordsCopy, setWordsCopy] = useState(words);
+export const ConfirmForm = ({ className, card, onClose, onUpdate, ...props }: ConfirmFormProps) => {
+  const [cardCopy, setCardCopy] = useState(card);
 
-    const handleWordChange = useCallback((index: number, word: string) => {
-        setWordsCopy(wordsCopy => {
-            const newWords = [...wordsCopy];
-            const color = newWords[index].color;
-            newWords.splice(index, 1, { word, color });
-            return newWords
-        })
-    }, [])
+  const handleWordChange = useCallback((index: number, word: string) => {
+    setCardCopy((cardCopy) => {
+      const newWords = [...cardCopy.words];
+      const color = newWords[index].color;
+      newWords.splice(index, 1, { word, color });
+      return { ...cardCopy, words: newWords };
+    });
+  }, []);
 
-    const handleColorChange = useCallback((index: number, color: string) => {
-        setWordsCopy(wordsCopy => {
-            const newWords = [...wordsCopy];
-            const word = newWords[index].word;
-            newWords.splice(index, 1, { word, color });
-            return newWords;
-        })
-    }, [])
+  const handleColorChange = useCallback((index: number, color: string) => {
+    setCardCopy((cardCopy) => {
+      const newWords = [...cardCopy.words];
+      const word = newWords[index].word;
+      newWords.splice(index, 1, { word, color });
+      return {
+        ...cardCopy,
+        words: newWords,
+      };
+    });
+  }, []);
 
-    const confirmChanges = useCallback(() => {
-        onChangeWords(wordsCopy)
-        onClose();
-    }, [onChangeWords, onClose, wordsCopy]);
+  const confirmChanges = useCallback(() => {
+    onUpdate(cardCopy);
+    onClose();
+  }, [onUpdate, onClose, cardCopy]);
 
-    return (
-        <div className={clsx("flex flex-col gap-4 bg-slate-50/85 p-3 rounded", className)} {...props}>
-            {wordsCopy.map(({ word, color }, index) => (
-                <ConfigWordFieldGroup key={index} index={index} word={word} color={color} autoFocus={index === 0}
-                    onChangeWord={word => handleWordChange(index, word)}
-                    onChangeColor={color => handleColorChange(index, color)}
-                />
-            ))}
+  return (
+    <div className={clsx("flex flex-col gap-4 bg-slate-50/85 p-3 rounded", className)} {...props}>
+      {cardCopy.words.map(({ word, color }, index) => (
+        <ConfigWordFieldGroup
+          key={index}
+          index={index}
+          word={word}
+          color={color}
+          autoFocus={index === 0}
+          onChangeWord={(word) => handleWordChange(index, word)}
+          onChangeColor={(color) => handleColorChange(index, color)}
+        />
+      ))}
 
-            <button onClick={confirmChanges}>OK</button>
-        </div>)
-}
+      <button onClick={confirmChanges}>OK</button>
+    </div>
+  );
+};

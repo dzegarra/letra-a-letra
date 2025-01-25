@@ -1,6 +1,7 @@
 export type Word = {
     word: string;
     color: string;
+    rotationDeg?: number;
 }
 
 export type Card = {

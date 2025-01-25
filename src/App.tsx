@@ -60,24 +60,18 @@ function App() {
     setCards((cards) => [...cards, newCard]);
   }, [cards]);
 
-  const updateCard = useCallback((words: Word[], id: string) => {
+  const updateCard = useCallback((card: CardType) => {
     setCards((cards) => {
       const newCards = [...cards];
-      const index = newCards.findIndex((card) => card.id === id);
-      newCards.splice(index, 1, {
-        ...newCards[index],
-        words,
-      });
+      const index = newCards.findIndex((c) => c.id === card.id);
+      newCards.splice(index, 1, card);
       return newCards;
     });
   }, []);
 
-  const deleteCard = useCallback((id: string) => {
+  const deleteCard = useCallback((card: CardType) => {
     setCards((cards) => {
-      const newCards = [...cards];
-      const index = newCards.findIndex((card) => card.id === id);
-      newCards.splice(index, 1);
-      return newCards;
+      return cards.filter((c) => c.id !== card.id);
     });
   }, []);
 
@@ -128,11 +122,7 @@ function App() {
               exit={{ opacity: 0, scale: 0.5 }}
               key={card.id}
             >
-              <Card
-                words={card.words}
-                onUpdate={(words) => updateCard(words, card.id)}
-                onDelete={() => deleteCard(card.id)}
-              />
+              <Card card={card} onUpdate={updateCard} onDelete={deleteCard} />
             </motion.ul>
           ))}
         </AnimatePresence>
