@@ -11,8 +11,9 @@ type ConfigWordFieldGroupProps = Word & {
 export const ConfigWordFieldGroup = ({ index, word, color, autoFocus, onChangeWord, onChangeColor }: ConfigWordFieldGroupProps) => (<div className="flex items-end gap-2">
     <InputField
         label={`Palabra #${index+1}`}
-        inputProps={{placeholder:"Ingresa la palabra", autoFocus}}
+        inputProps={{placeholder:"Ingresa la palabra", className:"uppercase", autoFocus}}
         value={word}
+        helperText={`${word.length} caracteres`}
         onChange={(evt) => onChangeWord(evt.target.value)}
     />
     <input type="color" value={color} onChange={(evt) => onChangeColor(evt.target.value)} />
