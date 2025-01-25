@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Card } from "./components/Card";
-import { Word } from "./types";
+import { Card as CardType, Word } from "./types";
 
 const defaultWords: Word[] = [
   {
@@ -18,10 +18,14 @@ const defaultWords: Word[] = [
   },
 ];
 
+const generateId = () => {
+  return Math.random().toString(36).substr(2, 9);
+};
+
 function App() {
   const initialLoadRef = useRef(true);
   const lastCardsCountRef = useRef(0);
-  const [cards, setCards] = useState<Word[][]>([]);
+  const [cards, setCards] = useState<CardType[]>([]);
 
   const restore = useCallback((showConfirmation = true) => {
     const savedCards = localStorage.getItem("cards");
@@ -39,25 +43,39 @@ function App() {
   }, [cards]);
 
   const addCard = useCallback(() => {
-    setCards((cards) => [...cards, defaultWords]);
+    setCards((cards) => [...cards, { id: generateId(), words: defaultWords }]);
   }, []);
 
   const duplicateLastCard = useCallback(() => {
-    const lastCard = cards.length ? cards[cards.length - 1] : defaultWords;
-    setCards((cards) => [...cards, lastCard.map((word) => ({ ...word, word: "" }))]);
+    const lastCard = cards.length
+      ? cards[cards.length - 1]
+      : {
+          id: generateId(),
+          words: defaultWords,
+        };
+    const newCard = {
+      id: generateId(),
+      words: lastCard.words.map((card) => ({ ...card, word: "" })),
+    };
+    setCards((cards) => [...cards, newCard]);
   }, [cards]);
 
-  const updateCard = useCallback((words: Word[], index: number) => {
+  const updateCard = useCallback((words: Word[], id: string) => {
     setCards((cards) => {
       const newCards = [...cards];
-      newCards.splice(index, 1, words);
+      const index = newCards.findIndex((card) => card.id === id);
+      newCards.splice(index, 1, {
+        ...newCards[index],
+        words,
+      });
       return newCards;
     });
   }, []);
 
-  const deleteCard = useCallback((index: number) => {
+  const deleteCard = useCallback((id: string) => {
     setCards((cards) => {
       const newCards = [...cards];
+      const index = newCards.findIndex((card) => card.id === id);
       newCards.splice(index, 1);
       return newCards;
     });
@@ -102,15 +120,19 @@ function App() {
 
       <div className="flex flex-wrap gap-5 mt-[80px]">
         <AnimatePresence>
-          {cards.map((words, index) => (
+          {cards.map((card) => (
             <motion.ul
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ type: "spring", bounce: 0.25, duration: 0.4 }}
               exit={{ opacity: 0, scale: 0.5 }}
-              key={index}
+              key={card.id}
             >
-              <Card words={words} onUpdate={(words) => updateCard(words, index)} onDelete={() => deleteCard(index)} />
+              <Card
+                words={card.words}
+                onUpdate={(words) => updateCard(words, card.id)}
+                onDelete={() => deleteCard(card.id)}
+              />
             </motion.ul>
           ))}
         </AnimatePresence>
