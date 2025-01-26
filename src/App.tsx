@@ -42,7 +42,7 @@ function App() {
     <div className="flex flex-col gap-5 p-4">
       <ConfigBar cards={cards} setCards={setCards} className="fixed top-0 left-0 w-full z-10 print:hidden" />
 
-      <div className="flex flex-wrap gap-5 mt-[80px]">
+      <div className="flex flex-wrap gap-10 mt-[80px]">
         <AnimatePresence>
           {cards.map((card) => (
             <motion.ul
