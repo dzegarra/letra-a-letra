@@ -1,7 +1,7 @@
 import { ComponentProps, useCallback, useState } from 'react'
 import clsx from 'clsx'
-import { Card as CardType } from "../types";
-import { ConfigWordFieldGroup } from './ConfigWordFieldGroup'
+import { Card as CardType, CardWords } from "../types";
+import { InputField } from "./InputField";
 
 type ConfirmFormProps = {
   card: CardType;
@@ -16,20 +16,9 @@ export const ConfirmForm = ({ className, card, onClose, onUpdate, ...props }: Co
 
   const handleWordChange = useCallback((index: number, word: string) => {
     setCardCopy((cardCopy) => {
-      const newWords = [...cardCopy.words];
+      const newWords: CardWords = [...cardCopy.words];
       newWords.splice(index, 1, { ...cardCopy.words[index], word, rotationDeg: randomRotaionDeg() });
       return { ...cardCopy, words: newWords };
-    });
-  }, []);
-
-  const handleColorChange = useCallback((index: number, color: string) => {
-    setCardCopy((cardCopy) => {
-      const newWords = [...cardCopy.words];
-      newWords.splice(index, 1, { ...cardCopy.words[index], color });
-      return {
-        ...cardCopy,
-        words: newWords,
-      };
     });
   }, []);
 
@@ -40,19 +29,19 @@ export const ConfirmForm = ({ className, card, onClose, onUpdate, ...props }: Co
 
   return (
     <div className={clsx("flex flex-col gap-4 bg-slate-50/85 p-3 rounded", className)} {...props}>
-      {cardCopy.words.map(({ word, color }, index) => (
-        <ConfigWordFieldGroup
-          key={index}
-          index={index}
-          word={word}
-          color={color}
-          autoFocus={index === 0}
-          onChangeWord={(word) => handleWordChange(index, word)}
-          onChangeColor={(color) => handleColorChange(index, color)}
+      {cardCopy.words.map(({ word }, index) => (
+        <InputField
+          label={`Palabra #${index + 1}`}
+          inputProps={{ placeholder: "Ingresa la palabra", className: "uppercase", autoFocus: index === 0 }}
+          value={word}
+          helperText={`${word.length} caracteres`}
+          onChange={(evt) => handleWordChange(index, evt.target.value)}
         />
       ))}
 
-      <button onClick={confirmChanges}>OK</button>
+      <button className="rounded-full bg-slate-100 hover:bg-slate-300 py-2 px-4" onClick={confirmChanges}>
+        OK
+      </button>
     </div>
   );
 };

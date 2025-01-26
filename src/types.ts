@@ -5,6 +5,12 @@ export type Word = {
 }
 
 export type Card = {
-    id: string;
-    words: Word[];
-}
+  id: string;
+  words: CardWords;
+};
+
+export type CardWords = [Word, Word, Word];
+
+export type CardColors = [string, string, string];
+
+export type WordIndex = 0 | 1 | 2;
