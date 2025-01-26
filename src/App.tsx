@@ -44,7 +44,7 @@ function App() {
 
       <div className="flex flex-wrap gap-10 mt-[80px]">
         <AnimatePresence>
-          {cards.map((card) => (
+          {cards.map((card, index) => (
             <motion.ul
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -52,7 +52,7 @@ function App() {
               exit={{ opacity: 0, scale: 0.5 }}
               key={card.id}
             >
-              <Card card={card} onUpdate={updateCard} onDelete={deleteCard} />
+              <Card index={index} card={card} onUpdate={updateCard} onDelete={deleteCard} />
             </motion.ul>
           ))}
         </AnimatePresence>
