@@ -7,6 +7,7 @@ import { defaultWords } from "../constants";
 import { jsonToFile } from "../helpers/jsonToFile";
 import { InputField } from "./InputField";
 import { useDebounce } from "../hooks/useDebounce";
+import { pickFile } from "../helpers/pickFile";
 
 type ConfigBarProps = {
   cards: CardType[];
@@ -38,14 +39,41 @@ export const ConfigBar = ({ className, cards, setCards }: ConfigBarProps) => {
     jsonToFile(cards, "letra-a-letra");
   }, [cards]);
 
+  const importFile = useCallback(() => {
+    pickFile(async function (files) {
+      if (files && files.length) {
+        const file = files[0];
+        try {
+          const text = await file.text();
+          const decoded = JSON.parse(text);
+          setCards(decoded);
+        } catch (err) {
+          alert(String(err));
+        }
+      }
+    });
+  }, [setCards]);
+
   return (
     <div className={clsx("flex gap-2 items-center p-4  bg-cyan-200 border-b-slate-400", className)}>
       <button className="rounded-full bg-slate-100 hover:bg-slate-300 py-2 px-4" onClick={duplicateLastCard}>
         ➕Añadir tarjeta
       </button>
 
-      <button className="rounded-full bg-slate-100 hover:bg-slate-300 py-2 px-4" onClick={exportData}>
-        💾Guardar en disco
+      <button
+        className="rounded-full bg-slate-100 hover:bg-slate-300 py-2 px-4"
+        onClick={exportData}
+        title="Descarga los datos actuales ingresados en un archivo"
+      >
+        ⬇️Exportar
+      </button>
+
+      <button
+        className="rounded-full bg-slate-100 hover:bg-slate-300 py-2 px-4"
+        onClick={importFile}
+        title="Importar datos previamente descargados"
+      >
+        ⬆️Importar
       </button>
 
       <button className="rounded-full bg-slate-100 hover:bg-slate-300 py-2 px-4" onClick={() => window.print()}>
