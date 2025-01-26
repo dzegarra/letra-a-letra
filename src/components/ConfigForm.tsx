@@ -17,8 +17,7 @@ export const ConfirmForm = ({ className, card, onClose, onUpdate, ...props }: Co
   const handleWordChange = useCallback((index: number, word: string) => {
     setCardCopy((cardCopy) => {
       const newWords = [...cardCopy.words];
-      const color = newWords[index].color;
-      newWords.splice(index, 1, { word, color, rotationDeg: randomRotaionDeg() });
+      newWords.splice(index, 1, { ...cardCopy.words[index], word, rotationDeg: randomRotaionDeg() });
       return { ...cardCopy, words: newWords };
     });
   }, []);
@@ -26,8 +25,7 @@ export const ConfirmForm = ({ className, card, onClose, onUpdate, ...props }: Co
   const handleColorChange = useCallback((index: number, color: string) => {
     setCardCopy((cardCopy) => {
       const newWords = [...cardCopy.words];
-      const word = newWords[index].word;
-      newWords.splice(index, 1, { word, color });
+      newWords.splice(index, 1, { ...cardCopy.words[index], color });
       return {
         ...cardCopy,
         words: newWords,
