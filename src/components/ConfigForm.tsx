@@ -28,9 +28,10 @@ export const ConfirmForm = ({ className, card, onClose, onUpdate, ...props }: Co
   }, [onUpdate, onClose, cardCopy]);
 
   return (
-    <div className={clsx("flex flex-col gap-4 bg-slate-50/85 p-3 rounded", className)} {...props}>
+    <div className={clsx("flex flex-col gap-2 bg-slate-50/85 p-3 rounded", className)} {...props}>
       {cardCopy.words.map(({ word }, index) => (
         <InputField
+          key={index}
           label={`Palabra #${index + 1}`}
           inputProps={{ placeholder: "Ingresa la palabra", className: "uppercase", autoFocus: index === 0 }}
           value={word}
