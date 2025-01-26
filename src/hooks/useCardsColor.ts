@@ -1,12 +1,18 @@
+import { useCallback, Dispatch, SetStateAction } from "react";
+import fontColorContrast from "font-color-contrast";
 import { defaultColors } from "../constants";
 import { Card as CardType, CardWords, CardColors, WordIndex } from "../types";
-import { useCallback, Dispatch, SetStateAction } from "react";
 
 const factoryCardColorApply =
   (color: string, index: WordIndex) =>
   (card: CardType): CardType => ({
     ...card,
-    words: card.words.map((word, wordIndex) => (wordIndex === index ? { ...word, color } : word)) as CardWords,
+    words: card.words.map((word, wordIndex) => {
+      if (wordIndex === index) {
+        return { ...word, color, fontColor: fontColorContrast(color) };
+      }
+      return word;
+    }) as CardWords,
   });
 
 export const useCardsColor = (cards: CardType[], setCards: Dispatch<SetStateAction<CardType[]>>) => {

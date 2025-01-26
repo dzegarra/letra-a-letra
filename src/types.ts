@@ -1,8 +1,9 @@
 export type Word = {
-    word: string;
-    color: string;
-    rotationDeg?: number;
-}
+  word: string;
+  color: string;
+  fontColor?: string;
+  rotationDeg?: number;
+};
 
 export type Card = {
   id: string;

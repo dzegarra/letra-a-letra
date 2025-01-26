@@ -4,6 +4,7 @@
 }
 .ring [style*='--index'] {
   font-size: calc(var(--font-size) * 1rem);
+  color: var(--font-color);
   position: absolute;
   top: 50%;
   left: 50%;

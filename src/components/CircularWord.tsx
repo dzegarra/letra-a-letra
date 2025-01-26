@@ -6,6 +6,7 @@ type CircularWordProps = {
   word: string;
   radius?: number;
   fontSize?: number;
+  fontColor?: string;
   width?: string;
   height?: string;
   rotationDeg?: number;
@@ -17,6 +18,7 @@ export const CircularWord = ({
   width,
   height,
   fontSize = 1,
+  fontColor = "#000000",
   radius = 5,
   rotationDeg = 0,
 }: CircularWordProps) => (
@@ -26,6 +28,7 @@ export const CircularWord = ({
       {
         "--total": word.length,
         "--font-size": fontSize,
+        "--font-color": fontColor,
         "--radius": radius,
         "--rotation": `${rotationDeg}deg`,
         width,
