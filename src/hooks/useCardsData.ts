@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { Card as CardType } from "../types";
 
+const emptyArray: CardType[] = [];
+
 const readFromLocalStorage = () => {
   const savedCards = localStorage.getItem("cards");
   if (savedCards) {
     return JSON.parse(savedCards);
   }
+  return emptyArray;
 };
 
 const saveInLocalStorage = (cards: CardType[]) => {
