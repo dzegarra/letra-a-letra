@@ -36,7 +36,7 @@ export const ConfigBar = ({ className, cards, setCards }: ConfigBarProps) => {
   }, [setCards]);
 
   const exportData = useCallback(() => {
-    jsonToFile(cards, "letra-a-letra");
+    jsonToFile(cards, "project-export");
   }, [cards]);
 
   const importFile = useCallback(() => {
@@ -57,27 +57,27 @@ export const ConfigBar = ({ className, cards, setCards }: ConfigBarProps) => {
   return (
     <div className={clsx("flex gap-2 items-center p-4  bg-cyan-200 border-b-slate-400", className)}>
       <button className="rounded-full bg-slate-100 hover:bg-slate-300 py-2 px-4" onClick={duplicateLastCard}>
-        ➕Añadir tarjeta
+        ➕Add card
       </button>
 
       <button
         className="rounded-full bg-slate-100 hover:bg-slate-300 py-2 px-4"
         onClick={exportData}
-        title="Descarga los datos actuales ingresados en un archivo"
+        title="Downloads the project as a file that can be used to continue the project later"
       >
-        ⬇️Exportar
+        ⬇️Export
       </button>
 
       <button
         className="rounded-full bg-slate-100 hover:bg-slate-300 py-2 px-4"
         onClick={importFile}
-        title="Importar datos previamente descargados"
+        title="Import a previously exported project file"
       >
-        ⬆️Importar
+        ⬆️Import
       </button>
 
       <button className="rounded-full bg-slate-100 hover:bg-slate-300 py-2 px-4" onClick={() => window.print()}>
-        🖨️ Imprimir
+        🖨️ Print
       </button>
 
       <div className="flex gap-4 mx-6">
@@ -101,7 +101,7 @@ export const ConfigBar = ({ className, cards, setCards }: ConfigBarProps) => {
         />
       </div>
 
-      <div>Numero de cartas: {cards.length}</div>
+      <div>Count or cards: {cards.length}</div>
     </div>
   );
 };

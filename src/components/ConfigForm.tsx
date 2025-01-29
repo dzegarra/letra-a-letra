@@ -32,10 +32,10 @@ export const ConfirmForm = ({ className, card, onClose, onUpdate, ...props }: Co
       {cardCopy.words.map(({ word }, index) => (
         <InputField
           key={index}
-          label={`Palabra #${index + 1}`}
-          inputProps={{ placeholder: "Ingresa la palabra", className: "uppercase", autoFocus: index === 0 }}
+          label={`Word #${index + 1}`}
+          inputProps={{ placeholder: "Input word", className: "uppercase", autoFocus: index === 0 }}
           value={word}
-          helperText={`${word.length} caracteres`}
+          helperText={`${word.length} characters`}
           onChange={(evt) => handleWordChange(index, evt.target.value)}
         />
       ))}
