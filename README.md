@@ -5,13 +5,7 @@ My wife is a language teacher and she liked the idea to use this game as a way t
 
 ## Usage
 
-```bash
-npm install
-npm run build
-npm run preview
-```
-
-Once the app is running, open your web browser at [http://localhost:4173](http://localhost:4173/) to use the web app.
+The latest version of this webapp is published using Github actions at [dzegarra.github.io/letra-a-letra/](https://dzegarra.github.io/letra-a-letra/).
 
 ### Instructions
 
