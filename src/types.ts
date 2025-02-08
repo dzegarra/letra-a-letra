@@ -3,12 +3,15 @@ export type Word = {
   color: string;
   fontColor?: string;
   rotationDeg?: number;
+  direction?: WordDirection;
 };
 
 export type Card = {
   id: string;
   words: CardWords;
 };
+
+export type WordDirection = "normal" | "reverse";
 
 export type CardWords = [Word, Word, Word];
 

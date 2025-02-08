@@ -1,13 +1,12 @@
 import { ComponentProps, Dispatch, SetStateAction, useCallback } from "react";
 import clsx from "clsx";
-import { Card as CardType, CardWords } from "../types";
-import { useCardsColor } from "../hooks/useCardsColor";
-import { generateCardId } from "../helpers/generateCardId";
-import { defaultWords } from "../constants";
-import { jsonToFile } from "../helpers/jsonToFile";
-import { InputField } from "./InputField";
-import { useDebounce } from "../hooks/useDebounce";
+import { Card as CardType } from "../types";
 import { pickFile } from "../helpers/pickFile";
+import { generateCard } from "../helpers/generateCard";
+import { jsonToFile } from "../helpers/jsonToFile";
+import { useCardsColor } from "../hooks/useCardsColor";
+import { useDebounce } from "../hooks/useDebounce";
+import { InputField } from "./InputField";
 
 type ConfigBarProps = {
   cards: CardType[];
@@ -19,21 +18,9 @@ export const ConfigBar = ({ className, cards, setCards }: ConfigBarProps) => {
 
   const updateWithDelayColorAtIndex = useDebounce(updateColorAtIndex, 200);
 
-  const duplicateLastCard = useCallback(() => {
-    setCards((cards) => {
-      const lastCard = cards.length
-        ? cards[cards.length - 1]
-        : {
-            id: generateCardId(),
-            words: defaultWords,
-          };
-      const newCard: CardType = {
-        id: generateCardId(),
-        words: lastCard.words.map((card) => ({ ...card, word: "" })) as CardWords,
-      };
-      return [...cards, newCard];
-    });
-  }, [setCards]);
+  const addCard = useCallback(() => {
+    setCards((cards) => [...cards, generateCard(colors)]);
+  }, [setCards, colors]);
 
   const exportData = useCallback(() => {
     jsonToFile(cards, "project-export");
@@ -56,7 +43,7 @@ export const ConfigBar = ({ className, cards, setCards }: ConfigBarProps) => {
 
   return (
     <div className={clsx("flex gap-2 items-center p-4  bg-cyan-200 border-b-slate-400", className)}>
-      <button className="rounded-full bg-slate-100 hover:bg-slate-300 py-2 px-4" onClick={duplicateLastCard}>
+      <button className="rounded-full bg-slate-100 hover:bg-slate-300 py-2 px-4" onClick={addCard}>
         ➕Add card
       </button>
 
