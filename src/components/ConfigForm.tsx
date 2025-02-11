@@ -2,7 +2,6 @@ import { ComponentProps, useCallback, useState } from 'react'
 import clsx from 'clsx'
 import { Card as CardType, CardWords } from "../types";
 import { InputField } from "./InputField";
-import { getRandomDirection } from "../helpers/getRandomDirection";
 
 type ConfirmFormProps = {
   card: CardType;
@@ -28,13 +27,6 @@ export const ConfirmForm = ({ className, card, onClose, onUpdate, ...props }: Co
     onClose();
   }, [onUpdate, onClose, cardCopy]);
 
-  const randommizeWordDirections = useCallback(() => {
-    setCardCopy((cardCopy) => {
-      const newWords = cardCopy.words.map((word) => ({ ...word, direction: getRandomDirection() })) as CardWords;
-      return { ...cardCopy, words: newWords };
-    });
-  }, []);
-
   return (
     <div className={clsx("flex flex-col gap-2 bg-slate-50/85 p-3 rounded", className)} {...props}>
       {cardCopy.words.map(({ word }, index) => (
@@ -47,13 +39,6 @@ export const ConfirmForm = ({ className, card, onClose, onUpdate, ...props }: Co
           onChange={(evt) => handleWordChange(index, evt.target.value)}
         />
       ))}
-
-      <button
-        className="rounded-full bg-slate-100 hover:bg-slate-300 active:bg-slate-400 py-2 px-4"
-        onClick={randommizeWordDirections}
-      >
-        Randomize word directions
-      </button>
 
       <button
         className="rounded-full bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700 py-2 px-4"

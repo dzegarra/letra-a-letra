@@ -31,7 +31,6 @@ export const Card = ({ index, card, onUpdate, onDelete }: CardProps) => {
           fontSize={2.4}
           fontColor={card.words[0].fontColor}
           rotationDeg={card.words[0].rotationDeg}
-          direction={card.words[0].direction}
         />
         <CircularWord
           word={card.words[1].word}
@@ -39,7 +38,6 @@ export const Card = ({ index, card, onUpdate, onDelete }: CardProps) => {
           fontSize={2.4}
           fontColor={card.words[1].fontColor}
           rotationDeg={card.words[1].rotationDeg}
-          direction={card.words[1].direction}
         />
         <CircularWord
           word={card.words[2].word}
@@ -47,7 +45,6 @@ export const Card = ({ index, card, onUpdate, onDelete }: CardProps) => {
           fontSize={2.4}
           fontColor={card.words[2].fontColor}
           rotationDeg={card.words[2].rotationDeg}
-          direction={card.words[2].direction}
         />
 
         <span className="text-4xl font-bold text-slate-700 absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 print:hidden">
