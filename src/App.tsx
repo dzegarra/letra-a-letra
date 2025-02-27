@@ -47,7 +47,7 @@ function App() {
 
       <div className="flex mt-[80px]">
         <div className="flex flex-wrap flex-1" ref={cardsRef}>
-          <PageWithCardFronts cards={cards} setCards={setCards} />
+          <PageWithCardFronts cards={cards} setCards={setCards} hideIndex={showRears} />
           {showRears && <PageWithCardRears cards={cards} className="flex-row-reverse break-before-page" />}
         </div>
       </div>

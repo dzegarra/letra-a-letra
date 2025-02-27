@@ -6,10 +6,11 @@ import { CardFront } from "./CardFront";
 
 type PageWithCardFrontsProps = {
   cards: Card[];
+  hideIndex?: boolean;
   setCards: Dispatch<SetStateAction<Card[]>>;
 } & ComponentProps<"div">;
 
-export const PageWithCardFronts = ({ className, cards, setCards, ...props }: PageWithCardFrontsProps) => {
+export const PageWithCardFronts = ({ className, cards, hideIndex, setCards, ...props }: PageWithCardFrontsProps) => {
   const updateCard = useCallback(
     (card: Card) => {
       setCards((cards) => {
@@ -42,7 +43,7 @@ export const PageWithCardFronts = ({ className, cards, setCards, ...props }: Pag
             exit={{ opacity: 0, scale: 0.5 }}
             key={card.id}
           >
-            <CardFront index={index} card={card} onUpdate={updateCard} onDelete={deleteCard} />
+            <CardFront index={index} card={card} onUpdate={updateCard} onDelete={deleteCard} hideIndex={hideIndex} />
           </motion.ul>
         ))}
       </AnimatePresence>
