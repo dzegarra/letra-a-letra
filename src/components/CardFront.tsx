@@ -2,47 +2,47 @@ import { useState } from 'react';
 import clsx from 'clsx';
 import { motion, AnimatePresence } from "motion/react";
 import { CircularWord } from "./CircularWord";
-import { Circle } from "./Circle";
+import { CardBackground } from "./CardBackground";
 import { ConfirmForm } from "./ConfigForm";
 import { Card as CardType } from "../types";
 
-type CardProps = {
+type CardFrontProps = {
   index: number;
   card: CardType;
   onUpdate: (card: CardType) => void;
   onDelete: (card: CardType) => void;
 };
 
-export const Card = ({ index, card, onUpdate, onDelete }: CardProps) => {
+export const CardFront = ({ index, card, onUpdate, onDelete }: CardFrontProps) => {
   const [editVisible, setEditVisible] = useState(false);
 
   return (
-    <div className="h-[400px] w-[400px] relative select-none break-inside-avoid">
+    <div className="h-[340px] w-[340px] relative select-none">
       <div
         className={clsx("relative w-full h-full flex justify-center", {
           "blur-sm": editVisible,
         })}
       >
-        <Circle size="400px" color1={card.words[0].color} color2={card.words[1].color} color3={card.words[2].color} />
+        <CardBackground size="340px" color1={card.words[0].color} color2={card.words[1].color} color3={card.words[2].color} />
 
         <CircularWord
           word={card.words[0].word}
           radius={8.4}
-          fontSize={2.4}
+          fontSize={2}
           fontColor={card.words[0].fontColor}
           rotationDeg={card.words[0].rotationDeg}
         />
         <CircularWord
           word={card.words[1].word}
           radius={6}
-          fontSize={2.4}
+          fontSize={2}
           fontColor={card.words[1].fontColor}
           rotationDeg={card.words[1].rotationDeg}
         />
         <CircularWord
           word={card.words[2].word}
           radius={3.5}
-          fontSize={2.4}
+          fontSize={2}
           fontColor={card.words[2].fontColor}
           rotationDeg={card.words[2].rotationDeg}
         />

@@ -1,15 +1,15 @@
 import { ComponentProps, CSSProperties } from "react";
 import clsx from "clsx";
-import classes from "./Circle.module.css";
+import classes from "./CardBackground.module.css";
 
-type CircleProps = {
+type CardBackgroundProps = {
   size: string;
   color1: string;
   color2: string;
   color3: string;
 } & ComponentProps<"div">;
 
-export const Circle = ({ size, className, color1, color2, color3, ...props }: CircleProps) => (
+export const CardBackground = ({ size, className, color1, color2, color3, ...props }: CardBackgroundProps) => (
   <div
     style={
       {

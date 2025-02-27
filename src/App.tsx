@@ -1,34 +1,15 @@
-import { useCallback, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { Card } from "./components/Card";
-import { Card as CardType } from "./types";
+import { useEffect, useState, useRef } from "react";
+import html2pdf from "html2pdf.js";
 import { useCardsData } from "./hooks/useCardsData";
 import { ConfigBar } from "./components/ConfigBar";
+import { PageWithCardRears } from "./components/PageWithCardRears";
+import { PageWithCardFronts } from "./components/PageWithCardFronts";
 
 function App() {
+  const [showRears, setShowRears] = useState(false);
+  const cardsRef = useRef<HTMLDivElement>(null);
   const lastCardsCountRef = useRef(-1);
   const { cards, setCards } = useCardsData();
-
-  const updateCard = useCallback(
-    (card: CardType) => {
-      setCards((cards) => {
-        const newCards = [...cards];
-        const index = newCards.findIndex((c) => c.id === card.id);
-        newCards.splice(index, 1, card);
-        return newCards;
-      });
-    },
-    [setCards],
-  );
-
-  const deleteCard = useCallback(
-    (card: CardType) => {
-      setCards((cards) => {
-        return cards.filter((c) => c.id !== card.id);
-      });
-    },
-    [setCards],
-  );
 
   // Scroll to the bottom each time a new card is added
   useEffect(() => {
@@ -38,24 +19,37 @@ function App() {
     lastCardsCountRef.current = cards.length;
   }, [cards]);
 
+  const downloadPdf = async () => {
+    try {
+      setShowRears(true);
+      await html2pdf()
+      .set({
+        margin: 0.6,
+        filename: "letra-a-letra.pdf",
+        jsPDF: { unit: "cm", format: "A4", orientation: "portrait" },
+        pagebreak: { mode: ["css", "legacy"] },
+      })
+      .from(cardsRef.current)
+      .save();
+    } finally {
+      setShowRears(false);
+    }
+  };
+
   return (
     <div className="flex flex-col gap-5 p-4">
-      <ConfigBar cards={cards} setCards={setCards} className="fixed top-0 left-0 w-full z-10 print:hidden" />
+      <ConfigBar
+        cards={cards}
+        setCards={setCards}
+        className="fixed top-0 left-0 w-full z-10 print:hidden"
+        onDownloadPdf={downloadPdf}
+      />
 
-      <div className="flex flex-wrap gap-10 mt-[80px]">
-        <AnimatePresence>
-          {cards.map((card, index) => (
-            <motion.ul
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ type: "spring", bounce: 0.25, duration: 0.4 }}
-              exit={{ opacity: 0, scale: 0.5 }}
-              key={card.id}
-            >
-              <Card index={index} card={card} onUpdate={updateCard} onDelete={deleteCard} />
-            </motion.ul>
-          ))}
-        </AnimatePresence>
+      <div className="flex mt-[80px]">
+        <div className="flex flex-wrap flex-1" ref={cardsRef}>
+          <PageWithCardFronts cards={cards} setCards={setCards} />
+          {showRears && <PageWithCardRears cards={cards} className="flex-row-reverse break-before-page" />}
+        </div>
       </div>
     </div>
   );
