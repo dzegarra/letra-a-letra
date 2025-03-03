@@ -1,18 +1,20 @@
 import { ComponentProps, Dispatch, SetStateAction, useCallback } from "react";
-import { Button, Layout, Tooltip, Space } from "antd";
-import { DownloadOutlined, FilePdfOutlined, UploadOutlined } from "@ant-design/icons";
-import { Card as CardType } from "../types";
+import { Button, Layout, Tooltip, Space, Segmented } from "antd";
+import { AppstoreOutlined, BarsOutlined, DownloadOutlined, FilePdfOutlined, UploadOutlined } from "@ant-design/icons";
+import { Card, ViewMode } from "../types";
 import { pickFile } from "../helpers/pickFile";
 import { jsonToFile } from "../helpers/jsonToFile";
 import { CardsCount } from "./CardsCount";
 
-type ConfigBarProps = {
-  cards: CardType[];
-  setCards: Dispatch<SetStateAction<CardType[]>>;
+type AppHeaderProps = {
+  cards: Card[];
+  viewMode: ViewMode;
+  setViewMode: Dispatch<SetStateAction<ViewMode>>;
+  setCards: Dispatch<SetStateAction<Card[]>>;
   onDownloadPdf: () => void;
-} & ComponentProps<"div">;
+} & ComponentProps<typeof Layout.Header>;
 
-export const ConfigBar = ({ className, cards, setCards, onDownloadPdf }: ConfigBarProps) => {
+export const AppHeader = ({ cards, setCards, onDownloadPdf, viewMode, setViewMode, ...props }: AppHeaderProps) => {
   const exportData = useCallback(() => {
     jsonToFile(cards, "project-export");
   }, [cards]);
@@ -44,7 +46,7 @@ export const ConfigBar = ({ className, cards, setCards, onDownloadPdf }: ConfigB
         justifyContent: "space-between",
         padding: "0 24px",
       }}
-      className={className}
+      {...props}
     >
       <Space>
         <Tooltip title="Downloads the project as a file that can be used to continue the project later">
@@ -59,12 +61,23 @@ export const ConfigBar = ({ className, cards, setCards, onDownloadPdf }: ConfigB
           </Button>
         </Tooltip>
 
-        <Tooltip title="Downloads the project as a PDF file">
-          <Button onClick={onDownloadPdf} icon={<FilePdfOutlined />}>
-            Generate PDF
-          </Button>
-        </Tooltip>
+        {viewMode === "preview" && (
+          <Tooltip title="Downloads the project as a PDF file">
+            <Button onClick={onDownloadPdf} icon={<FilePdfOutlined />} type="primary">
+              Generate PDF
+            </Button>
+          </Tooltip>
+        )}
       </Space>
+
+      <Segmented
+        value={viewMode}
+        onChange={setViewMode}
+        options={[
+          { value: "preview", label: "Preview", icon: <AppstoreOutlined /> },
+          { value: "table", label: "Table", icon: <BarsOutlined /> },
+        ]}
+      />
 
       <CardsCount count={cards.length} />
     </Layout.Header>
