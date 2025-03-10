@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, useMemo } from "react";
 import { Table, TableProps } from "antd";
 import { Card, CardWords, Word } from "../types";
 import { EditableCell } from "./EditableCell";
+import { wordPositionName } from "../constants";
 
 type TableViewProps = {
   cards: Card[];
@@ -17,25 +18,22 @@ const columns: TableProps<Card>["columns"] = [
     render: (_, __, index) => <span>{index + 1}</span>,
   },
   {
-    title: "Word #1",
-    dataIndex: "words",
-    key: 0,
-    width: "30%",
-    render: (_, { words }) => <span>{words[0].word}</span>,
-  },
-  {
-    title: "Word #2",
-    dataIndex: "words",
-    key: 1,
-    width: "30%",
-    render: (_, { words }) => <span>{words[1].word}</span>,
-  },
-  {
-    title: "Word #3",
+    title: wordPositionName[2],
     dataIndex: "words",
     key: 2,
     width: "30%",
-    render: (_, { words }) => <span>{words[2].word}</span>,
+  },
+  {
+    title: wordPositionName[1],
+    dataIndex: "words",
+    key: 1,
+    width: "30%",
+  },
+  {
+    title: wordPositionName[0],
+    dataIndex: "words",
+    key: 0,
+    width: "30%",
   },
 ];
 

@@ -7,3 +7,5 @@ export const defaultColors: CardColors = ["#C0392B", "#8E44AD", "#27AE60"];
 type FormInstance<T> = GetRef<typeof Form<T>>;
 
 export const EditableContext = createContext<FormInstance<Card> | null>(null);
+
+export const wordPositionName = ["Outside", "Middle", "Inner"] as const;

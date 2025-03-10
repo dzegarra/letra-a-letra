@@ -2,6 +2,7 @@ import { ComponentProps, useCallback, useState } from 'react'
 import clsx from 'clsx'
 import { Card as CardType, CardWords } from "../types";
 import { InputField } from "./InputField";
+import { wordPositionName } from "../constants";
 
 type ConfirmFormProps = {
   card: CardType;
@@ -32,7 +33,7 @@ export const ConfirmForm = ({ className, card, onClose, onUpdate, ...props }: Co
       {cardCopy.words.map(({ word }, index) => (
         <InputField
           key={index}
-          label={`Word #${index + 1}`}
+          label={wordPositionName[index]}
           inputProps={{ placeholder: "Input word", className: "uppercase", autoFocus: index === 0 }}
           value={word}
           helperText={`${word.length} characters`}
