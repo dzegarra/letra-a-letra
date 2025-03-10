@@ -1,15 +1,13 @@
 import { ComponentProps, useMemo } from "react";
-import { getCardsColors } from "../helpers/getCardsColors";
-import { Card } from "../types";
 import { CardRear } from "./CardRear";
 import clsx from "clsx";
+import { useCardsStore } from "../store";
 
-type PageWithCardRearsProps = {
-  cards: Card[];
-} & ComponentProps<"div">;
+type PageWithCardRearsProps = ComponentProps<"div">;
 
-export const PageWithCardRears = ({ cards, className, ...props }: PageWithCardRearsProps) => {
-  const colors = getCardsColors(cards);
+export const PageWithCardRears = ({ className, ...props }: PageWithCardRearsProps) => {
+  const cards = useCardsStore((state) => state.cards);
+  const colors = useCardsStore((state) => state.colors);
 
   const cardsDistribution = useMemo(() => {
     const distribution = [];

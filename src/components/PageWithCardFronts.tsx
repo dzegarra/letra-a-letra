@@ -1,36 +1,17 @@
-import { ComponentProps, Dispatch, SetStateAction, useCallback } from "react";
+import { ComponentProps } from "react";
 import clsx from "clsx";
 import { motion, AnimatePresence } from "motion/react";
-import { Card } from "../types";
 import { CardFront } from "./CardFront";
+import { useCardsStore } from "../store";
 
 type PageWithCardFrontsProps = {
-  cards: Card[];
   hideIndex?: boolean;
-  setCards: Dispatch<SetStateAction<Card[]>>;
 } & ComponentProps<"div">;
 
-export const PageWithCardFronts = ({ className, cards, hideIndex, setCards, ...props }: PageWithCardFrontsProps) => {
-  const updateCard = useCallback(
-    (card: Card) => {
-      setCards((cards) => {
-        const newCards = [...cards];
-        const index = newCards.findIndex((c) => c.id === card.id);
-        newCards.splice(index, 1, card);
-        return newCards;
-      });
-    },
-    [setCards],
-  );
-
-  const deleteCard = useCallback(
-    (card: Card) => {
-      setCards((cards) => {
-        return cards.filter((c) => c.id !== card.id);
-      });
-    },
-    [setCards],
-  );
+export const PageWithCardFronts = ({ className, hideIndex, ...props }: PageWithCardFrontsProps) => {
+  const cards = useCardsStore((state) => state.cards);
+  const updateCard = useCardsStore((state) => state.updateCard);
+  const deleteCard = useCardsStore((state) => state.deleteCard);
 
   return (
     <div className={clsx("flex flex-wrap gap-5", className)} {...props}>

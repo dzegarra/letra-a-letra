@@ -5,6 +5,8 @@ import { CircularWord } from "./CircularWord";
 import { CardBackground } from "./CardBackground";
 import { ConfirmForm } from "./ConfigForm";
 import { Card as CardType } from "../types";
+import { CardDeletePopConfirm } from "./CardDeletePopConfirm";
+import { Button } from "antd";
 
 type CardFrontProps = {
   index: number;
@@ -77,20 +79,14 @@ export const CardFront = ({ index, card, hideIndex = false, onUpdate, onDelete }
           </motion.ul>
         ) : (
           <div className="flex gap-1 opacity-0 hover:opacity-100 print:hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ">
-            <button
-              className="rounded-full bg-slate-100 hover:bg-slate-300 p-2"
-              title="Editar"
-              onClick={() => setEditVisible(true)}
-            >
+            <Button shape="circle" variant="text" title="Editar" onClick={() => setEditVisible(true)}>
               ✏️
-            </button>
-            <button
-              className="rounded-full bg-slate-100 hover:bg-slate-300 p-2"
-              title="Eliminar"
-              onClick={() => onDelete(card)}
-            >
-              🗑️
-            </button>
+            </Button>
+            <CardDeletePopConfirm card={card} placement="left">
+              <Button shape="circle" variant="text" title="Eliminar">
+                🗑️
+              </Button>
+            </CardDeletePopConfirm>
           </div>
         )}
       </AnimatePresence>

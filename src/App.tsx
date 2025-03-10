@@ -1,7 +1,6 @@
 import { useState, useRef } from "react";
 import { Layout } from "antd";
 import html2pdf from "html2pdf.js";
-import { useCardsData } from "./hooks/useCardsData";
 import { AppHeader } from "./components/AppHeader";
 import { PreviewView } from "./components/PreviewView";
 import { useViewMode } from "./hooks/useViewMode";
@@ -11,7 +10,6 @@ function App() {
   const [showRears, setShowRears] = useState(false);
   const cardsRef = useRef<HTMLDivElement>(null);
   const scrollableContainer = useRef<HTMLDivElement>(null);
-  const { cards, setCards } = useCardsData();
   const { viewMode, setViewMode } = useViewMode();
 
   const downloadPdf = async () => {
@@ -36,8 +34,6 @@ function App() {
       <Layout style={{ height: "100vh", overflow: "hidden" }}>
         <AppHeader
           className="fixed top-0 left-0 w-full z-10 print:hidden"
-          cards={cards}
-          setCards={setCards}
           onDownloadPdf={downloadPdf}
           viewMode={viewMode}
           setViewMode={setViewMode}
@@ -46,16 +42,11 @@ function App() {
         <Layout.Content className="overflow-y-auto flex-1" ref={scrollableContainer}>
           {viewMode === "preview" && (
             <div ref={cardsRef}>
-              <PreviewView
-                cards={cards}
-                setCards={setCards}
-                showRears={showRears}
-                scrollableContainer={scrollableContainer.current}
-              />
+              <PreviewView showRears={showRears} scrollableContainer={scrollableContainer.current} />
             </div>
           )}
 
-          {viewMode === "table" && <TableView cards={cards} setCards={setCards} />}
+          {viewMode === "table" && <TableView />}
         </Layout.Content>
       </Layout>
     </>

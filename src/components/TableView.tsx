@@ -1,13 +1,16 @@
-import { Dispatch, SetStateAction, useMemo } from "react";
-import { Table, TableProps } from "antd";
-import { Card, CardWords, Word } from "../types";
+import { useMemo } from "react";
+import { Button, Table, TableProps } from "antd";
+import { Card, WordIndex } from "../types";
 import { EditableCell } from "./EditableCell";
 import { wordPositionName } from "../constants";
+import { DeleteOutlined } from "@ant-design/icons";
+import { useCardsStore } from "../store";
+import { CardDeletePopConfirm } from "./CardDeletePopConfirm";
 
-type TableViewProps = {
-  cards: Card[];
-  setCards: Dispatch<SetStateAction<Card[]>>;
-};
+type TableViewProps = Omit<
+  TableProps<Card>,
+  "bordered" | "pagination" | "rowClassName" | "dataSource" | "columns" | "components" | "rowKey"
+>;
 
 const columns: TableProps<Card>["columns"] = [
   {
@@ -35,6 +38,17 @@ const columns: TableProps<Card>["columns"] = [
     key: 0,
     width: "30%",
   },
+  {
+    key: "actions",
+    width: "10%",
+    render: (_, card) => {
+      return (
+        <CardDeletePopConfirm card={card} placement="left">
+          <Button variant="outlined" color="danger" shape="circle" icon={<DeleteOutlined />} />
+        </CardDeletePopConfirm>
+      );
+    },
+  },
 ];
 
 const components = {
@@ -43,43 +57,36 @@ const components = {
   },
 };
 
-export const TableView = ({ cards, setCards }: TableViewProps) => {
+export const TableView = (props: TableViewProps) => {
+  const cards = useCardsStore((state) => state.cards);
+  const updateCardWord = useCardsStore((state) => state.updateCardWord);
 
   const columnsFinal = useMemo(
     () =>
       columns.map((column, index) => ({
         ...column,
-        onCell: index>0 ? (record: Card, cardIndex: number) => ({
-          cardWord: record.words[column.key as number].word,
-          updateCardWord: (word: string) => {
-            setCards((cards) => {
-              const wordIndex = column.key as number;
-              const oldCard = cards[cardIndex];
-              const oldWord = oldCard.words[wordIndex];
-              const newWord: Word = { ...oldWord, word };
-              const newCard: Card = {
-                ...oldCard,
-                words: oldCard.words.map((word, index) => (index === wordIndex ? newWord : word)) as CardWords,
-              };
-              const newCards = [...cards];
-              newCards[cardIndex] = newCard;
-              return newCards;
-            });
-          },
-        }) : undefined,
+        onCell: [1, 2, 3].includes(index)
+          ? (card: Card) => ({
+              cardWord: card.words[column.key as number].word,
+              updateCardWord: (word: string) => {
+                updateCardWord(card.id, column.key as WordIndex, word);
+              },
+            })
+          : undefined,
       })),
-    [setCards],
+    [updateCardWord],
   );
 
   return (
-      <Table<Card>
-        bordered
-        pagination={false}
-        rowClassName={() => "editable-row"}
-        dataSource={cards}
-        columns={columnsFinal as TableProps<Card>["columns"]}
-        components={components}
-        rowKey={(card) => card.id}
-      />
+    <Table<Card>
+      bordered
+      pagination={false}
+      rowClassName={() => "editable-row"}
+      dataSource={cards}
+      columns={columnsFinal as TableProps<Card>["columns"]}
+      components={components}
+      rowKey={(card) => card.id}
+      {...props}
+    />
   );
 };

@@ -1,20 +1,22 @@
 import { ComponentProps, Dispatch, SetStateAction, useCallback } from "react";
 import { Button, Layout, Tooltip, Space, Segmented } from "antd";
 import { AppstoreOutlined, BarsOutlined, DownloadOutlined, FilePdfOutlined, UploadOutlined } from "@ant-design/icons";
-import { Card, ViewMode } from "../types";
+import { ViewMode } from "../types";
 import { pickFile } from "../helpers/pickFile";
 import { jsonToFile } from "../helpers/jsonToFile";
 import { CardsCount } from "./CardsCount";
+import { useCardsStore } from "../store";
 
 type AppHeaderProps = {
-  cards: Card[];
   viewMode: ViewMode;
   setViewMode: Dispatch<SetStateAction<ViewMode>>;
-  setCards: Dispatch<SetStateAction<Card[]>>;
   onDownloadPdf: () => void;
 } & ComponentProps<typeof Layout.Header>;
 
-export const AppHeader = ({ cards, setCards, onDownloadPdf, viewMode, setViewMode, ...props }: AppHeaderProps) => {
+export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: AppHeaderProps) => {
+  const cards = useCardsStore((store) => store.cards);
+  const importCards = useCardsStore((store) => store.importCards);
+
   const exportData = useCallback(() => {
     jsonToFile(cards, "project-export");
   }, [cards]);
@@ -26,13 +28,13 @@ export const AppHeader = ({ cards, setCards, onDownloadPdf, viewMode, setViewMod
         try {
           const text = await file.text();
           const decoded = JSON.parse(text);
-          setCards(decoded);
+          importCards(decoded);
         } catch (err) {
           alert(String(err));
         }
       }
     });
-  }, [setCards]);
+  }, [importCards]);
 
   return (
     <Layout.Header

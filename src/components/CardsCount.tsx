@@ -6,7 +6,7 @@ type CardsCountProps = {
 };
 
 export const CardsCount = ({ count }: CardsCountProps) => (
-  <Tooltip title="Total number of cards">
+  <Tooltip title="Total number of cards" placement="bottomRight">
     <Flex
       style={{
         padding: "4px 12px",
