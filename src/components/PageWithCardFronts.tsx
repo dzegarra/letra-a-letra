@@ -11,7 +11,6 @@ type PageWithCardFrontsProps = {
 export const PageWithCardFronts = ({ className, hideIndex, ...props }: PageWithCardFrontsProps) => {
   const cards = useCardsStore((state) => state.cards);
   const updateCard = useCardsStore((state) => state.updateCard);
-  const deleteCard = useCardsStore((state) => state.deleteCard);
 
   return (
     <div className={clsx("flex flex-wrap gap-5", className)} {...props}>
@@ -24,7 +23,7 @@ export const PageWithCardFronts = ({ className, hideIndex, ...props }: PageWithC
             exit={{ opacity: 0, scale: 0.5 }}
             key={card.id}
           >
-            <CardFront index={index} card={card} onUpdate={updateCard} onDelete={deleteCard} hideIndex={hideIndex} />
+            <CardFront index={index} card={card} onUpdate={updateCard} hideIndex={hideIndex} />
           </motion.ul>
         ))}
       </AnimatePresence>

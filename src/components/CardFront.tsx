@@ -13,10 +13,9 @@ type CardFrontProps = {
   card: CardType;
   hideIndex?: boolean;
   onUpdate: (card: CardType) => void;
-  onDelete: (card: CardType) => void;
 };
 
-export const CardFront = ({ index, card, hideIndex = false, onUpdate, onDelete }: CardFrontProps) => {
+export const CardFront = ({ index, card, hideIndex = false, onUpdate }: CardFrontProps) => {
   const [editVisible, setEditVisible] = useState(false);
 
   return (
