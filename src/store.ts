@@ -5,6 +5,7 @@ import { defaultColors } from "./constants";
 import { generateCard } from "./helpers/generateCard";
 import { factoryCardColorApply } from "./helpers/factoryCardColorApply";
 import { cardsSchema } from "./helpers/validateCardsData";
+import { readFromLocalStorage } from "./helpers/readFromLocalStorage";
 
 type CardsStore = {
   cards: Card[];
@@ -77,3 +78,17 @@ export const useCardsStore = create<CardsStore>()(
     },
   ),
 );
+
+// These lines below will load the cards saved in memory when the save in localStorage was done manually
+try {
+  const maybeOldState = readFromLocalStorage();
+  if (maybeOldState && Array.isArray(maybeOldState)) {
+    console.info("Old saved data found in localStorage:", maybeOldState);
+    const cards = cardsSchema.parse(maybeOldState);
+    useCardsStore.setState({
+      cards: cards as Card[],
+    });
+  }
+} catch (err) {
+  console.info("The old data found in localStorage could not be imported because of the error: ", err);
+}
