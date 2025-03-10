@@ -1,9 +1,9 @@
 import { useMemo } from "react";
-import { Button, Table, TableProps } from "antd";
+import { Button, FloatButton, Table, TableProps } from "antd";
 import { Card, WordIndex } from "../types";
 import { EditableCell } from "./EditableCell";
 import { wordPositionName } from "../constants";
-import { DeleteOutlined } from "@ant-design/icons";
+import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { useCardsStore } from "../store";
 import { CardDeletePopConfirm } from "./CardDeletePopConfirm";
 
@@ -60,6 +60,7 @@ const components = {
 export const TableView = (props: TableViewProps) => {
   const cards = useCardsStore((state) => state.cards);
   const updateCardWord = useCardsStore((state) => state.updateCardWord);
+  const addCard = useCardsStore((state) => state.addCard);
 
   const columnsFinal = useMemo(
     () =>
@@ -78,15 +79,21 @@ export const TableView = (props: TableViewProps) => {
   );
 
   return (
-    <Table<Card>
-      bordered
-      pagination={false}
-      rowClassName={() => "editable-row"}
-      dataSource={cards}
-      columns={columnsFinal as TableProps<Card>["columns"]}
-      components={components}
-      rowKey={(card) => card.id}
-      {...props}
-    />
+    <>
+      <Table<Card>
+        bordered
+        pagination={false}
+        rowClassName={() => "editable-row"}
+        dataSource={cards}
+        columns={columnsFinal as TableProps<Card>["columns"]}
+        components={components}
+        rowKey={(card) => card.id}
+        {...props}
+      />
+
+      <FloatButton.Group shape="circle" style={{ insetInlineEnd: 24 }}>
+        <FloatButton type="primary" tooltip="Add new card" icon={<PlusOutlined />} onClick={addCard} />
+      </FloatButton.Group>
+    </>
   );
 };
