@@ -6,6 +6,7 @@ import { generateCard } from "./helpers/generateCard";
 import { factoryCardColorApply } from "./helpers/factoryCardColorApply";
 import { cardsSchema } from "./helpers/validateCardsData";
 import { readFromLocalStorage } from "./helpers/readFromLocalStorage";
+import { randomRotationDeg } from "./helpers/randomRotationDeg";
 
 type CardsStore = {
   cards: Card[];
@@ -31,7 +32,7 @@ export const useCardsStore = create<CardsStore>()(
           const word = card.words[wordIndex];
           const newWords: CardWords = [...card.words];
           const newCards = [...cards];
-          newWords.splice(wordIndex, 1, { ...word, word: newWord });
+          newWords.splice(wordIndex, 1, { ...word, word: newWord, rotationDeg: randomRotationDeg() });
           newCards.splice(cardIndex, 1, { ...card, words: newWords });
           return { cards: newCards };
         });

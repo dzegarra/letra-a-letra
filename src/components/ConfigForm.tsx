@@ -1,8 +1,9 @@
-import { ComponentProps, useCallback, useState } from 'react'
-import clsx from 'clsx'
+import { ComponentProps, useCallback, useState } from "react";
+import clsx from "clsx";
 import { Card as CardType, CardWords } from "../types";
 import { InputField } from "./InputField";
 import { wordPositionName } from "../constants";
+import { randomRotationDeg } from "../helpers/randomRotationDeg";
 
 type ConfirmFormProps = {
   card: CardType;
@@ -10,15 +11,13 @@ type ConfirmFormProps = {
   onClose: () => void;
 } & ComponentProps<"div">;
 
-const randomRotaionDeg = () => Math.floor(Math.random() * 360);
-
 export const ConfirmForm = ({ className, card, onClose, onUpdate, ...props }: ConfirmFormProps) => {
   const [cardCopy, setCardCopy] = useState(card);
 
   const handleWordChange = useCallback((index: number, word: string) => {
     setCardCopy((cardCopy) => {
       const newWords: CardWords = [...cardCopy.words];
-      newWords.splice(index, 1, { ...cardCopy.words[index], word, rotationDeg: randomRotaionDeg() });
+      newWords.splice(index, 1, { ...cardCopy.words[index], word, rotationDeg: randomRotationDeg() });
       return { ...cardCopy, words: newWords };
     });
   }, []);
