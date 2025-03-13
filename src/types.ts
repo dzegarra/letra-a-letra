@@ -16,4 +16,4 @@ export type CardColors = [string, string, string];
 
 export type WordIndex = 0 | 1 | 2;
 
-export type ViewMode = "preview" | "table";
+export type ViewMode = "preview" | "table" | "print";

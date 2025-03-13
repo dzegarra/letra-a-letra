@@ -1,11 +1,11 @@
 import { ComponentProps, useMemo } from "react";
 import { CardRear } from "./CardRear";
-import clsx from "clsx";
 import { useCardsStore } from "../store";
+import { PrintPage } from "./PrintPage";
 
-type PageWithCardRearsProps = ComponentProps<"div">;
+type PrintPageCardRearsProps = ComponentProps<"div">;
 
-export const PageWithCardRears = ({ className, ...props }: PageWithCardRearsProps) => {
+export const PrintPageCardRears = ({ ...props }: PrintPageCardRearsProps) => {
   const cards = useCardsStore((state) => state.cards);
   const colors = useCardsStore((state) => state.colors);
 
@@ -25,10 +25,10 @@ export const PageWithCardRears = ({ className, ...props }: PageWithCardRearsProp
   }, [cards.length, colors]);
 
   return (
-    <div className={clsx("flex flex-wrap gap-5", className)} {...props}>
+    <PrintPage {...props}>
       {cardsDistribution.map(({ color }, index) => (
         <CardRear key={index} color={color} />
       ))}
-    </div>
+    </PrintPage>
   );
 };

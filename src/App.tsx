@@ -1,32 +1,26 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import { Layout } from "antd";
 import html2pdf from "html2pdf.js";
 import { AppHeader } from "./components/AppHeader";
 import { PreviewView } from "./components/PreviewView";
 import { useViewMode } from "./hooks/useViewMode";
 import { TableView } from "./components/TableView";
+import { PrintDocument } from "./components/PrintDocument";
 
 function App() {
-  const [showRears, setShowRears] = useState(false);
   const cardsRef = useRef<HTMLDivElement>(null);
   const scrollableContainer = useRef<HTMLDivElement>(null);
   const { viewMode, setViewMode } = useViewMode();
 
   const downloadPdf = async () => {
-    try {
-      setShowRears(true);
-      await html2pdf()
-        .set({
-          margin: 0.6,
-          filename: "letra-a-letra.pdf",
-          jsPDF: { unit: "cm", format: "A4", orientation: "portrait" },
-          pagebreak: { mode: ["css", "legacy"] },
-        })
-        .from(cardsRef.current)
-        .save();
-    } finally {
-      setShowRears(false);
-    }
+    await html2pdf()
+      .set({
+        filename: "letra-a-letra.pdf",
+        jsPDF: { format: "A4", orientation: "portrait" },
+        pagebreak: { mode: ["css", "legacy"] },
+      })
+      .from(cardsRef.current)
+      .save();
   };
 
   return (
@@ -41,12 +35,14 @@ function App() {
 
         <Layout.Content className="overflow-y-auto flex-1" ref={scrollableContainer}>
           {viewMode === "preview" && (
-            <div ref={cardsRef}>
-              <PreviewView showRears={showRears} scrollableContainer={scrollableContainer.current} />
+            <div>
+              <PreviewView scrollableContainer={scrollableContainer.current} />
             </div>
           )}
 
           {viewMode === "table" && <TableView />}
+
+          {viewMode === "print" && <PrintDocument ref={cardsRef} />}
         </Layout.Content>
       </Layout>
     </>
