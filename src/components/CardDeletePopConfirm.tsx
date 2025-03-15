@@ -2,6 +2,7 @@ import { Popconfirm, PopconfirmProps } from "antd";
 import { useCardsStore } from "../store";
 import { Card } from "../types";
 import { useCallback } from "react";
+import { useTranslation } from "react-i18next";
 
 type CardDeletePopConfirm = { card: Card } & Omit<
   PopconfirmProps,
@@ -10,6 +11,7 @@ type CardDeletePopConfirm = { card: Card } & Omit<
 
 export const CardDeletePopConfirm = ({ card, children, ...props }: CardDeletePopConfirm) => {
   const deleteCard = useCardsStore((state) => state.deleteCard);
+  const { t } = useTranslation();
 
   const confirmDeleteCard = useCallback(() => {
     deleteCard(card);
@@ -17,11 +19,11 @@ export const CardDeletePopConfirm = ({ card, children, ...props }: CardDeletePop
 
   return (
     <Popconfirm
-      title="Delete the card"
-      description="Are you sure to delete this card?"
+      title={t("deleteCard")}
+      description={t("areYouSureToDeleteThisCard")}
       onConfirm={confirmDeleteCard}
-      okText="Yes"
-      cancelText="No"
+      okText={t("yes")}
+      cancelText={t("no")}
       {...props}
     >
       {children}

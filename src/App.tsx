@@ -5,11 +5,13 @@ import { PreviewView } from "./components/PreviewView";
 import { useViewMode } from "./hooks/useViewMode";
 import { TableView } from "./components/TableView";
 import { PrintDocument } from "./components/PrintDocument";
+import { useTranslation } from "react-i18next";
 
 function App() {
   const scrollableContainer = useRef<HTMLDivElement>(null);
   const { viewMode, setViewMode } = useViewMode();
   const [open, setOpen] = useState(false);
+  const { t } = useTranslation();
 
   return (
     <>
@@ -32,7 +34,7 @@ function App() {
         </Layout.Content>
       </Layout>
       <Modal
-        title="Create PDF document"
+        title={t("generatePdfModalTitle")}
         open={open}
         onCancel={() => setOpen(false)}
         okButtonProps={{ disabled: true }}

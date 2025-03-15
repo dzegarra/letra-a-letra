@@ -5,6 +5,7 @@ import { BgColorsOutlined, PlusOutlined } from "@ant-design/icons";
 import { ColorsChanger } from "./ColorsChanger";
 import { useCardsStore } from "../store";
 import { CardFront } from "./CardFront";
+import { useTranslation } from "react-i18next";
 
 type PreviewViewProps = {
   scrollableContainer?: HTMLDivElement | null;
@@ -16,6 +17,7 @@ export const PreviewView = forwardRef<HTMLDivElement, PreviewViewProps>(({ scrol
   const addCard = useCardsStore((state) => state.addCard);
   const updateCard = useCardsStore((state) => state.updateCard);
   const lastCardsCountRef = useRef(-1);
+  const { t } = useTranslation();
 
   // Scroll to the bottom each time a new card is added
   useEffect(() => {
@@ -46,14 +48,18 @@ export const PreviewView = forwardRef<HTMLDivElement, PreviewViewProps>(({ scrol
       </div>
 
       <FloatButton.Group shape="circle" style={{ insetInlineEnd: 24 }}>
-        <FloatButton type="primary" tooltip="Add new card" icon={<PlusOutlined />} onClick={addCard} />
-        <FloatButton tooltip="Change colors" icon={<BgColorsOutlined />} onClick={() => setIsColorsModalOpen(true)} />
-        <FloatButton.BackTop tooltip="Move to the top" target={() => scrollableContainer ?? window} />
+        <FloatButton type="primary" tooltip={t("addNewCard")} icon={<PlusOutlined />} onClick={addCard} />
+        <FloatButton
+          tooltip={t("changeColors")}
+          icon={<BgColorsOutlined />}
+          onClick={() => setIsColorsModalOpen(true)}
+        />
+        <FloatButton.BackTop tooltip={t("moveToTheTop")} target={() => scrollableContainer ?? window} />
       </FloatButton.Group>
 
       <Modal
         centered
-        title="Colors of the cards"
+        title={t("colorsOfTheCards")}
         width={300}
         footer={null}
         open={isColorsModalOpen}

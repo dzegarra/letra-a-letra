@@ -8,4 +8,4 @@ type FormInstance<T> = GetRef<typeof Form<T>>;
 
 export const EditableContext = createContext<FormInstance<Card> | null>(null);
 
-export const wordPositionName = ["Outside", "Middle", "Inner"] as const;
+export const wordPositionName = ["outer", "middle", "inner"] as const;

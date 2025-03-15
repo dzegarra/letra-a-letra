@@ -6,6 +6,7 @@ import { wordPositionName } from "../constants";
 import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { useCardsStore } from "../store";
 import { CardDeletePopConfirm } from "./CardDeletePopConfirm";
+import { useTranslation } from "react-i18next";
 
 type TableViewProps = Omit<
   TableProps<Card>,
@@ -14,7 +15,7 @@ type TableViewProps = Omit<
 
 const columns: TableProps<Card>["columns"] = [
   {
-    title: "Card #",
+    title: "#",
     dataIndex: "index",
     key: "index",
     width: "10%",
@@ -61,11 +62,13 @@ export const TableView = (props: TableViewProps) => {
   const cards = useCardsStore((state) => state.cards);
   const updateCardWord = useCardsStore((state) => state.updateCardWord);
   const addCard = useCardsStore((state) => state.addCard);
+  const { t } = useTranslation();
 
   const columnsFinal = useMemo(
     () =>
       columns.map((column, index) => ({
         ...column,
+        title: t(column.title as (typeof wordPositionName)[number]),
         onCell: [1, 2, 3].includes(index)
           ? (card: Card) => ({
               cardWord: card.words[column.key as number].word,
@@ -75,7 +78,7 @@ export const TableView = (props: TableViewProps) => {
             })
           : undefined,
       })),
-    [updateCardWord],
+    [t, updateCardWord],
   );
 
   return (
@@ -92,7 +95,7 @@ export const TableView = (props: TableViewProps) => {
       />
 
       <FloatButton.Group shape="circle" style={{ insetInlineEnd: 24 }}>
-        <FloatButton type="primary" tooltip="Add new card" icon={<PlusOutlined />} onClick={addCard} />
+        <FloatButton type="primary" tooltip={t("addNewCard")} icon={<PlusOutlined />} onClick={addCard} />
       </FloatButton.Group>
     </>
   );

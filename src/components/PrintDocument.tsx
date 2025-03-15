@@ -12,6 +12,7 @@ import clsx from "clsx";
 import { PageSizes, PDFDocument } from "pdf-lib";
 import { bytesToPdf } from "../helpers/bytesToPdf";
 import { DownloadOutlined, LoadingOutlined, SettingOutlined } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 
 type PreviewViewProps = ComponentProps<"div"> & {
   onComplete: () => void;
@@ -25,6 +26,7 @@ export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewPr
   const pagesRef = useRef<HTMLDivElement>(null);
   const colors = useCardsStore((state) => state.colors);
   const cards = useCardsStore((state) => state.cards);
+  const { t } = useTranslation();
 
   const isBusy = renderingStatus === "process" || creatingPdfStatus === "process";
 
@@ -124,12 +126,12 @@ export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewPr
         <Steps
           items={[
             {
-              title: "Preparing pages",
+              title: t("preparingPages"),
               status: renderingStatus,
               icon: renderingStatus === "process" ? <LoadingOutlined /> : <SettingOutlined />,
             },
             {
-              title: "Generating PDF",
+              title: t("creatingPdf"),
               status: creatingPdfStatus,
               icon: creatingPdfStatus === "process" ? <LoadingOutlined /> : <DownloadOutlined />,
             },
@@ -149,22 +151,24 @@ export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewPr
 
       <div className="flex justify-between pt-3 px-3">
         <div className="flex gap-3 items-center">
-          <Typography.Text type="secondary">{pages.length} pages</Typography.Text>
-          <Tooltip title="Interleave front and rear pages">
+          <Typography.Text type="secondary">
+            {pages.length} {t("pages", { count: pages.length })}
+          </Typography.Text>
+          <Tooltip title={t("duplexTooltip")}>
             <Checkbox checked={duplex} onChange={(e) => setDuplex(e.target.checked)} disabled={isBusy}>
-              Duplex
+              {t("duplex")}
             </Checkbox>
           </Tooltip>
           <Checkbox checked={showCardNumber} onChange={(e) => setShowCardNumber(e.target.checked)} disabled={isBusy}>
-            Display card number
+            {t("displayCardNumber")}
           </Checkbox>
         </div>
         <div className="flex gap-3">
           <Button type="default" onClick={onComplete} disabled={isBusy}>
-            Cancel
+            {t("cancel")}
           </Button>
           <Button type="primary" onClick={renderizePages} loading={isBusy}>
-            Start creating PDF
+            {t("startCreatingPdf")}
           </Button>
         </div>
       </div>

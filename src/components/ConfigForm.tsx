@@ -4,6 +4,7 @@ import { Card as CardType, CardWords } from "../types";
 import { InputField } from "./InputField";
 import { wordPositionName } from "../constants";
 import { randomRotationDeg } from "../helpers/randomRotationDeg";
+import { useTranslation } from "react-i18next";
 
 type ConfirmFormProps = {
   card: CardType;
@@ -13,6 +14,7 @@ type ConfirmFormProps = {
 
 export const ConfirmForm = ({ className, card, onClose, onUpdate, ...props }: ConfirmFormProps) => {
   const [cardCopy, setCardCopy] = useState(card);
+  const { t } = useTranslation();
 
   const handleWordChange = useCallback((index: number, word: string) => {
     setCardCopy((cardCopy) => {
@@ -32,7 +34,7 @@ export const ConfirmForm = ({ className, card, onClose, onUpdate, ...props }: Co
       {cardCopy.words.map(({ word }, index) => (
         <InputField
           key={index}
-          label={wordPositionName[index]}
+          label={t(wordPositionName[index])}
           inputProps={{ placeholder: "Input word", className: "uppercase", autoFocus: index === 0 }}
           value={word}
           helperText={`${word.length} characters`}
@@ -44,7 +46,7 @@ export const ConfirmForm = ({ className, card, onClose, onUpdate, ...props }: Co
         className="rounded-full bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700 py-2 px-4"
         onClick={confirmChanges}
       >
-        OK
+        {t("ok")}
       </button>
     </div>
   );

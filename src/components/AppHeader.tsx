@@ -6,6 +6,7 @@ import { pickFile } from "../helpers/pickFile";
 import { jsonToFile } from "../helpers/jsonToFile";
 import { CardsCount } from "./CardsCount";
 import { useCardsStore } from "../store";
+import { useTranslation } from "react-i18next";
 
 type AppHeaderProps = {
   viewMode: ViewMode;
@@ -16,6 +17,7 @@ type AppHeaderProps = {
 export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: AppHeaderProps) => {
   const cards = useCardsStore((store) => store.cards);
   const importCards = useCardsStore((store) => store.importCards);
+  const { t } = useTranslation();
 
   const exportData = useCallback(() => {
     jsonToFile(cards, "project-export");
@@ -51,21 +53,21 @@ export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: Ap
       {...props}
     >
       <Space>
-        <Tooltip title="Downloads the project as a file that can be used to continue the project later">
+        <Tooltip title={t("exportTooltip")}>
           <Button onClick={exportData} icon={<DownloadOutlined />}>
-            Export
+            {t("export")}
           </Button>
         </Tooltip>
 
-        <Tooltip title="Import a previously exported project file">
+        <Tooltip title={t("importTooltip")}>
           <Button onClick={importFile} icon={<UploadOutlined />}>
-            Import
+            {t("import")}
           </Button>
         </Tooltip>
 
-        <Tooltip title="Downloads the project as a PDF file">
+        <Tooltip title={t("generatePdfTooltip")}>
           <Button onClick={onDownloadPdf} icon={<FilePdfOutlined />} type="primary">
-            Generate PDF
+            {t("generatePdf")}
           </Button>
         </Tooltip>
       </Space>
@@ -74,8 +76,8 @@ export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: Ap
         value={viewMode}
         onChange={setViewMode}
         options={[
-          { value: "preview", label: "Preview", icon: <AppstoreOutlined /> },
-          { value: "table", label: "Table", icon: <BarsOutlined /> },
+          { value: "preview", label: t("preview"), icon: <AppstoreOutlined /> },
+          { value: "table", label: t("table"), icon: <BarsOutlined /> },
         ]}
       />
 

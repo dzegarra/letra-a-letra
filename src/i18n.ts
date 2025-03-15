@@ -1,0 +1,93 @@
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import LanguageDetector from "i18next-browser-languagedetector";
+
+i18n
+  .use(LanguageDetector)
+  .use(initReactI18next)
+  .init({
+    debug: true,
+    lng: "es",
+    fallbackLng: "es",
+    interpolation: {
+      escapeValue: false,
+    },
+    resources: {
+      en: {
+        translation: {
+          export: "Export",
+          exportTooltip: "Downloads the project as a file that can be used to continue the project later",
+          import: "Import",
+          importTooltip: "Import a previously exported project file",
+          generatePdf: "Generate PDF",
+          generatePdfTooltip: "Downloads the project as a PDF file",
+          generatePdfModalTitle: "Create PDF document",
+          preview: "Preview",
+          table: "Table",
+          cards: "Cards",
+          totalNumberOfCards: "Total number of cards",
+          deleteCard: "Delete card",
+          areYouSureToDeleteThisCard: "Are you sure to delete this card?",
+          yes: "Yes",
+          no: "No",
+          edit: "Edit",
+          ok: "OK",
+          addNewCard: "Add new card",
+          changeColors: "Change colors",
+          moveToTheTop: "Move to the top",
+          colorsOfTheCards: "Colors of the cards",
+          preparingPages: "Preparing pages",
+          creatingPdf: "Creating PDF",
+          duplex: "Duplex",
+          duplexTooltip: "Interleave front and rear pages",
+          displayCardNumber: "Display card numbers",
+          cancel: "Cancel",
+          startCreatingPdf: "Start creating PDF",
+          pages_one: "pages",
+          pages_other: "pages",
+          inner: "Inner",
+          middle: "Middle",
+          outer: "Outer",
+        },
+      },
+      es: {
+        translation: {
+          export: "Exportar",
+          exportTooltip: "Descarga el proyecto como un archivo que se puede usar para continuar el proyecto más tarde",
+          import: "Importar",
+          importTooltip: "Importar un archivo de proyecto exportado previamente",
+          generatePdf: "Generar PDF",
+          generatePdfTooltip: "Descarga el proyecto como un archivo PDF",
+          generatePdfModalTitle: "Crear documento PDF",
+          preview: "Vista previa",
+          table: "Tabla",
+          cards: "Tarjetas",
+          totalNumberOfCards: "Número total de tarjetas",
+          deleteCard: "Eliminar tarjeta",
+          areYouSureToDeleteThisCard: "¿Estás seguro de eliminar esta tarjeta?",
+          yes: "Sí",
+          no: "No",
+          edit: "Editar",
+          ok: "OK",
+          addNewCard: "Agregar nueva tarjeta",
+          changeColors: "Cambiar colores",
+          moveToTheTop: "Mover al principio",
+          colorsOfTheCards: "Colores de las tarjetas",
+          preparingPages: "Preparando páginas",
+          creatingPdf: "Creando PDF",
+          duplex: "Dúplex",
+          duplexTooltip: "Intercalar páginas delanteras y traseras",
+          displayCardNumber: "Mostrar número de cada tarjeta",
+          cancel: "Cancelar",
+          startCreatingPdf: "Comenzar a crear PDF",
+          pages_one: "página",
+          pages_other: "páginas",
+          inner: "Interno",
+          middle: "Medio",
+          outer: "Externo",
+        },
+      },
+    },
+  });
+
+export default i18n;
