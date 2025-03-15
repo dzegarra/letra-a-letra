@@ -19,12 +19,12 @@ export const EditableCell: React.FC<React.PropsWithChildren<EditableCellProps>> 
   }, [updateCardWord]);
 
   if (updateCardWord) {
-    return (<td {...restProps}>
-      <Input ref={inputRef} onBlur={save} defaultValue={cardWord} />
-    </td>)
+    return (
+      <td {...restProps}>
+        <Input ref={inputRef} onBlur={save} defaultValue={cardWord} className="uppercase" />
+      </td>
+    );
   }
 
-  return (
-    <td {...restProps}>{children}</td>
-  );
+  return <td {...restProps}>{children}</td>;
 };
