@@ -1,13 +1,6 @@
 import { ComponentProps, Dispatch, SetStateAction, useCallback } from "react";
 import { Button, Layout, Tooltip, Space, Segmented } from "antd";
-import {
-  AppstoreOutlined,
-  BarsOutlined,
-  DownloadOutlined,
-  FilePdfOutlined,
-  PrinterOutlined,
-  UploadOutlined,
-} from "@ant-design/icons";
+import { AppstoreOutlined, BarsOutlined, DownloadOutlined, FilePdfOutlined, UploadOutlined } from "@ant-design/icons";
 import { ViewMode } from "../types";
 import { pickFile } from "../helpers/pickFile";
 import { jsonToFile } from "../helpers/jsonToFile";
@@ -70,13 +63,11 @@ export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: Ap
           </Button>
         </Tooltip>
 
-        {viewMode === "print" && (
-          <Tooltip title="Downloads the project as a PDF file">
-            <Button onClick={onDownloadPdf} icon={<FilePdfOutlined />} type="primary">
-              Generate PDF
-            </Button>
-          </Tooltip>
-        )}
+        <Tooltip title="Downloads the project as a PDF file">
+          <Button onClick={onDownloadPdf} icon={<FilePdfOutlined />} type="primary">
+            Generate PDF
+          </Button>
+        </Tooltip>
       </Space>
 
       <Segmented
@@ -85,7 +76,6 @@ export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: Ap
         options={[
           { value: "preview", label: "Preview", icon: <AppstoreOutlined /> },
           { value: "table", label: "Table", icon: <BarsOutlined /> },
-          { value: "print", label: "Print", icon: <PrinterOutlined /> },
         ]}
       />
 

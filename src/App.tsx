@@ -1,6 +1,5 @@
-import { useRef } from "react";
-import { Layout } from "antd";
-import html2pdf from "html2pdf.js";
+import { useRef, useState } from "react";
+import { Layout, Modal } from "antd";
 import { AppHeader } from "./components/AppHeader";
 import { PreviewView } from "./components/PreviewView";
 import { useViewMode } from "./hooks/useViewMode";
@@ -8,27 +7,16 @@ import { TableView } from "./components/TableView";
 import { PrintDocument } from "./components/PrintDocument";
 
 function App() {
-  const cardsRef = useRef<HTMLDivElement>(null);
   const scrollableContainer = useRef<HTMLDivElement>(null);
   const { viewMode, setViewMode } = useViewMode();
-
-  const downloadPdf = async () => {
-    await html2pdf()
-      .set({
-        filename: "letra-a-letra.pdf",
-        jsPDF: { format: "A4", orientation: "portrait" },
-        pagebreak: { mode: ["css", "legacy"] },
-      })
-      .from(cardsRef.current)
-      .save();
-  };
+  const [open, setOpen] = useState(false);
 
   return (
     <>
       <Layout style={{ height: "100vh", overflow: "hidden" }}>
         <AppHeader
           className="fixed top-0 left-0 w-full z-10 print:hidden"
-          onDownloadPdf={downloadPdf}
+          onDownloadPdf={() => setOpen(true)}
           viewMode={viewMode}
           setViewMode={setViewMode}
         />
@@ -41,10 +29,23 @@ function App() {
           )}
 
           {viewMode === "table" && <TableView />}
-
-          {viewMode === "print" && <PrintDocument ref={cardsRef} />}
         </Layout.Content>
       </Layout>
+      <Modal
+        title="Create PDF document"
+        open={open}
+        onCancel={() => setOpen(false)}
+        okButtonProps={{ disabled: true }}
+        cancelButtonProps={{ disabled: true }}
+        destroyOnClose
+        width={1050}
+        closable={false}
+        keyboard={false}
+        maskClosable={false}
+        footer={null}
+      >
+        <PrintDocument className="max-h-[600px]" onComplete={() => setOpen(false)} />
+      </Modal>
     </>
   );
 }
