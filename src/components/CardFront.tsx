@@ -54,7 +54,7 @@ export const CardFront = ({ index, card, hideIndex = false, onUpdate }: CardFron
           rotationDeg={card.words[2].rotationDeg}
         />
 
-        {!hideIndex && index && (
+        {!hideIndex && index !== undefined && (
           <span className="text-4xl font-bold text-slate-700 absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2">
             {index + 1}
           </span>
