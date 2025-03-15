@@ -1,12 +1,13 @@
 import { ComponentProps, Dispatch, SetStateAction, useCallback } from "react";
 import { Button, Layout, Tooltip, Space, Segmented } from "antd";
 import { AppstoreOutlined, BarsOutlined, DownloadOutlined, FilePdfOutlined, UploadOutlined } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 import { ViewMode } from "../types";
 import { pickFile } from "../helpers/pickFile";
 import { jsonToFile } from "../helpers/jsonToFile";
 import { CardsCount } from "./CardsCount";
 import { useCardsStore } from "../store";
-import { useTranslation } from "react-i18next";
+import { LangSelector } from "./LangSelector";
 
 type AppHeaderProps = {
   viewMode: ViewMode;
@@ -80,6 +81,8 @@ export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: Ap
           { value: "table", label: t("table"), icon: <BarsOutlined /> },
         ]}
       />
+
+      <LangSelector />
 
       <CardsCount count={cards.length} />
     </Layout.Header>
