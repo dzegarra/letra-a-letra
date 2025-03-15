@@ -61,34 +61,36 @@ export const CardFront = ({ index, card, hideIndex = false, onUpdate }: CardFron
         )}
       </div>
 
-      <AnimatePresence>
-        {editVisible && onUpdate ? (
-          <motion.ul
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.4 }}
-            exit={{ opacity: 0 }}
-          >
-            <ConfirmForm
-              className="w-[250px] absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2"
-              card={card}
-              onUpdate={onUpdate}
-              onClose={() => setEditVisible(false)}
-            />
-          </motion.ul>
-        ) : (
-          <div className="flex gap-1 opacity-0 hover:opacity-100 print:hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ">
-            <Button shape="circle" variant="text" title="Editar" onClick={() => setEditVisible(true)}>
-              ✏️
-            </Button>
-            <CardDeletePopConfirm card={card} placement="left">
-              <Button shape="circle" variant="text" title="Eliminar">
-                🗑️
+      {onUpdate && (
+        <AnimatePresence>
+          {editVisible ? (
+            <motion.ul
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4 }}
+              exit={{ opacity: 0 }}
+            >
+              <ConfirmForm
+                className="w-[250px] absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2"
+                card={card}
+                onUpdate={onUpdate}
+                onClose={() => setEditVisible(false)}
+              />
+            </motion.ul>
+          ) : (
+            <div className="flex gap-1 opacity-0 hover:opacity-100 print:hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ">
+              <Button shape="circle" variant="text" title="Editar" onClick={() => setEditVisible(true)}>
+                ✏️
               </Button>
-            </CardDeletePopConfirm>
-          </div>
-        )}
-      </AnimatePresence>
+              <CardDeletePopConfirm card={card} placement="left">
+                <Button shape="circle" variant="text" title="Eliminar">
+                  🗑️
+                </Button>
+              </CardDeletePopConfirm>
+            </div>
+          )}
+        </AnimatePresence>
+      )}
     </div>
   );
 };
