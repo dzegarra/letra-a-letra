@@ -130,7 +130,7 @@ export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewPr
       </div>
 
       <div
-        className={clsx("flex-1 overflow-y-auto", {
+        className={clsx("flex-1 overflow-y-auto bg-gray-200", {
           "overflow-hidden": renderingStatus === "process",
         })}
       >
