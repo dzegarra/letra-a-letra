@@ -19,6 +19,7 @@ type PreviewViewProps = ComponentProps<"div"> & {
 
 export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewProps) => {
   const [duplex, setDuplex] = useState(false);
+  const [showCardNumber, setShowCardNumber] = useState(false);
   const [renderingStatus, setRenderingStatus] = useState<StepsProps["status"]>("wait");
   const [creatingPdfStatus, setCreatingPdfStatus] = useState<StepsProps["status"]>("wait");
   const pagesRef = useRef<HTMLDivElement>(null);
@@ -31,22 +32,29 @@ export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewPr
     const cardsGroupedBySix = chunk(cards, 6);
     const rearCards = calculateRearColors(cards.length, colors);
     const rearCardsGroupedBySix = chunk(rearCards, 6);
+    let nextCardIndex = 0;
 
     const frontPages = cardsGroupedBySix.map((cards, index) => (
       <Page format="a4" key={`front-${index}`}>
         <div className="inline-grid grid-cols-2 grid-rows-3 gap-5 mt-3 ml-3">
           {cards.map((card) => (
-            <CardFront key={card.id} card={card} />
+            <CardFront
+              key={`card-front-${nextCardIndex}`}
+              card={card}
+              index={nextCardIndex++}
+              hideIndex={!showCardNumber}
+            />
           ))}
         </div>
       </Page>
     ));
 
+    nextCardIndex = 0;
     const rearPages = rearCardsGroupedBySix.map((colors, index) => (
       <Page format="a4" key={`rear-${index}`} contentClassname="text-right">
         <div className="inline-grid grid-cols-2 grid-rows-3 gap-5 mt-3 mr-3 self-end" style={{ direction: "rtl" }}>
           {colors.map((color, index) => (
-            <CardRear key={index} color={color} />
+            <CardRear key={`card-rear-${index++}`} color={color} />
           ))}
         </div>
       </Page>
@@ -56,7 +64,7 @@ export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewPr
       return zip(frontPages, rearPages).flat();
     }
     return [...frontPages, ...rearPages];
-  }, [cards, colors, duplex]);
+  }, [cards, colors, duplex, showCardNumber]);
 
   const generatePdf = useCallback(
     async (screenshots: HTMLCanvasElement[]) => {
@@ -121,7 +129,7 @@ export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewPr
               icon: renderingStatus === "process" ? <LoadingOutlined /> : <SettingOutlined />,
             },
             {
-              title: "Generate PDF",
+              title: "Generating PDF",
               status: creatingPdfStatus,
               icon: creatingPdfStatus === "process" ? <LoadingOutlined /> : <DownloadOutlined />,
             },
@@ -147,6 +155,9 @@ export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewPr
               Duplex
             </Checkbox>
           </Tooltip>
+          <Checkbox checked={showCardNumber} onChange={(e) => setShowCardNumber(e.target.checked)} disabled={isBusy}>
+            Display card number
+          </Checkbox>
         </div>
         <div className="flex gap-3">
           <Button type="default" onClick={onComplete} disabled={isBusy}>
