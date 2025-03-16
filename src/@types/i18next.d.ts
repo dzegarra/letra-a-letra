@@ -38,6 +38,8 @@ declare module "i18next" {
         inner: string;
         middle: string;
         outer: string;
+        newProject: string;
+        newProjectConfirmationMessage: string;
       };
     };
   }

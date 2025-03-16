@@ -1,6 +1,13 @@
 import { ComponentProps, Dispatch, SetStateAction, useCallback } from "react";
 import { Button, Layout, Tooltip, Space, Segmented } from "antd";
-import { AppstoreOutlined, BarsOutlined, DownloadOutlined, FilePdfOutlined, UploadOutlined } from "@ant-design/icons";
+import {
+  AppstoreOutlined,
+  BarsOutlined,
+  DownloadOutlined,
+  FormatPainterOutlined,
+  PrinterOutlined,
+  UploadOutlined,
+} from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import { ViewMode } from "../types";
 import { pickFile } from "../helpers/pickFile";
@@ -8,6 +15,7 @@ import { jsonToFile } from "../helpers/jsonToFile";
 import { CardsCount } from "./CardsCount";
 import { useCardsStore } from "../store";
 import { LangSelector } from "./LangSelector";
+import { NewProjectPopConfirm } from "./NewProjectPopConfirm";
 
 type AppHeaderProps = {
   viewMode: ViewMode;
@@ -54,6 +62,12 @@ export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: Ap
       {...props}
     >
       <Space>
+        {cards.length > 0 && (
+          <NewProjectPopConfirm>
+            <Button icon={<FormatPainterOutlined />}>{t("newProject")}</Button>
+          </NewProjectPopConfirm>
+        )}
+
         <Tooltip title={t("exportTooltip")}>
           <Button onClick={exportData} icon={<DownloadOutlined />}>
             {t("export")}
@@ -67,7 +81,7 @@ export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: Ap
         </Tooltip>
 
         <Tooltip title={t("generatePdfTooltip")}>
-          <Button onClick={onDownloadPdf} icon={<FilePdfOutlined />} type="primary">
+          <Button onClick={onDownloadPdf} icon={<PrinterOutlined />} type="primary">
             {t("generatePdf")}
           </Button>
         </Tooltip>

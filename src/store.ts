@@ -15,6 +15,7 @@ type CardsStore = {
   updateCard: (card: Card) => void;
   deleteCard: (cardId: Card) => void;
   deleteCardById: (cardId: Card["id"]) => void;
+  deleteAllCards: () => void;
   addCard: () => void;
   changeColorArIndex: (color: string, index: WordIndex) => void;
   importCards: (cards: Card[]) => void;
@@ -54,6 +55,9 @@ export const useCardsStore = create<CardsStore>()(
         set(({ cards }) => ({
           cards: cards.filter((card) => card.id !== cardId),
         }));
+      },
+      deleteAllCards: () => {
+        set(() => ({ cards: [] }));
       },
       addCard: () => {
         set(({ cards, colors }) => ({

@@ -49,6 +49,8 @@ i18n
           inner: "Inner",
           middle: "Middle",
           outer: "Outer",
+          newProject: "New project",
+          newProjectConfirmationMessage: "Are you sure you want to delete all cards?",
         },
       },
       es: {
@@ -87,6 +89,8 @@ i18n
           inner: "Interno",
           middle: "Medio",
           outer: "Externo",
+          newProject: "Nuevo proyecto",
+          newProjectConfirmationMessage: "¿Estás seguro de que quieres eliminar todas las tarjetas?",
         },
       },
       pl: {
@@ -126,6 +130,8 @@ i18n
           inner: "Wewnętrzny",
           middle: "Środkowy",
           outer: "Zewnętrzny",
+          newProject: "Nowy projekt",
+          newProjectConfirmationMessage: "Czy na pewno chcesz usunąć wszystkie karty?",
         },
       },
     },
