@@ -1,6 +1,6 @@
 import { createContext } from "react";
 import { Card, CardColors } from "./types";
-import { Form, GetRef, TagProps } from "antd";
+import { Form, GetRef } from "antd";
 
 export const defaultColors: CardColors = ["#C0392B", "#8E44AD", "#27AE60"];
 
