@@ -13,6 +13,7 @@ type CardsStore = {
   colors: CardColors;
   updateCardWord: (cardId: Card["id"], wordIndex: WordIndex, newWord: string) => void;
   updateCard: (card: Card) => void;
+  sortWordsOfCard: (card: Card) => void;
   deleteCard: (cardId: Card) => void;
   deleteCardById: (cardId: Card["id"]) => void;
   deleteAllCards: () => void;
@@ -43,6 +44,16 @@ export const useCardsStore = create<CardsStore>()(
           const newCards = [...cards];
           const cardIndex = newCards.findIndex((c) => c.id === card.id);
           newCards.splice(cardIndex, 1, card);
+          return { cards: newCards };
+        });
+      },
+      sortWordsOfCard: ({ id }) => {
+        set(({ cards }) => {
+          const card = cards.find((card) => card.id === id)!;
+          const cardIndex = cards.findIndex((card) => card.id === id);
+          const newWords = [...card.words].sort((a, b) => b.word.length - a.word.length) as CardWords;
+          const newCards = [...cards];
+          newCards.splice(cardIndex, 1, { ...card, words: newWords });
           return { cards: newCards };
         });
       },

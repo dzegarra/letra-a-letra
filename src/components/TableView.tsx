@@ -1,14 +1,13 @@
 import { useMemo } from "react";
-import { Button, FloatButton, Table, TableProps } from "antd";
+import { FloatButton, Table, TableProps } from "antd";
 import { useTranslation } from "react-i18next";
-import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
 import { Card, WordIndex } from "../types";
 import { EditableCell } from "./EditableCell";
 import { wordPositionName } from "../constants";
 import { useCardsStore } from "../store";
-import { CardDeletePopConfirm } from "./CardDeletePopConfirm";
 import { EmptyCards } from "./EmptyCards";
-import { t } from "i18next";
+import { TableActionsCell } from "./TableActionsCell";
 
 type TableViewProps = Omit<
   TableProps<Card>,
@@ -43,21 +42,9 @@ const columns: TableProps<Card>["columns"] = [
   },
   {
     key: "actions",
-    width: "60px",
+    width: "110px",
     className: "text-center",
-    render: (_, card) => {
-      return (
-        <CardDeletePopConfirm card={card} placement="left">
-          <Button
-            variant="outlined"
-            color="danger"
-            shape="circle"
-            aria-label={t("deleteCard")}
-            icon={<DeleteOutlined />}
-          />
-        </CardDeletePopConfirm>
-      );
-    },
+    render: (_, card) => <TableActionsCell card={card} />,
   },
 ];
 

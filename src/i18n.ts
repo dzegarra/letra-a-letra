@@ -53,6 +53,7 @@ i18n
           newProject: "New project",
           newProjectConfirmationMessage: "Are you sure you want to delete all cards?",
           wordLength: "{{length}} characters",
+          sortWordsAscending: "Sort words ascending",
         },
       },
       es: {
@@ -95,6 +96,7 @@ i18n
           newProject: "Nuevo proyecto",
           newProjectConfirmationMessage: "¿Estás seguro de que quieres eliminar todas las tarjetas?",
           wordLength: "{{length}} caracteres",
+          sortWordsAscending: "Ordenar palabras ascendentemente",
         },
       },
       pl: {
@@ -138,6 +140,7 @@ i18n
           newProject: "Nowy projekt",
           newProjectConfirmationMessage: "Czy na pewno chcesz usunąć wszystkie karty?",
           wordLength: "{{length}} znaków",
+          sortWordsAscending: "Sortuj słowa rosnąco",
         },
       },
     },

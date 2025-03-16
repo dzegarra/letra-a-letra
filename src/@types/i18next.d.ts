@@ -42,6 +42,7 @@ declare module "i18next" {
         newProject: string;
         newProjectConfirmationMessage: string;
         wordLength: string;
+        sortWordsAscending: string;
       };
     };
   }

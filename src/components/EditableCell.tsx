@@ -26,7 +26,7 @@ export const EditableCell: React.FC<React.PropsWithChildren<EditableCellProps>> 
     return (
       <td {...restProps}>
         <div className="flex items-center gap-2">
-          <Input ref={inputRef} onChange={save} defaultValue={cardWord} className="uppercase flex-1" />
+          <Input ref={inputRef} onChange={save} value={cardWord} className="uppercase flex-1" />
           <WordCounterTag word={cardWord} position={wordPosition} />
         </div>
       </td>
