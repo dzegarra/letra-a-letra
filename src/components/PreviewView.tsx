@@ -6,6 +6,7 @@ import { ColorsChanger } from "./ColorsChanger";
 import { useCardsStore } from "../store";
 import { CardFront } from "./CardFront";
 import { useTranslation } from "react-i18next";
+import { EmptyCards } from "./EmptyCards";
 
 type PreviewViewProps = {
   scrollableContainer?: HTMLDivElement | null;
@@ -29,6 +30,7 @@ export const PreviewView = forwardRef<HTMLDivElement, PreviewViewProps>(({ scrol
 
   return (
     <>
+      {cards.length === 0 && <EmptyCards className="h-full" />}
       <div className="flex flex-wrap flex-1 mx-3 my-2" {...props} ref={ref}>
         <div className="flex flex-wrap gap-5">
           <AnimatePresence>

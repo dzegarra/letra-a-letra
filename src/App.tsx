@@ -23,12 +23,8 @@ function App() {
           setViewMode={setViewMode}
         />
 
-        <Layout.Content className="overflow-y-auto flex-1" ref={scrollableContainer}>
-          {viewMode === "preview" && (
-            <div>
-              <PreviewView scrollableContainer={scrollableContainer.current} />
-            </div>
-          )}
+        <Layout.Content className="overflow-y-auto flex flex-col flex-1" ref={scrollableContainer}>
+          {viewMode === "preview" && <PreviewView scrollableContainer={scrollableContainer.current} />}
 
           {viewMode === "table" && <TableView />}
         </Layout.Content>
