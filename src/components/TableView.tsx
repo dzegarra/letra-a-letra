@@ -1,12 +1,13 @@
 import { useMemo } from "react";
 import { Button, FloatButton, Table, TableProps } from "antd";
+import { useTranslation } from "react-i18next";
+import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { Card, WordIndex } from "../types";
 import { EditableCell } from "./EditableCell";
 import { wordPositionName } from "../constants";
-import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { useCardsStore } from "../store";
 import { CardDeletePopConfirm } from "./CardDeletePopConfirm";
-import { useTranslation } from "react-i18next";
+import { EmptyCards } from "./EmptyCards";
 
 type TableViewProps = Omit<
   TableProps<Card>,
@@ -83,16 +84,22 @@ export const TableView = (props: TableViewProps) => {
 
   return (
     <>
-      <Table<Card>
-        bordered
-        pagination={false}
-        rowClassName={() => "editable-row"}
-        dataSource={cards}
-        columns={columnsFinal as TableProps<Card>["columns"]}
-        components={components}
-        rowKey={(card) => card.id}
-        {...props}
-      />
+      {cards.length === 0 ? (
+        <EmptyCards className="h-full" />
+      ) : (
+        <Table<Card>
+          bordered
+          pagination={false}
+          rowClassName={() => "editable-row"}
+          dataSource={cards}
+          columns={columnsFinal as TableProps<Card>["columns"]}
+          components={components}
+          rowKey={(card) => card.id}
+          size="small"
+          sticky
+          {...props}
+        />
+      )}
 
       <FloatButton.Group shape="circle" style={{ insetInlineEnd: 24 }}>
         <FloatButton type="primary" tooltip={t("addNewCard")} icon={<PlusOutlined />} onClick={addCard} />
