@@ -154,6 +154,12 @@ export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewPr
         <div className="flex flex-col flex-1 items-start gap-7 p-4" ref={pagesRef}>
           {pages}
         </div>
+        <Typography.Text type="secondary" className="p-3">
+          The design of the rear cards was obtained from{" "}
+          <a href="https://www.vecteezy.com/free-vector/spiral" target="_blank">
+            Vecteezy
+          </a>
+        </Typography.Text>
       </div>
 
       <div className="flex justify-between pt-3 px-3">
