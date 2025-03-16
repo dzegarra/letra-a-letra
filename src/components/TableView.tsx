@@ -8,6 +8,7 @@ import { wordPositionName } from "../constants";
 import { useCardsStore } from "../store";
 import { CardDeletePopConfirm } from "./CardDeletePopConfirm";
 import { EmptyCards } from "./EmptyCards";
+import { t } from "i18next";
 
 type TableViewProps = Omit<
   TableProps<Card>,
@@ -19,7 +20,7 @@ const columns: TableProps<Card>["columns"] = [
     title: "#",
     dataIndex: "index",
     key: "index",
-    width: "10%",
+    width: "60px",
     render: (_, __, index) => <span>{index + 1}</span>,
   },
   {
@@ -42,11 +43,18 @@ const columns: TableProps<Card>["columns"] = [
   },
   {
     key: "actions",
-    width: "10%",
+    width: "60px",
+    className: "text-center",
     render: (_, card) => {
       return (
         <CardDeletePopConfirm card={card} placement="left">
-          <Button variant="outlined" color="danger" shape="circle" icon={<DeleteOutlined />} />
+          <Button
+            variant="outlined"
+            color="danger"
+            shape="circle"
+            aria-label={t("deleteCard")}
+            icon={<DeleteOutlined />}
+          />
         </CardDeletePopConfirm>
       );
     },
@@ -73,6 +81,7 @@ export const TableView = (props: TableViewProps) => {
         onCell: [1, 2, 3].includes(index)
           ? (card: Card) => ({
               cardWord: card.words[column.key as number].word,
+              wordPosition: wordPositionName[column.key as WordIndex],
               updateCardWord: (word: string) => {
                 updateCardWord(card.id, column.key as WordIndex, word);
               },

@@ -52,6 +52,7 @@ i18n
           outer: "Outer",
           newProject: "New project",
           newProjectConfirmationMessage: "Are you sure you want to delete all cards?",
+          wordLength: "{{length}} characters",
         },
       },
       es: {
@@ -93,6 +94,7 @@ i18n
           outer: "Externo",
           newProject: "Nuevo proyecto",
           newProjectConfirmationMessage: "¿Estás seguro de que quieres eliminar todas las tarjetas?",
+          wordLength: "{{length}} caracteres",
         },
       },
       pl: {
@@ -135,6 +137,7 @@ i18n
           outer: "Zewnętrzny",
           newProject: "Nowy projekt",
           newProjectConfirmationMessage: "Czy na pewno chcesz usunąć wszystkie karty?",
+          wordLength: "{{length}} znaków",
         },
       },
     },

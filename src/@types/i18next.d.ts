@@ -41,6 +41,7 @@ declare module "i18next" {
         outer: string;
         newProject: string;
         newProjectConfirmationMessage: string;
+        wordLength: string;
       };
     };
   }
