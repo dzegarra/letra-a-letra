@@ -33,7 +33,7 @@ export const Page = ({ children, className, contentClassname, format, replaceWit
 
   return (
     <div
-      className={clsx("m-3 bg-white shadow-md relative", className)}
+      className={clsx(" bg-white shadow-md relative overflow-hidden", className)}
       style={{
         width: `${dimensions.w / 10}mm`,
         height: `${dimensions.h / 10}mm`,

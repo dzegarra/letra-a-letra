@@ -9,3 +9,9 @@ type FormInstance<T> = GetRef<typeof Form<T>>;
 export const EditableContext = createContext<FormInstance<Card> | null>(null);
 
 export const wordPositionName = ["outer", "middle", "inner"] as const;
+
+export const cardSizes = {
+  S: "scale-100",
+  M: "scale-110",
+  L: "scale-125",
+} as const;

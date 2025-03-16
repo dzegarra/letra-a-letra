@@ -16,6 +16,7 @@ declare module "i18next" {
         table: string;
         cards: string;
         totalNumberOfCards: string;
+        cardSize: string;
         deleteCard: string;
         areYouSureToDeleteThisCard: string;
         yes: string;

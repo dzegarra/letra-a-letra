@@ -1,25 +1,25 @@
-import { useState } from "react";
+import { ComponentProps, useState } from "react";
 import clsx from "clsx";
 import { motion, AnimatePresence } from "motion/react";
+import { Button } from "antd";
 import { CircularWord } from "./CircularWord";
 import { CardBackground } from "./CardBackground";
 import { ConfirmForm } from "./ConfigForm";
 import { Card as CardType } from "../types";
 import { CardDeletePopConfirm } from "./CardDeletePopConfirm";
-import { Button } from "antd";
 
 type CardFrontProps = {
   index?: number;
   card: CardType;
   hideIndex?: boolean;
   onUpdate?: (card: CardType) => void;
-};
+} & ComponentProps<"div">;
 
-export const CardFront = ({ index, card, hideIndex = false, onUpdate }: CardFrontProps) => {
+export const CardFront = ({ index, card, hideIndex = false, className, onUpdate }: CardFrontProps) => {
   const [editVisible, setEditVisible] = useState(false);
 
   return (
-    <div className="h-[340px] w-[340px] relative select-none">
+    <div className={clsx("h-[340px] w-[340px] relative select-none", className)}>
       <div
         className={clsx("relative w-full h-full flex justify-center", {
           "blur-sm": editVisible,

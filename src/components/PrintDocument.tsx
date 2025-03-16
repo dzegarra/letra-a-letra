@@ -1,7 +1,7 @@
 import { ComponentProps, useRef, useState, useCallback, useMemo } from "react";
 import chunk from "lodash/chunk";
 import zip from "lodash/zip";
-import { Button, Checkbox, Steps, StepsProps, Tooltip, Typography } from "antd";
+import { Button, Checkbox, Segmented, Space, Steps, StepsProps, Tooltip, Typography } from "antd";
 import { useCardsStore } from "../store";
 import { CardFront } from "./CardFront";
 import { calculateRearColors } from "../helpers/calculateRearColors";
@@ -13,6 +13,7 @@ import { PageSizes, PDFDocument } from "pdf-lib";
 import { bytesToPdf } from "../helpers/bytesToPdf";
 import { DownloadOutlined, LoadingOutlined, SettingOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
+import { cardSizes } from "../constants";
 
 type PreviewViewProps = ComponentProps<"div"> & {
   onComplete: () => void;
@@ -23,6 +24,7 @@ export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewPr
   const [showCardNumber, setShowCardNumber] = useState(false);
   const [renderingStatus, setRenderingStatus] = useState<StepsProps["status"]>("wait");
   const [creatingPdfStatus, setCreatingPdfStatus] = useState<StepsProps["status"]>("wait");
+  const [cardSize, setCardSize] = useState<keyof typeof cardSizes>("S");
   const pagesRef = useRef<HTMLDivElement>(null);
   const colors = useCardsStore((state) => state.colors);
   const cards = useCardsStore((state) => state.cards);
@@ -37,14 +39,15 @@ export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewPr
     let nextCardIndex = 0;
 
     const frontPages = cardsGroupedBySix.map((cards, index) => (
-      <Page format="a4" key={`front-${index}`}>
-        <div className="inline-grid grid-cols-2 grid-rows-3 gap-5 mt-3 ml-3">
+      <Page format="a4" key={`front-page-${index}`}>
+        <div className="inline-grid grid-cols-2 grid-rows-3 gap-1 p-3 w-full h-full place-items-center">
           {cards.map((card) => (
             <CardFront
-              key={`card-front-${nextCardIndex}`}
+              key={`front-card-${nextCardIndex}`}
               card={card}
               index={nextCardIndex++}
               hideIndex={!showCardNumber}
+              className={cardSizes[cardSize]}
             />
           ))}
         </div>
@@ -53,10 +56,14 @@ export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewPr
 
     nextCardIndex = 0;
     const rearPages = rearCardsGroupedBySix.map((colors, index) => (
-      <Page format="a4" key={`rear-${index}`} contentClassname="text-right">
-        <div className="inline-grid grid-cols-2 grid-rows-3 gap-5 mt-3 mr-3 self-end" style={{ direction: "rtl" }}>
+      <Page format="a4" key={`rear-page-${index}`}>
+        {/* The change in the direction (rtl) is done to flip the ordering of the rear cards when the number if not even */}
+        <div
+          className="inline-grid grid-cols-2 grid-rows-3 gap-1 p-3 w-full h-full place-items-center"
+          style={{ direction: "rtl" }}
+        >
           {colors.map((color, index) => (
-            <CardRear key={`card-rear-${index++}`} color={color} />
+            <CardRear key={`rear-card-${index++}`} color={color} className={cardSizes[cardSize]} />
           ))}
         </div>
       </Page>
@@ -66,7 +73,7 @@ export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewPr
       return zip(frontPages, rearPages).flat();
     }
     return [...frontPages, ...rearPages];
-  }, [cards, colors, duplex, showCardNumber]);
+  }, [cards, colors, duplex, showCardNumber, cardSize]);
 
   const generatePdf = useCallback(
     async (screenshots: HTMLCanvasElement[]) => {
@@ -144,16 +151,14 @@ export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewPr
           "overflow-hidden": renderingStatus === "process",
         })}
       >
-        <div className="flex flex-col flex-1 items-start" ref={pagesRef}>
+        <div className="flex flex-col flex-1 items-start gap-7 p-4" ref={pagesRef}>
           {pages}
         </div>
       </div>
 
       <div className="flex justify-between pt-3 px-3">
-        <div className="flex gap-3 items-center">
-          <Typography.Text type="secondary">
-            {pages.length} {t("pages", { count: pages.length })}
-          </Typography.Text>
+        <Space size="middle">
+          <Typography.Text type="secondary">{t("pages", { count: pages.length })}</Typography.Text>
           <Tooltip title={t("duplexTooltip")}>
             <Checkbox checked={duplex} onChange={(e) => setDuplex(e.target.checked)} disabled={isBusy}>
               {t("duplex")}
@@ -162,15 +167,25 @@ export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewPr
           <Checkbox checked={showCardNumber} onChange={(e) => setShowCardNumber(e.target.checked)} disabled={isBusy}>
             {t("displayCardNumber")}
           </Checkbox>
-        </div>
-        <div className="flex gap-3">
+          <Space>
+            <span>{t("cardSize")}:</span>
+            <Segmented<string>
+              options={Object.keys(cardSizes)}
+              onChange={(value) => {
+                setCardSize(value as keyof typeof cardSizes);
+              }}
+              disabled={isBusy}
+            />
+          </Space>
+        </Space>
+        <Space>
           <Button type="default" onClick={onComplete} disabled={isBusy}>
             {t("cancel")}
           </Button>
           <Button type="primary" onClick={renderizePages} loading={isBusy}>
             {t("startCreatingPdf")}
           </Button>
-        </div>
+        </Space>
       </div>
     </div>
   );
