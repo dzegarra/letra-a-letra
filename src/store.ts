@@ -51,7 +51,11 @@ export const useCardsStore = create<CardsStore>()(
         set(({ cards }) => {
           const card = cards.find((card) => card.id === id)!;
           const cardIndex = cards.findIndex((card) => card.id === id);
-          const newWords = [...card.words].sort((a, b) => b.word.length - a.word.length) as CardWords;
+
+          // Swapping only the word strings, not the Word objects
+          const newWordStrings: string[] = [...card.words].map((word) => word.word).sort((a, b) => b.length - a.length);
+          const newWords = card.words.map((word, index) => ({ ...word, word: newWordStrings[index] })) as CardWords;
+
           const newCards = [...cards];
           newCards.splice(cardIndex, 1, { ...card, words: newWords });
           return { cards: newCards };
