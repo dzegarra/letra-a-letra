@@ -1,5 +1,5 @@
 import { useRef, useCallback } from "react";
-import { Input, InputRef, Space, Tag } from "antd";
+import { Input, InputRef } from "antd";
 import { WordCounterTag } from "./WordCounterTag";
 import { wordPositionName } from "../constants";
 
