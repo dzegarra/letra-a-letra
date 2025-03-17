@@ -16,6 +16,7 @@ import { CardsCount } from "./CardsCount";
 import { useCardsStore } from "../store";
 import { LangSelector } from "./LangSelector";
 import { NewProjectPopConfirm } from "./NewProjectPopConfirm";
+import { useCardLength } from "../hooks/useCardLength";
 
 type AppHeaderProps = {
   viewMode: ViewMode;
@@ -24,13 +25,14 @@ type AppHeaderProps = {
 } & ComponentProps<typeof Layout.Header>;
 
 export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: AppHeaderProps) => {
-  const cards = useCardsStore((store) => store.cards);
+  const cardsLength = useCardLength();
   const importCards = useCardsStore((store) => store.importCards);
   const { t } = useTranslation();
 
   const exportData = useCallback(() => {
+    const cards = useCardsStore.getState().cards;
     jsonToFile(cards, "project-export");
-  }, [cards]);
+  }, []);
 
   const importFile = useCallback(() => {
     pickFile(async function (files) {
@@ -62,7 +64,7 @@ export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: Ap
       {...props}
     >
       <Space>
-        {cards.length > 0 && (
+        {cardsLength > 0 && (
           <NewProjectPopConfirm>
             <Button icon={<FormatPainterOutlined />}>{t("newProject")}</Button>
           </NewProjectPopConfirm>
@@ -98,7 +100,7 @@ export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: Ap
 
       <LangSelector />
 
-      <CardsCount count={cards.length} />
+      <CardsCount count={cardsLength} />
     </Layout.Header>
   );
 };
