@@ -13,20 +13,20 @@
     <text x="256" y="86" font-size="44" transform="rotate(225 256 256)">N</text>
     <text x="256" y="86" font-size="44" transform="rotate(270 256 256)">T</text>
     <text x="256" y="86" font-size="44" transform="rotate(315 256 256)">E</text>
-    <!-- Tigre -->
-    <text x="256" y="146" font-size="40" transform="rotate(0 256 256)">T</text>
-    <text x="256" y="146" font-size="40" transform="rotate(72 256 256)">I</text>
-    <text x="256" y="146" font-size="40" transform="rotate(144 256 256)">G</text>
-    <text x="256" y="146" font-size="40" transform="rotate(216 256 256)">R</text>
-    <text x="256" y="146" font-size="40" transform="rotate(288 256 256)">E</text>
     <!-- Leopardo -->
-    <text x="256" y="206" font-size="26" transform="rotate(0 256 256)">L</text>
-    <text x="256" y="206" font-size="26" transform="rotate(45 256 256)">E</text>
-    <text x="256" y="206" font-size="26" transform="rotate(90 256 256)">O</text>
-    <text x="256" y="206" font-size="26" transform="rotate(135 256 256)">P</text>
-    <text x="256" y="206" font-size="26" transform="rotate(180 256 256)">A</text>
-    <text x="256" y="206" font-size="26" transform="rotate(225 256 256)">R</text>
-    <text x="256" y="206" font-size="26" transform="rotate(270 256 256)">D</text>
-    <text x="256" y="206" font-size="26" transform="rotate(315 256 256)">O</text>
+    <text x="256" y="146" font-size="38" transform="rotate(0 256 256)">L</text>
+    <text x="256" y="146" font-size="38" transform="rotate(45 256 256)">E</text>
+    <text x="256" y="146" font-size="38" transform="rotate(90 256 256)">O</text>
+    <text x="256" y="146" font-size="38" transform="rotate(135 256 256)">P</text>
+    <text x="256" y="146" font-size="38" transform="rotate(180 256 256)">A</text>
+    <text x="256" y="146" font-size="38" transform="rotate(225 256 256)">R</text>
+    <text x="256" y="146" font-size="38" transform="rotate(270 256 256)">D</text>
+    <text x="256" y="146" font-size="38" transform="rotate(315 256 256)">O</text>
+    <!-- Tigre -->
+    <text x="256" y="206" font-size="30" transform="rotate(0 256 256)">T</text>
+    <text x="256" y="206" font-size="30" transform="rotate(72 256 256)">I</text>
+    <text x="256" y="206" font-size="30" transform="rotate(144 256 256)">G</text>
+    <text x="256" y="206" font-size="30" transform="rotate(216 256 256)">R</text>
+    <text x="256" y="206" font-size="30" transform="rotate(288 256 256)">E</text>
   </g>
 </svg>
