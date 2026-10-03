@@ -60,6 +60,8 @@ i18n
           rearDesign_dots: "Dots",
           rearDesign_stars: "Stars",
           rearDesign_plain: "Plain",
+          install: "Install",
+          installTooltip: "Installs the webapp on this device so it can be opened like an app, even offline",
         },
       },
       es: {
@@ -109,6 +111,8 @@ i18n
           rearDesign_dots: "Lunares",
           rearDesign_stars: "Estrellas",
           rearDesign_plain: "Liso",
+          install: "Instalar",
+          installTooltip: "Instala la webapp en este dispositivo para abrirla como una aplicación, incluso sin conexión",
         },
       },
       pl: {
@@ -159,6 +163,8 @@ i18n
           rearDesign_dots: "Kropki",
           rearDesign_stars: "Gwiazdy",
           rearDesign_plain: "Gładki",
+          install: "Zainstaluj",
+          installTooltip: "Instaluje aplikację na tym urządzeniu, aby można było ją otwierać jak zwykłą aplikację, także offline",
         },
       },
     },

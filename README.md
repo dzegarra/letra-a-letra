@@ -16,6 +16,7 @@ The latest version of this webapp is published using Github actions at [dzegarra
 - Remembers the last project
 - Generates a PDF document ready to be use
 - If you have a duplex printer, you can choose interleave the pages to save time
+- Can be installed as an app (PWA) and works offline
 
 ### Instructions
 
