@@ -49,6 +49,8 @@ declare module "i18next" {
         rearDesign_dots: string;
         rearDesign_stars: string;
         rearDesign_plain: string;
+        install: string;
+        installTooltip: string;
       };
     };
   }

@@ -5,6 +5,7 @@ import {
   BarsOutlined,
   DownloadOutlined,
   FormatPainterOutlined,
+  MobileOutlined,
   PrinterOutlined,
   UploadOutlined,
 } from "@ant-design/icons";
@@ -17,6 +18,7 @@ import { useCardsStore } from "../store";
 import { LangSelector } from "./LangSelector";
 import { NewProjectPopConfirm } from "./NewProjectPopConfirm";
 import { useCardLength } from "../hooks/useCardLength";
+import { useInstallPrompt } from "../hooks/useInstallPrompt";
 
 type AppHeaderProps = {
   viewMode: ViewMode;
@@ -28,6 +30,7 @@ export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: Ap
   const cardsLength = useCardLength();
   const importCards = useCardsStore((store) => store.importCards);
   const { t } = useTranslation();
+  const { canInstall, install } = useInstallPrompt();
 
   const exportData = useCallback(() => {
     const cards = useCardsStore.getState().cards;
@@ -87,6 +90,14 @@ export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: Ap
             {t("generatePdf")}
           </Button>
         </Tooltip>
+
+        {canInstall && (
+          <Tooltip title={t("installTooltip")}>
+            <Button onClick={install} icon={<MobileOutlined />}>
+              {t("install")}
+            </Button>
+          </Tooltip>
+        )}
       </Space>
 
       <Segmented
