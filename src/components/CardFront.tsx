@@ -1,5 +1,6 @@
 import { ComponentProps, useState } from "react";
 import clsx from "clsx";
+import fontColorContrast from "font-color-contrast";
 import { motion, AnimatePresence } from "motion/react";
 import { Button } from "antd";
 import { CircularWord } from "./CircularWord";
@@ -36,21 +37,21 @@ export const CardFront = ({ index, card, hideIndex = false, className, onUpdate 
           word={card.words[0].word}
           radius={8.6}
           fontSize={2}
-          fontColor={card.words[0].fontColor}
+          fontColor={fontColorContrast(card.words[0].color)}
           rotationDeg={card.words[0].rotationDeg}
         />
         <CircularWord
           word={card.words[1].word}
           radius={6.1}
           fontSize={2}
-          fontColor={card.words[1].fontColor}
+          fontColor={fontColorContrast(card.words[1].color)}
           rotationDeg={card.words[1].rotationDeg}
         />
         <CircularWord
           word={card.words[2].word}
           radius={3.6}
           fontSize={2}
-          fontColor={card.words[2].fontColor}
+          fontColor={fontColorContrast(card.words[2].color)}
           rotationDeg={card.words[2].rotationDeg}
         />
 
