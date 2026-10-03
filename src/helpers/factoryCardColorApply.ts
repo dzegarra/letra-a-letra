@@ -1,4 +1,3 @@
-import fontColorContrast from "font-color-contrast";
 import { Card, CardWords, WordIndex } from "../types";
 
 export const factoryCardColorApply =
@@ -7,7 +6,7 @@ export const factoryCardColorApply =
     ...card,
     words: card.words.map((word, wordIndex) => {
       if (wordIndex === index) {
-        return { ...word, color, fontColor: fontColorContrast(color) };
+        return { ...word, color };
       }
       return word;
     }) as CardWords,

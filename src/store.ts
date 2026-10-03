@@ -102,14 +102,24 @@ export const useCardsStore = create<CardsStore>()(
     {
       name: "cards",
       storage: createJSONStorage(() => localStorage),
-      // Ignore persisted rear designs that no longer exist
       merge: (persisted, current) => {
         const state = { ...current, ...(persisted as Partial<CardsStore>) };
-        return isRearDesign(state.rearDesign) ? state : { ...state, rearDesign: defaultRearDesign };
+        // The font color is derived from the background color, so drop any stale value persisted by older versions
+        const cards = state.cards.map(withoutFontColor);
+        // Ignore persisted rear designs that no longer exist
+        const rearDesign = isRearDesign(state.rearDesign) ? state.rearDesign : defaultRearDesign;
+        return { ...state, cards, rearDesign };
       },
     },
   ),
 );
+
+function withoutFontColor(card: Card): Card {
+  return {
+    ...card,
+    words: card.words.map(({ word, color, rotationDeg }) => ({ word, color, rotationDeg })) as CardWords,
+  };
+}
 
 // These lines below will load the cards saved in memory when the save in localStorage was done manually
 try {
