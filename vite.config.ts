@@ -9,6 +9,8 @@ export default defineConfig({
     // Makes the webapp installable and usable offline
     VitePWA({
       registerType: 'autoUpdate',
+      // The precache glob below already lists the icons
+      includeManifestIcons: false,
       manifest: {
         name: 'Letra a letra',
         short_name: 'Letra a letra',
