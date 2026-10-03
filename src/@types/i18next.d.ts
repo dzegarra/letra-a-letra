@@ -43,6 +43,13 @@ declare module "i18next" {
         newProjectConfirmationMessage: string;
         wordLength: string;
         sortWordsAscending: string;
+        rearDesign: string;
+        rearDesign_spiral: string;
+        rearDesign_rings: string;
+        rearDesign_rays: string;
+        rearDesign_dots: string;
+        rearDesign_stars: string;
+        rearDesign_plain: string;
       };
     };
   }

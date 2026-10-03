@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 100 100">
+  <polygon points="50,50 125,50 123.56,64.63" fill="#000" fill-opacity="0.35"/>
+  <polygon points="50,50 119.29,78.7 112.36,91.67" fill="#000" fill-opacity="0.35"/>
+  <polygon points="50,50 103.03,103.03 91.67,112.36" fill="#000" fill-opacity="0.35"/>
+  <polygon points="50,50 78.7,119.29 64.63,123.56" fill="#000" fill-opacity="0.35"/>
+  <polygon points="50,50 50,125 35.37,123.56" fill="#000" fill-opacity="0.35"/>
+  <polygon points="50,50 21.3,119.29 8.33,112.36" fill="#000" fill-opacity="0.35"/>
+  <polygon points="50,50 -3.03,103.03 -12.36,91.67" fill="#000" fill-opacity="0.35"/>
+  <polygon points="50,50 -19.29,78.7 -23.56,64.63" fill="#000" fill-opacity="0.35"/>
+  <polygon points="50,50 -25,50 -23.56,35.37" fill="#000" fill-opacity="0.35"/>
+  <polygon points="50,50 -19.29,21.3 -12.36,8.33" fill="#000" fill-opacity="0.35"/>
+  <polygon points="50,50 -3.03,-3.03 8.33,-12.36" fill="#000" fill-opacity="0.35"/>
+  <polygon points="50,50 21.3,-19.29 35.37,-23.56" fill="#000" fill-opacity="0.35"/>
+  <polygon points="50,50 50,-25 64.63,-23.56" fill="#000" fill-opacity="0.35"/>
+  <polygon points="50,50 78.7,-19.29 91.67,-12.36" fill="#000" fill-opacity="0.35"/>
+  <polygon points="50,50 103.03,-3.03 112.36,8.33" fill="#000" fill-opacity="0.35"/>
+  <polygon points="50,50 119.29,21.3 123.56,35.37" fill="#000" fill-opacity="0.35"/>
+</svg>

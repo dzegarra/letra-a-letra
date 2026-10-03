@@ -1,7 +1,7 @@
 import { ComponentProps, useRef, useState, useCallback, useMemo } from "react";
 import chunk from "lodash/chunk";
 import zip from "lodash/zip";
-import { Button, Checkbox, Segmented, Space, Steps, StepsProps, Tooltip, Typography } from "antd";
+import { Button, Checkbox, Segmented, Select, Space, Steps, StepsProps, Tooltip, Typography } from "antd";
 import { useCardsStore } from "../store";
 import { CardFront } from "./CardFront";
 import { calculateRearColors } from "../helpers/calculateRearColors";
@@ -14,6 +14,7 @@ import { bytesToPdf } from "../helpers/bytesToPdf";
 import { DownloadOutlined, LoadingOutlined, SettingOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import { cardSizes } from "../constants";
+import { RearDesign, rearDesigns } from "../rearDesigns";
 
 type PreviewViewProps = ComponentProps<"div"> & {
   onComplete: () => void;
@@ -28,6 +29,8 @@ export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewPr
   const pagesRef = useRef<HTMLDivElement>(null);
   const colors = useCardsStore((state) => state.colors);
   const cards = useCardsStore((state) => state.cards);
+  const rearDesign = useCardsStore((state) => state.rearDesign);
+  const setRearDesign = useCardsStore((state) => state.setRearDesign);
   const { t } = useTranslation();
 
   const isBusy = renderingStatus === "process" || creatingPdfStatus === "process";
@@ -63,7 +66,7 @@ export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewPr
           style={{ direction: "rtl" }}
         >
           {colors.map((color, index) => (
-            <CardRear key={`rear-card-${index++}`} color={color} className={cardSizes[cardSize]} />
+            <CardRear key={`rear-card-${index++}`} color={color} design={rearDesign} className={cardSizes[cardSize]} />
           ))}
         </div>
       </Page>
@@ -73,7 +76,7 @@ export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewPr
       return zip(frontPages, rearPages).flat();
     }
     return [...frontPages, ...rearPages];
-  }, [cards, colors, duplex, showCardNumber, cardSize]);
+  }, [cards, colors, duplex, showCardNumber, cardSize, rearDesign]);
 
   const generatePdf = useCallback(
     async (screenshots: HTMLCanvasElement[]) => {
@@ -154,12 +157,14 @@ export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewPr
         <div className="flex flex-col flex-1 items-start gap-7 p-4" ref={pagesRef}>
           {pages}
         </div>
-        <Typography.Text type="secondary" className="p-3">
-          The design of the rear cards was obtained from{" "}
-          <a href="https://www.vecteezy.com/free-vector/spiral" target="_blank">
-            Vecteezy
-          </a>
-        </Typography.Text>
+        {rearDesign === "spiral" && (
+          <Typography.Text type="secondary" className="p-3">
+            The design of the rear cards was obtained from{" "}
+            <a href="https://www.vecteezy.com/free-vector/spiral" target="_blank">
+              Vecteezy
+            </a>
+          </Typography.Text>
+        )}
       </div>
 
       <div className="flex justify-between pt-3 px-3">
@@ -181,6 +186,24 @@ export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewPr
                 setCardSize(value as keyof typeof cardSizes);
               }}
               disabled={isBusy}
+            />
+          </Space>
+          <Space>
+            <span>{t("rearDesign")}:</span>
+            <Select<RearDesign>
+              value={rearDesign}
+              onChange={setRearDesign}
+              disabled={isBusy}
+              popupMatchSelectWidth={false}
+              options={(Object.keys(rearDesigns) as RearDesign[]).map((design) => ({
+                value: design,
+                label: (
+                  <Space size="small">
+                    <CardRear color={colors[0]} design={design} className="!h-5 !w-5 align-middle" />
+                    {t(`rearDesign_${design}`)}
+                  </Space>
+                ),
+              }))}
             />
           </Space>
         </Space>

@@ -7,10 +7,12 @@ import { factoryCardColorApply } from "./helpers/factoryCardColorApply";
 import { cardsSchema } from "./helpers/validateCardsData";
 import { readFromLocalStorage } from "./helpers/readFromLocalStorage";
 import { randomRotationDeg } from "./helpers/randomRotationDeg";
+import { defaultRearDesign, isRearDesign, RearDesign } from "./rearDesigns";
 
 type CardsStore = {
   cards: Card[];
   colors: CardColors;
+  rearDesign: RearDesign;
   updateCardWord: (cardId: Card["id"], wordIndex: WordIndex, newWord: string) => void;
   updateCard: (card: Card) => void;
   sortWordsOfCard: (card: Card) => void;
@@ -20,6 +22,7 @@ type CardsStore = {
   addCard: () => void;
   changeColorArIndex: (color: string, index: WordIndex) => void;
   importCards: (cards: Card[]) => void;
+  setRearDesign: (design: RearDesign) => void;
 };
 
 export const useCardsStore = create<CardsStore>()(
@@ -27,6 +30,7 @@ export const useCardsStore = create<CardsStore>()(
     (set) => ({
       cards: [],
       colors: defaultColors,
+      rearDesign: defaultRearDesign,
       updateCardWord: (cardId, wordIndex, newWord) => {
         set(({ cards }) => {
           const card = cards.find((card) => card.id === cardId)!;
@@ -91,10 +95,18 @@ export const useCardsStore = create<CardsStore>()(
           validCards.length > 0 ? (validCards[0].words.map((word) => word.color) as CardColors) : defaultColors;
         set(() => ({ cards: validCards, colors }));
       },
+      setRearDesign: (rearDesign) => {
+        set(() => ({ rearDesign }));
+      },
     }),
     {
       name: "cards",
       storage: createJSONStorage(() => localStorage),
+      // Ignore persisted rear designs that no longer exist
+      merge: (persisted, current) => {
+        const state = { ...current, ...(persisted as Partial<CardsStore>) };
+        return isRearDesign(state.rearDesign) ? state : { ...state, rearDesign: defaultRearDesign };
+      },
     },
   ),
 );
