@@ -19,7 +19,7 @@ type Story = StoryObj<typeof CardRear>;
 export const Default: Story = {
   args: {
     color: "#000000",
-    design: "spiral",
+    design: "rings",
   },
   render: (props) => <CardRear {...props}></CardRear>,
 };

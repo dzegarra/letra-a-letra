@@ -1,4 +1,3 @@
-import spiral from "./assets/rear/spiral.svg";
 import rings from "./assets/rear/rings.svg";
 import rays from "./assets/rear/rays.svg";
 import dots from "./assets/rear/dots.svg";
@@ -8,7 +7,6 @@ import stars from "./assets/rear/stars.svg";
  * Designs available for the rear of the cards. `null` means a plain background with only the color.
  */
 export const rearDesigns = {
-  spiral,
   rings,
   rays,
   dots,
@@ -18,7 +16,7 @@ export const rearDesigns = {
 
 export type RearDesign = keyof typeof rearDesigns;
 
-export const defaultRearDesign: RearDesign = "spiral";
+export const defaultRearDesign: RearDesign = "rings";
 
 export const isRearDesign = (value: unknown): value is RearDesign =>
   typeof value === "string" && Object.prototype.hasOwnProperty.call(rearDesigns, value);
