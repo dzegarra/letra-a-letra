@@ -9,7 +9,6 @@ export default defineConfig({
     // Makes the webapp installable and usable offline
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['icon.svg', 'apple-touch-icon.png'],
       manifest: {
         name: 'Letra a letra',
         short_name: 'Letra a letra',
