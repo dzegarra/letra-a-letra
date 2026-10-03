@@ -1,7 +1,0 @@
-.bgcolor {
-  background: var(--color);
-  background-image: url("/public/spiral.svg");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
