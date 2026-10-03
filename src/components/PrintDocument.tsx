@@ -159,7 +159,7 @@ export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewPr
         </div>
       </div>
 
-      <div className="flex justify-between pt-3 px-3">
+      <div className="flex justify-between items-center gap-4 pt-3 px-3">
         <Space size="middle">
           <Typography.Text type="secondary">{t("pages", { count: pages.length })}</Typography.Text>
           <Tooltip title={t("duplexTooltip")}>
