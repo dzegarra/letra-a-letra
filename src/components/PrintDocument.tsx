@@ -155,7 +155,7 @@ export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewPr
           "overflow-hidden": renderingStatus === "process",
         })}
       >
-        <div className="flex flex-wrap justify-center items-start gap-7 p-4" ref={pagesRef}>
+        <div className="flex flex-wrap [justify-content:safe_center] items-start gap-7 p-4" ref={pagesRef}>
           {pages}
         </div>
       </div>
