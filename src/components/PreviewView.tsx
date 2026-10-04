@@ -21,6 +21,9 @@ export const PreviewView = forwardRef<HTMLDivElement, PreviewViewProps>(({ scrol
   const [editingId, setEditingId] = useState<string>();
   const editingIndex = cards.findIndex((card) => card.id === editingId);
   const editingCard = editingIndex === -1 ? undefined : cards[editingIndex];
+  // Forget the card once it is gone (deleted from the editor, new project), so a later import that
+  // brings back a card with the same id doesn't reopen the editor on its own
+  if (editingId !== undefined && editingIndex === -1) setEditingId(undefined);
   const lastEditingIndexRef = useRef(0);
   if (editingIndex !== -1) lastEditingIndexRef.current = editingIndex;
 
