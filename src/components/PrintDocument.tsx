@@ -1,7 +1,7 @@
 import { ComponentProps, useRef, useState, useCallback, useMemo, useEffect } from "react";
 import chunk from "lodash/chunk";
 import zip from "lodash/zip";
-import { Button, Checkbox, Collapse, Segmented, Select, Space, Steps, StepsProps, Tooltip, Typography } from "antd";
+import { Button, Checkbox, Collapse, Segmented, Select, Space, Tooltip, Typography } from "antd";
 import { useCardsStore } from "../store";
 import { CardFront } from "./CardFront";
 import { calculateRearColors } from "../helpers/calculateRearColors";
@@ -11,14 +11,7 @@ import html2canvas from "html2canvas";
 import clsx from "clsx";
 import { PageSizes, PDFDocument } from "pdf-lib";
 import { bytesToPdf } from "../helpers/bytesToPdf";
-import {
-  ColumnWidthOutlined,
-  DownloadOutlined,
-  LoadingOutlined,
-  SettingOutlined,
-  ZoomInOutlined,
-  ZoomOutOutlined,
-} from "@ant-design/icons";
+import { ColumnWidthOutlined, ZoomInOutlined, ZoomOutOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import { cardSizes, pageSizes } from "../constants";
 import { RearDesign, rearDesigns } from "../rearDesigns";
@@ -31,6 +24,8 @@ const pagesWidthPx = (pageSizes.a4.w / 10) * (96 / 25.4) + 32;
 
 const clampZoom = (zoom: number) => Math.min(maxZoom, Math.max(minZoom, Math.round(zoom * 100) / 100));
 
+type ProcessStatus = "wait" | "process" | "finish" | "error";
+
 type PreviewViewProps = ComponentProps<"div"> & {
   onComplete: () => void;
 };
@@ -38,8 +33,8 @@ type PreviewViewProps = ComponentProps<"div"> & {
 export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewProps) => {
   const [duplex, setDuplex] = useState(false);
   const [showCardNumber, setShowCardNumber] = useState(false);
-  const [renderingStatus, setRenderingStatus] = useState<StepsProps["status"]>("wait");
-  const [creatingPdfStatus, setCreatingPdfStatus] = useState<StepsProps["status"]>("wait");
+  const [renderingStatus, setRenderingStatus] = useState<ProcessStatus>("wait");
+  const [creatingPdfStatus, setCreatingPdfStatus] = useState<ProcessStatus>("wait");
   const [cardSize, setCardSize] = useState<keyof typeof cardSizes>("S");
   const pagesRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -203,24 +198,6 @@ export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewPr
 
   return (
     <div className={clsx("relative overflow-hidden flex flex-col", className)} {...props}>
-      <div className="h-16 flex-none p-3 sm:px-24">
-        <Steps
-          responsive={false}
-          items={[
-            {
-              title: t("preparingPages"),
-              status: renderingStatus,
-              icon: renderingStatus === "process" ? <LoadingOutlined /> : <SettingOutlined />,
-            },
-            {
-              title: t("creatingPdf"),
-              status: creatingPdfStatus,
-              icon: creatingPdfStatus === "process" ? <LoadingOutlined /> : <DownloadOutlined />,
-            },
-          ]}
-        />
-      </div>
-
       <div className="flex flex-1 min-h-0 flex-col md:flex-row gap-3 md:gap-4">
         <div className="hidden md:block w-60 flex-none overflow-y-auto pr-1">{options}</div>
 
@@ -287,7 +264,11 @@ export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewPr
             {t("cancel")}
           </Button>
           <Button type="primary" onClick={renderizePages} loading={isBusy}>
-            {t("startCreatingPdf")}
+            {renderingStatus === "process"
+              ? t("preparingPages")
+              : creatingPdfStatus === "process"
+                ? t("creatingPdf")
+                : t("startCreatingPdf")}
           </Button>
         </Space>
       </div>
