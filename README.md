@@ -1,9 +1,9 @@
-# React app to generate circular cards similar to the game Word A Round
+# Create printable circular cards based on the game Word A Round
 
 ## The reason of this project
 My wife is a language teacher and she liked the idea to use this game as a way to make their students memorize words and increase their vocabulary.
 
-## Inmediate use
+## Use it!
 
 The latest version of this webapp is published using Github actions at [dzegarra.github.io/letra-a-letra/](https://dzegarra.github.io/letra-a-letra/).
 
