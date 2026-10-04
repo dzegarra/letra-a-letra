@@ -36,13 +36,14 @@ function App() {
         okButtonProps={{ disabled: true }}
         cancelButtonProps={{ disabled: true }}
         destroyOnClose
-        width={1050}
+        className="pdf-modal"
+        width="calc(100vw - 48px)"
         closable={false}
         keyboard={false}
         maskClosable={false}
         footer={null}
       >
-        <PrintDocument className="max-h-[600px]" onComplete={() => setOpen(false)} />
+        <PrintDocument className="h-full" onComplete={() => setOpen(false)} />
       </Modal>
     </>
   );

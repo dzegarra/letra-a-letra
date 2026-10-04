@@ -1,13 +1,7 @@
 import clsx from "clsx";
 import { ComponentProps, useEffect, useRef, useState } from "react";
 import html2canvas from "html2canvas";
-
-const pageSizes = {
-  a4: {
-    w: 2480,
-    h: 3508,
-  },
-};
+import { pageSizes } from "../constants";
 
 type PageProps = ComponentProps<"div"> & {
   format: keyof typeof pageSizes;
@@ -33,7 +27,7 @@ export const Page = ({ children, className, contentClassname, format, replaceWit
 
   return (
     <div
-      className={clsx(" bg-white shadow-md relative overflow-hidden", className)}
+      className={clsx("flex-none bg-white shadow-md relative overflow-hidden", className)}
       style={{
         width: `${dimensions.w / 10}mm`,
         height: `${dimensions.h / 10}mm`,
