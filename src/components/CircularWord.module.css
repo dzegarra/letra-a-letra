@@ -11,5 +11,5 @@
   text-transform: uppercase;
   transform: translate(-50%, -50%)
     rotate(calc(360deg / var(--total) * var(--index)))
-    translateY(calc(var(--radius) * -1ch));
+    translateY(calc(var(--radius) * -1));
 }
