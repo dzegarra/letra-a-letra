@@ -101,6 +101,7 @@ declare module "i18next" {
         howToPlayStep3: string;
         howToPlayStep4: string;
         howToPlayStep5: string;
+        howToPlayStep6: string;
         createFirstCard: string;
         watchVideo: string;
         videoFromYoutube: string;
