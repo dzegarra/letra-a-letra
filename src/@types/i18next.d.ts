@@ -59,6 +59,12 @@ declare module "i18next" {
         language: string;
         inputWord: string;
         tapToWrite: string;
+        cardNumber: string;
+        save: string;
+        saveAndNext: string;
+        shuffleRotation: string;
+        wordTight: string;
+        wordTooLong: string;
       };
     };
   }

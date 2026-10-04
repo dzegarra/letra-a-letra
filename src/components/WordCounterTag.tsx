@@ -6,9 +6,12 @@ import { wordLengthsMax, wordPositionName } from "../constants";
 type WordCounterTagProps = {
   word?: string;
   position: (typeof wordPositionName)[number];
+  /** Shows the count against the recommended maximum of the ring, like "5/9" */
+  showMax?: boolean;
+  className?: string;
 };
 
-export const WordCounterTag = ({ word = "", position }: WordCounterTagProps) => {
+export const WordCounterTag = ({ word = "", position, showMax = false, className }: WordCounterTagProps) => {
   const { t } = useTranslation();
   const color = useMemo(() => {
     const positionRules = wordLengthsMax[position];
@@ -19,5 +22,9 @@ export const WordCounterTag = ({ word = "", position }: WordCounterTagProps) => 
     if (word.length <= positionRules[2]) return "error";
     return "#cd201f";
   }, [word, position]);
-  return <Tag color={color}>{t("wordLength", { length: word.length })}</Tag>;
+  return (
+    <Tag color={color} className={className}>
+      {showMax ? `${word.length}/${wordLengthsMax[position][0]}` : t("wordLength", { length: word.length })}
+    </Tag>
+  );
 };
