@@ -12,7 +12,8 @@ export const WordCounterTag = ({ word = "", position }: WordCounterTagProps) => 
   const { t } = useTranslation();
   const color = useMemo(() => {
     const positionRules = wordLengthsMax[position];
-    if (word.length === 0) return "#cd201f";
+    // An empty word is not an error yet, the card just hasn't been filled in
+    if (word.length === 0) return undefined;
     if (word.length <= positionRules[0]) return "green";
     if (word.length <= positionRules[1]) return "warning";
     if (word.length <= positionRules[2]) return "error";

@@ -8,6 +8,7 @@ import { wordPositionName } from "../constants";
 import { useCardsStore } from "../store";
 import { EmptyCards } from "./EmptyCards";
 import { TableActionsCell } from "./TableActionsCell";
+import { useIsDesktop } from "../hooks/useIsDesktop";
 
 type TableViewProps = Omit<
   TableProps<Card>,
@@ -59,6 +60,7 @@ export const TableView = (props: TableViewProps) => {
   const updateCardWord = useCardsStore((state) => state.updateCardWord);
   const addCard = useCardsStore((state) => state.addCard);
   const { t } = useTranslation();
+  const isDesktop = useIsDesktop();
 
   const columnsFinal = useMemo(
     () =>
@@ -93,13 +95,16 @@ export const TableView = (props: TableViewProps) => {
           rowKey={(card) => card.id}
           size="small"
           sticky
+          scroll={{ x: 720 }}
           {...props}
         />
       )}
 
-      <FloatButton.Group shape="circle" style={{ insetInlineEnd: 24 }}>
-        <FloatButton type="primary" tooltip={t("addNewCard")} icon={<PlusOutlined />} onClick={addCard} />
-      </FloatButton.Group>
+      {!isDesktop && (
+        <FloatButton.Group shape="circle" style={{ insetInlineEnd: 24 }}>
+          <FloatButton type="primary" tooltip={t("addNewCard")} icon={<PlusOutlined />} onClick={addCard} />
+        </FloatButton.Group>
+      )}
     </>
   );
 };

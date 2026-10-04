@@ -6,15 +6,25 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    debug: true,
-    lng: "pl",
+    debug: import.meta.env.DEV,
+    supportedLngs: ["en", "es", "pl"],
+    nonExplicitSupportedLngs: true,
     fallbackLng: "en",
+    detection: {
+      order: ["localStorage", "navigator"],
+      caches: ["localStorage"],
+    },
     interpolation: {
       escapeValue: false,
     },
     resources: {
       en: {
         translation: {
+          addCard: "Add card",
+          more: "More",
+          language: "Language",
+          inputWord: "Type a word",
+          tapToWrite: "Tap to write the words",
           export: "Export",
           exportTooltip: "Downloads the project as a file that can be used to continue the project later",
           import: "Import",
@@ -70,6 +80,11 @@ i18n
       },
       es: {
         translation: {
+          addCard: "Agregar tarjeta",
+          more: "Más",
+          language: "Idioma",
+          inputWord: "Escribe una palabra",
+          tapToWrite: "Pulsa para escribir las palabras",
           export: "Exportar",
           exportTooltip: "Descarga el proyecto como un archivo que se puede usar para continuar el proyecto más tarde",
           import: "Importar",
@@ -120,11 +135,17 @@ i18n
           rearDesign_stars: "Estrellas",
           rearDesign_plain: "Liso",
           install: "Instalar",
-          installTooltip: "Instala la webapp en este dispositivo para abrirla como una aplicación, incluso sin conexión",
+          installTooltip:
+            "Instala la webapp en este dispositivo para abrirla como una aplicación, incluso sin conexión",
         },
       },
       pl: {
         translation: {
+          addCard: "Dodaj kartę",
+          more: "Więcej",
+          language: "Język",
+          inputWord: "Wpisz słowo",
+          tapToWrite: "Dotknij, aby wpisać słowa",
           export: "Eksport",
           exportTooltip: "Pobiera projekt jako plik, który można użyć do kontynuowania projektu później",
           import: "Import",
@@ -176,10 +197,15 @@ i18n
           rearDesign_stars: "Gwiazdy",
           rearDesign_plain: "Gładki",
           install: "Zainstaluj",
-          installTooltip: "Instaluje aplikację na tym urządzeniu, aby można było ją otwierać jak zwykłą aplikację, także offline",
+          installTooltip:
+            "Instaluje aplikację na tym urządzeniu, aby można było ją otwierać jak zwykłą aplikację, także offline",
         },
       },
     },
   });
+
+const syncHtmlLang = (lng: string) => document.documentElement.setAttribute("lang", lng);
+syncHtmlLang(i18n.resolvedLanguage ?? "en");
+i18n.on("languageChanged", () => syncHtmlLang(i18n.resolvedLanguage ?? "en"));
 
 export default i18n;

@@ -28,3 +28,9 @@ export const pageSizes = {
     h: 3508,
   },
 };
+
+export const languages = [
+  { label: "English", key: "en" },
+  { label: "Español", key: "es" },
+  { label: "Polski", key: "pl" },
+];

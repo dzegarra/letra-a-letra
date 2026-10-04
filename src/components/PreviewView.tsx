@@ -7,6 +7,7 @@ import { useCardsStore } from "../store";
 import { CardFront } from "./CardFront";
 import { useTranslation } from "react-i18next";
 import { EmptyCards } from "./EmptyCards";
+import { useIsDesktop } from "../hooks/useIsDesktop";
 
 type PreviewViewProps = {
   scrollableContainer?: HTMLDivElement | null;
@@ -19,6 +20,7 @@ export const PreviewView = forwardRef<HTMLDivElement, PreviewViewProps>(({ scrol
   const updateCard = useCardsStore((state) => state.updateCard);
   const lastCardsCountRef = useRef(-1);
   const { t } = useTranslation();
+  const isDesktop = useIsDesktop();
 
   // Scroll to the bottom each time a new card is added
   useEffect(() => {
@@ -46,11 +48,24 @@ export const PreviewView = forwardRef<HTMLDivElement, PreviewViewProps>(({ scrol
               </motion.ul>
             ))}
           </AnimatePresence>
+          {cards.length > 0 && (
+            <button
+              type="button"
+              onClick={addCard}
+              aria-label={t("addNewCard")}
+              className="h-[340px] w-[340px] rounded-full border-2 border-dashed border-slate-300 text-slate-400 hover:border-blue-400 hover:text-blue-500 hover:bg-blue-50/50 transition-colors flex flex-col items-center justify-center gap-2"
+            >
+              <PlusOutlined className="text-5xl" />
+              <span className="text-base">{t("addNewCard")}</span>
+            </button>
+          )}
         </div>
       </div>
 
       <FloatButton.Group shape="circle" style={{ insetInlineEnd: 24 }}>
-        <FloatButton type="primary" tooltip={t("addNewCard")} icon={<PlusOutlined />} onClick={addCard} />
+        {!isDesktop && (
+          <FloatButton type="primary" tooltip={t("addNewCard")} icon={<PlusOutlined />} onClick={addCard} />
+        )}
         <FloatButton
           tooltip={t("changeColors")}
           icon={<BgColorsOutlined />}

@@ -5,6 +5,7 @@ import { InputField } from "./InputField";
 import { wordPositionName } from "../constants";
 import { randomRotationDeg } from "../helpers/randomRotationDeg";
 import { useTranslation } from "react-i18next";
+import { CardDeletePopConfirm } from "./CardDeletePopConfirm";
 
 type ConfirmFormProps = {
   card: CardType;
@@ -35,9 +36,9 @@ export const ConfirmForm = ({ className, card, onClose, onUpdate, ...props }: Co
         <InputField
           key={index}
           label={t(wordPositionName[index])}
-          inputProps={{ placeholder: "Input word", className: "uppercase", autoFocus: index === 0 }}
+          inputProps={{ placeholder: t("inputWord"), className: "uppercase", autoFocus: index === 0 }}
           value={word}
-          helperText={`${word.length} characters`}
+          helperText={t("wordLength", { length: word.length })}
           onChange={(evt) => handleWordChange(index, evt.target.value)}
         />
       ))}
@@ -48,6 +49,15 @@ export const ConfirmForm = ({ className, card, onClose, onUpdate, ...props }: Co
       >
         {t("ok")}
       </button>
+
+      <div className="flex justify-between">
+        <button className="rounded-full text-slate-600 hover:bg-slate-200 py-1 px-3 text-sm" onClick={onClose}>
+          {t("cancel")}
+        </button>
+        <CardDeletePopConfirm card={card} placement="top">
+          <button className="rounded-full text-red-600 hover:bg-red-50 py-1 px-3 text-sm">{t("deleteCard")}</button>
+        </CardDeletePopConfirm>
+      </div>
     </div>
   );
 };

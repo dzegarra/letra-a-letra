@@ -55,6 +55,11 @@ declare module "i18next" {
         rearDesign_plain: string;
         install: string;
         installTooltip: string;
+        addCard: string;
+        more: string;
+        language: string;
+        inputWord: string;
+        tapToWrite: string;
       };
     };
   }
