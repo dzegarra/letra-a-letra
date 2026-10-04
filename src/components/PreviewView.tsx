@@ -7,7 +7,6 @@ import { useCardsStore } from "../store";
 import { CardFront } from "./CardFront";
 import { useTranslation } from "react-i18next";
 import { EmptyCards } from "./EmptyCards";
-import { useIsDesktop } from "../hooks/useIsDesktop";
 
 type PreviewViewProps = {
   scrollableContainer?: HTMLDivElement | null;
@@ -20,7 +19,6 @@ export const PreviewView = forwardRef<HTMLDivElement, PreviewViewProps>(({ scrol
   const updateCard = useCardsStore((state) => state.updateCard);
   const lastCardsCountRef = useRef(-1);
   const { t } = useTranslation();
-  const isDesktop = useIsDesktop();
 
   // Scroll to the bottom each time a new card is added
   useEffect(() => {
@@ -63,9 +61,6 @@ export const PreviewView = forwardRef<HTMLDivElement, PreviewViewProps>(({ scrol
       </div>
 
       <FloatButton.Group shape="circle" style={{ insetInlineEnd: 24 }}>
-        {!isDesktop && (
-          <FloatButton type="primary" tooltip={t("addNewCard")} icon={<PlusOutlined />} onClick={addCard} />
-        )}
         <FloatButton
           tooltip={t("changeColors")}
           icon={<BgColorsOutlined />}
