@@ -24,8 +24,8 @@ const cardSize = 340;
 const sampleSize = cardSize * sampleScale;
 
 /**
- * Where each ring ends, as a share of the card's radius. The card background is a radial gradient
- * whose stops are relative to the half diagonal of the card (see CardBackground.module.css)
+ * Where each ring ends, as a share of the card's radius. CardBackground's ring stops are relative to the
+ * half diagonal of the card
  */
 const ringOuterEdge: Record<WordIndex, number> = { 0: 1, 1: 0.53 * Math.SQRT2, 2: 0.35 * Math.SQRT2 };
 const ringInnerEdge: Record<WordIndex, number> = { 0: 0.53 * Math.SQRT2, 1: 0.35 * Math.SQRT2, 2: 0.17 * Math.SQRT2 };
