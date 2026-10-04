@@ -1,6 +1,5 @@
-import { ComponentProps, CSSProperties } from "react";
+import { ComponentProps } from "react";
 import clsx from "clsx";
-import classes from "./CardBackground.module.css";
 
 type CardBackgroundProps = {
   size: string;
@@ -9,22 +8,31 @@ type CardBackgroundProps = {
   color3: string;
 } & ComponentProps<"div">;
 
-export const CardBackground = ({ size, className, color1, color2, color3, ...props }: CardBackgroundProps) => (
+/**
+ * Outer edge of each inner ring, as a share of the half diagonal of the card. The rings are stacked circles
+ * instead of a radial gradient with hard stops because browsers and html2canvas don't antialias those stops,
+ * which leaves jagged edges between the rings
+ */
+const ringStops = { color2: 0.53, color3: 0.35, center: 0.17 };
+
+const Ring = ({ stop, color }: { stop: number; color: string }) => (
   <div
-    style={
-      {
-        width: size,
-        height: size,
-        "--color1": color1,
-        "--color2": color2,
-        "--color3": color3,
-      } as CSSProperties
-    }
+    className="absolute rounded-full"
+    style={{ inset: `${((1 - stop * Math.SQRT2) / 2) * 100}%`, background: color }}
+  />
+);
+
+export const CardBackground = ({ size, className, color1, color2, color3, style, ...props }: CardBackgroundProps) => (
+  <div
+    style={{ width: size, height: size, background: color1, ...style }}
     className={clsx(
       `top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 absolute rounded-full border border-slate-500`,
-      classes.bgcolor,
       className,
     )}
     {...props}
-  ></div>
+  >
+    <Ring stop={ringStops.color2} color={color2} />
+    <Ring stop={ringStops.color3} color={color3} />
+    <Ring stop={ringStops.center} color="#000" />
+  </div>
 );
