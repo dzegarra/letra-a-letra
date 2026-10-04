@@ -8,6 +8,7 @@ import { CardBackground } from "./CardBackground";
 import { ConfirmForm } from "./ConfigForm";
 import { Card as CardType } from "../types";
 import { CardDeletePopConfirm } from "./CardDeletePopConfirm";
+import { useTranslation } from "react-i18next";
 
 type CardFrontProps = {
   index?: number;
@@ -18,13 +19,17 @@ type CardFrontProps = {
 
 export const CardFront = ({ index, card, hideIndex = false, className, onUpdate }: CardFrontProps) => {
   const [editVisible, setEditVisible] = useState(false);
+  const { t } = useTranslation();
+  const isBlank = card.words.every(({ word }) => word.trim() === "");
 
   return (
     <div className={clsx("h-[340px] w-[340px] relative select-none", className)}>
       <div
         className={clsx("relative w-full h-full flex justify-center", {
           "blur-sm": editVisible,
+          "cursor-pointer": onUpdate && !editVisible,
         })}
+        onClick={onUpdate && !editVisible ? () => setEditVisible(true) : undefined}
       >
         <CardBackground
           size="340px"
@@ -56,8 +61,14 @@ export const CardFront = ({ index, card, hideIndex = false, className, onUpdate 
         />
 
         {!hideIndex && index !== undefined && (
-          <span className="text-4xl font-bold text-slate-700 absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2">
+          <span className="text-4xl font-bold text-white absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2">
             {index + 1}
+          </span>
+        )}
+
+        {onUpdate && isBlank && !editVisible && (
+          <span className="absolute bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-white/90 px-3 py-1 text-sm text-slate-700 shadow print:hidden">
+            {t("tapToWrite")}
           </span>
         )}
       </div>
@@ -80,11 +91,11 @@ export const CardFront = ({ index, card, hideIndex = false, className, onUpdate 
             </motion.ul>
           ) : (
             <div className="flex gap-1 opacity-0 hover:opacity-100 print:hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ">
-              <Button shape="circle" variant="text" title="Editar" onClick={() => setEditVisible(true)}>
+              <Button shape="circle" variant="text" title={t("edit")} onClick={() => setEditVisible(true)}>
                 ✏️
               </Button>
               <CardDeletePopConfirm card={card} placement="left">
-                <Button shape="circle" variant="text" title="Eliminar">
+                <Button shape="circle" variant="text" title={t("deleteCard")}>
                   🗑️
                 </Button>
               </CardDeletePopConfirm>

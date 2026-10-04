@@ -1,21 +1,7 @@
 import { FlagOutlined } from "@ant-design/icons";
 import { Button, Dropdown, MenuProps } from "antd";
 import { useTranslation } from "react-i18next";
-
-const items: MenuProps["items"] = [
-  {
-    label: "English",
-    key: "en",
-  },
-  {
-    label: "Español",
-    key: "es",
-  },
-  {
-    label: "Polski",
-    key: "pl",
-  },
-];
+import { languages } from "../constants";
 
 export const LangSelector = () => {
   const { i18n } = useTranslation();
@@ -27,12 +13,14 @@ export const LangSelector = () => {
   return (
     <Dropdown
       menu={{
-        items,
+        items: languages,
+        selectable: true,
+        selectedKeys: [i18n.resolvedLanguage ?? "en"],
         onClick: handleMenuClick,
       }}
     >
       <Button>
-        {i18n.language.toLocaleUpperCase()}
+        {(i18n.resolvedLanguage ?? "en").toLocaleUpperCase()}
         <FlagOutlined />
       </Button>
     </Dropdown>
