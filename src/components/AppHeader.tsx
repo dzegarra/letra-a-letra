@@ -1,7 +1,8 @@
-import { ComponentProps, Dispatch, SetStateAction, useCallback } from "react";
+import { ComponentProps, Dispatch, SetStateAction, useCallback, useState } from "react";
 import { Button, Dropdown, Grid, Layout, MenuProps, Modal, Segmented, Space, Tooltip } from "antd";
 import {
   AppstoreOutlined,
+  BgColorsOutlined,
   BarsOutlined,
   DownloadOutlined,
   FlagOutlined,
@@ -16,6 +17,7 @@ import { ViewMode } from "../types";
 import { pickFile } from "../helpers/pickFile";
 import { jsonToFile } from "../helpers/jsonToFile";
 import { CardsCount } from "./CardsCount";
+import { ColorsChanger } from "./ColorsChanger";
 import { useCardsStore } from "../store";
 import { LangSelector } from "./LangSelector";
 import { languages } from "../constants";
@@ -40,6 +42,7 @@ export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: Ap
   const showSecondaryInline = screens.xl === true;
   const isPhone = !screens.sm;
   const [modal, modalContextHolder] = Modal.useModal();
+  const [isColorsModalOpen, setIsColorsModalOpen] = useState(false);
 
   const exportData = useCallback(() => {
     const cards = useCardsStore.getState().cards;
@@ -116,7 +119,22 @@ export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: Ap
             {!isPhone && t("generatePdf")}
           </Button>
         </Tooltip>
+
+        <Button onClick={() => setIsColorsModalOpen(true)} icon={<BgColorsOutlined />} aria-label={t("changeColors")}>
+          {screens.md && t("changeColors")}
+        </Button>
       </Space>
+
+      <Modal
+        centered
+        title={t("colorsOfTheCards")}
+        width={300}
+        footer={null}
+        open={isColorsModalOpen}
+        onCancel={() => setIsColorsModalOpen(false)}
+      >
+        <ColorsChanger className="mt-5" />
+      </Modal>
 
       <Segmented
         value={viewMode}
