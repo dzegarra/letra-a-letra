@@ -11,6 +11,8 @@ type CircularWordProps = {
   width?: string;
   height?: string;
   rotationDeg?: number;
+  /** Shows a blinking caret after the last letter, while the word is being typed */
+  caret?: boolean;
 };
 
 export const CircularWord = ({
@@ -22,12 +24,13 @@ export const CircularWord = ({
   fontColor = "#000000",
   radius = 5,
   rotationDeg = 0,
+  caret = false,
 }: CircularWordProps) => (
   <span
     className={clsx(classes.ring, className)}
     style={
       {
-        "--total": word.length,
+        "--total": word.length + (caret ? 1 : 0),
         "--font-size": fontSize,
         "--font-color": fontColor,
         "--radius": radius,
@@ -42,5 +45,10 @@ export const CircularWord = ({
         {letter}
       </span>
     ))}
+    {caret && (
+      <span className={classes.caret} style={{ "--index": word.length } as any}>
+        |
+      </span>
+    )}
   </span>
 );

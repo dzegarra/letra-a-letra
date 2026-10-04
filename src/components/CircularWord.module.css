@@ -13,3 +13,12 @@
     rotate(calc(360deg / var(--total) * var(--index)))
     translateY(calc(var(--radius) * -1ch));
 }
+
+.caret {
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}

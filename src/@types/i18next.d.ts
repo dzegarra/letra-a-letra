@@ -59,6 +59,7 @@ declare module "i18next" {
         language: string;
         inputWord: string;
         tapToWrite: string;
+        save: string;
       };
     };
   }
