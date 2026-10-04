@@ -38,6 +38,7 @@ declare module "i18next" {
         zoomIn: string;
         zoomOut: string;
         fitToWidth: string;
+        options: string;
         pages: string;
         inner: string;
         middle: string;
