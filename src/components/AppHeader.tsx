@@ -128,12 +128,12 @@ export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: Ap
       <Modal
         centered
         title={t("colorsOfTheCards")}
-        width={300}
+        width={640}
         footer={null}
         open={isColorsModalOpen}
         onCancel={() => setIsColorsModalOpen(false)}
       >
-        <ColorsChanger className="mt-5" />
+        <ColorsChanger />
       </Modal>
 
       <Segmented

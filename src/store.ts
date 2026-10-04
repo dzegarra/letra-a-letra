@@ -21,6 +21,7 @@ type CardsStore = {
   deleteAllCards: () => void;
   addCard: () => void;
   changeColorArIndex: (color: string, index: WordIndex) => void;
+  changeColors: (colors: CardColors) => void;
   importCards: (cards: Card[]) => void;
   setRearDesign: (design: RearDesign) => void;
 };
@@ -87,6 +88,15 @@ export const useCardsStore = create<CardsStore>()(
         set(({ cards, colors }) => ({
           colors: [...colors].map((color, index) => (index === colorIndex ? newColor : color)) as CardColors,
           cards: [...cards].map(factoryCardColorApply(newColor, colorIndex)),
+        }));
+      },
+      changeColors: (newColors) => {
+        set(({ cards }) => ({
+          colors: newColors,
+          cards: cards.map((card) => ({
+            ...card,
+            words: card.words.map((word, index) => ({ ...word, color: newColors[index] })) as CardWords,
+          })),
         }));
       },
       importCards: (cards) => {
