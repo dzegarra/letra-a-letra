@@ -8,7 +8,8 @@ export default defineConfig({
     react(),
     // Makes the webapp installable and usable offline
     VitePWA({
-      registerType: 'autoUpdate',
+      // Wait for the user to accept the update notice before activating a new version
+      registerType: 'prompt',
       // The precache glob below already lists the icons
       includeManifestIcons: false,
       manifest: {

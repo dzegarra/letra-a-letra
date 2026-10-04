@@ -5,6 +5,7 @@ import { PreviewView } from "./components/PreviewView";
 import { useViewMode } from "./hooks/useViewMode";
 import { TableView } from "./components/TableView";
 import { PrintDocument } from "./components/PrintDocument";
+import { UpdatePrompt } from "./components/UpdatePrompt";
 import { useTranslation } from "react-i18next";
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
       >
         <PrintDocument className="h-full" onComplete={() => setOpen(false)} />
       </Modal>
+      <UpdatePrompt />
     </>
   );
 }

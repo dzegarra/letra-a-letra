@@ -55,6 +55,9 @@ declare module "i18next" {
         rearDesign_plain: string;
         install: string;
         installTooltip: string;
+        updateAvailable: string;
+        updateAvailableDescription: string;
+        update: string;
         more: string;
         language: string;
         inputWord: string;
