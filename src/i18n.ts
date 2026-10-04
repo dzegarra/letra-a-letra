@@ -264,7 +264,7 @@ i18n
             "Jeśli dwóch lub więcej graczy powie je jednocześnie, kartę odkłada się na bok, a o następną walczą tylko oni. Zwycięzca bierze obie.",
           howToPlayStep6: "Gdy stos się skończy, wygrywa gracz z największą liczbą kart.",
           createFirstCard: "Utwórz pierwszą kartę",
-          watchVideo: "Obejrzyj film z wyjaśnieniem gry",
+          watchVideo: "Obejrzyj film z wyjaśnieniem gry (po angielsku)",
           videoFromYoutube: "Odtwarzany z YouTube",
           howToPlayVideo: "Film wyjaśniający, jak grać",
           tapARing: "Dotknij pierścienia, aby wybrać jego kolor",

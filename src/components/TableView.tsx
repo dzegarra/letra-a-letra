@@ -112,7 +112,7 @@ export const TableView = (props: TableViewProps) => {
   return (
     <>
       {cards.length === 0 ? (
-        <EmptyCards className="h-full" />
+        <EmptyCards />
       ) : (
         <DndContext
           sensors={sensors}

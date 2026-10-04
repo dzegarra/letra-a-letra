@@ -60,7 +60,7 @@ export const PreviewView = forwardRef<HTMLDivElement, PreviewViewProps>(({ scrol
 
   return (
     <>
-      {cards.length === 0 && <EmptyCards className="h-full" />}
+      {cards.length === 0 && <EmptyCards />}
       <div className="mx-3 my-2" {...props} ref={ref}>
         <div className="flex flex-wrap gap-5">
           <AnimatePresence>

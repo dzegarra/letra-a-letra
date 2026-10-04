@@ -14,7 +14,11 @@ export const EmptyCards = ({ className, ...props }: EmptyCardsProps) => {
   const { t } = useTranslation();
 
   return (
-    <div className={clsx("flex justify-center px-4 py-6 sm:py-10", className)} data-testid="empty" {...props}>
+    <div
+      className={clsx("flex-none flex justify-center px-4 pt-6 pb-12 sm:pt-10 sm:pb-16", className)}
+      data-testid="empty"
+      {...props}
+    >
       <div className="w-full max-w-2xl flex flex-col gap-6">
         <div className="text-center">
           <Typography.Title level={2} className="!mb-2">

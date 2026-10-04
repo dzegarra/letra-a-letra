@@ -35,8 +35,9 @@ export const languages = [
   { label: "Polski", key: "pl" },
 ];
 
-/** YouTube videos that explain the game, by language. Languages without one just skip the video */
+/** YouTube videos that explain the game, by language. Polish has none, and many Poles speak English */
 export const howToPlayVideos: Partial<Record<string, string>> = {
   en: "WTTEoSTIEXg",
   es: "gGX3avQoT1Q",
+  pl: "WTTEoSTIEXg",
 };
