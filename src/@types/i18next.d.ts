@@ -54,6 +54,13 @@ declare module "i18next" {
         rearDesign_dots: string;
         rearDesign_stars: string;
         rearDesign_plain: string;
+        rearDesign_custom: string;
+        uploadCustomRearImage: string;
+        changeCustomRearImage: string;
+        removeCustomRearImage: string;
+        customRearImageError_type: string;
+        customRearImageError_size: string;
+        customRearImageError_invalid: string;
         install: string;
         installTooltip: string;
         updateAvailable: string;

@@ -1,6 +1,7 @@
 import { ComponentProps, CSSProperties } from "react";
 import clsx from "clsx";
 import { defaultRearDesign, RearDesign, rearDesigns } from "../rearDesigns";
+import { useCardsStore } from "../store";
 
 type CardRearProps = {
   color: string;
@@ -11,7 +12,8 @@ type CardRearProps = {
  * Reverse of the Cards.
  */
 export const CardRear = ({ color, design = defaultRearDesign, className, style, ...props }: CardRearProps) => {
-  const image = rearDesigns[design];
+  const customRearImage = useCardsStore((state) => state.customRearImage);
+  const image = design === "custom" ? customRearImage : rearDesigns[design];
   return (
     <div
       style={

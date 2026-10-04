@@ -33,7 +33,7 @@ type AppHeaderProps = {
 
 export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: AppHeaderProps) => {
   const cardsLength = useCardLength();
-  const importCards = useCardsStore((store) => store.importCards);
+  const importProject = useCardsStore((store) => store.importProject);
   const deleteAllCards = useCardsStore((store) => store.deleteAllCards);
   const { t, i18n } = useTranslation();
   const { canInstall, install } = useInstallPrompt();
@@ -45,8 +45,8 @@ export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: Ap
   const [isColorsModalOpen, setIsColorsModalOpen] = useState(false);
 
   const exportData = useCallback(() => {
-    const cards = useCardsStore.getState().cards;
-    jsonToFile(cards, "project-export");
+    const { cards, rearDesign, customRearImage } = useCardsStore.getState();
+    jsonToFile({ cards, rearDesign, customRearImage }, "project-export");
   }, []);
 
   const importFile = useCallback(() => {
@@ -56,13 +56,13 @@ export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: Ap
         try {
           const text = await file.text();
           const decoded = JSON.parse(text);
-          importCards(decoded);
+          importProject(decoded);
         } catch (err) {
           alert(String(err));
         }
       }
     });
-  }, [importCards]);
+  }, [importProject]);
 
   const confirmNewProject = useCallback(() => {
     modal.confirm({

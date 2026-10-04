@@ -14,9 +14,12 @@ export const rearDesigns = {
   plain: null,
 } as const satisfies Record<string, string | null>;
 
-export type RearDesign = keyof typeof rearDesigns;
+/**
+ * `custom` uses the image uploaded by the user, which is kept in the store.
+ */
+export type RearDesign = keyof typeof rearDesigns | "custom";
 
 export const defaultRearDesign: RearDesign = "rings";
 
 export const isRearDesign = (value: unknown): value is RearDesign =>
-  typeof value === "string" && Object.prototype.hasOwnProperty.call(rearDesigns, value);
+  value === "custom" || (typeof value === "string" && Object.prototype.hasOwnProperty.call(rearDesigns, value));
