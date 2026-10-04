@@ -8,7 +8,14 @@ import { HowToPlayVideo } from "./HowToPlayVideo";
 import { defaultColors, howToPlayVideos } from "../constants";
 import { Card } from "../types";
 
-const steps = ["howToPlayStep1", "howToPlayStep2", "howToPlayStep3", "howToPlayStep4", "howToPlayStep5"] as const;
+const steps = [
+  "howToPlayStep1",
+  "howToPlayStep2",
+  "howToPlayStep3",
+  "howToPlayStep4",
+  "howToPlayStep5",
+  "howToPlayStep6",
+] as const;
 
 type GameIntroProps = {
   /** Shows a "How to play" heading over the rules, for when nothing else around says what this is */

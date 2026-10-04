@@ -27,13 +27,16 @@ i18n
           educationalPurpose:
             "This is a project for educational purposes. It is meant above all for language classes: playing with words students have just learned helps them memorize vocabulary.",
           howToPlayStep1:
-            "Write three words on each card, for example the vocabulary of the lesson, and print the PDF. Cut out the cards.",
-          howToPlayStep2: "Shuffle the cards and put them face down in a pile.",
-          howToPlayStep3: "Turn over the top card. Every player looks for its three words at the same time.",
+            "Write three words on each card, for example the vocabulary of the lesson, and print the PDF. Cut out the cards and glue each one to its back. Laminating them is recommended, so they don't bend or get damaged while playing.",
+          howToPlayStep2:
+            "Shuffle the cards and put them face up in a pile in the middle. Before starting, the players choose the color of the ring to read on the first card.",
+          howToPlayStep3:
+            "Everyone looks at the same time for the word in that ring: its letters go one after another, without spaces, clockwise, starting anywhere on the ring.",
           howToPlayStep4:
-            "Each ring hides one word: its letters go one after another, without spaces, clockwise, starting anywhere on the ring.",
+            "Whoever says the word first takes the card. The color on its back tells which ring to read on the next card.",
           howToPlayStep5:
-            "Whoever says all three words first keeps the card. When the pile runs out, the player with the most cards wins.",
+            "If two or more players say it at the same time, the card is set aside and only they play for the next one. The winner takes both.",
+          howToPlayStep6: "The first player to collect 10 cards wins.",
           createFirstCard: "Create the first card",
           watchVideo: "Watch the video explaining the game",
           videoFromYoutube: "It plays from YouTube",
@@ -137,13 +140,16 @@ i18n
           educationalPurpose:
             "Este proyecto tiene fines educativos. Está pensado sobre todo para clases de idiomas: jugar con las palabras que se acaban de aprender ayuda a los estudiantes a memorizar vocabulario.",
           howToPlayStep1:
-            "Escribe tres palabras en cada tarjeta, por ejemplo el vocabulario de la lección, e imprime el PDF. Recorta las tarjetas.",
-          howToPlayStep2: "Mezcla las tarjetas y ponlas boca abajo en un montón.",
-          howToPlayStep3: "Da la vuelta a la tarjeta de arriba. Todos los jugadores buscan sus tres palabras a la vez.",
+            "Escribe tres palabras en cada tarjeta, por ejemplo el vocabulario de la lección, e imprime el PDF. Recorta las tarjetas y pega cada una con su reverso. Se recomienda plastificarlas para que no se doblen ni se estropeen durante el juego.",
+          howToPlayStep2:
+            "Baraja las tarjetas y ponlas boca arriba en un montón en el centro. Antes de empezar, los jugadores eligen el color del anillo que hay que leer en la primera tarjeta.",
+          howToPlayStep3:
+            "Todos buscan a la vez la palabra de ese anillo: sus letras van seguidas, sin espacios, en el sentido de las agujas del reloj y empiezan en cualquier punto del anillo.",
           howToPlayStep4:
-            "Cada anillo esconde una palabra: sus letras van seguidas, sin espacios, en el sentido de las agujas del reloj y empiezan en cualquier punto del anillo.",
+            "Quien dice primero la palabra se lleva la tarjeta. El color de su reverso indica qué anillo hay que leer en la siguiente.",
           howToPlayStep5:
-            "Quien diga primero las tres palabras se queda la tarjeta. Cuando se acaba el montón, gana quien tenga más tarjetas.",
+            "Si dos o más jugadores la dicen a la vez, se aparta la tarjeta y solo ellos compiten por la siguiente. El ganador se lleva las dos.",
+          howToPlayStep6: "Gana el primero que reúne 10 tarjetas.",
           createFirstCard: "Crear la primera tarjeta",
           watchVideo: "Ver el video que explica el juego",
           videoFromYoutube: "Se reproduce desde YouTube",
@@ -247,13 +253,16 @@ i18n
           educationalPurpose:
             "Ten projekt ma cele edukacyjne. Jest przeznaczony przede wszystkim na lekcje języków obcych: zabawa świeżo poznanymi słowami pomaga uczniom zapamiętać słownictwo.",
           howToPlayStep1:
-            "Wpisz trzy słowa na każdej karcie, na przykład słownictwo z lekcji, i wydrukuj PDF. Wytnij karty.",
-          howToPlayStep2: "Potasuj karty i połóż je w stosie rewersem do góry.",
-          howToPlayStep3: "Odwróć kartę z wierzchu. Wszyscy gracze jednocześnie szukają jej trzech słów.",
+            "Wpisz trzy słowa na każdej karcie, na przykład słownictwo z lekcji, i wydrukuj PDF. Wytnij karty i sklej każdą z jej rewersem. Zalecamy zalaminować karty, żeby nie zginały się i nie niszczyły podczas gry.",
+          howToPlayStep2:
+            "Potasuj karty i połóż je w stosie na środku, awersem do góry. Przed rozpoczęciem gracze wybierają kolor pierścienia, który trzeba odczytać na pierwszej karcie.",
+          howToPlayStep3:
+            "Wszyscy jednocześnie szukają słowa w tym pierścieniu: jego litery idą jedna za drugą, bez spacji, zgodnie z ruchem wskazówek zegara, zaczynając w dowolnym miejscu pierścienia.",
           howToPlayStep4:
-            "Każdy pierścień kryje jedno słowo: jego litery idą jedna za drugą, bez spacji, zgodnie z ruchem wskazówek zegara, zaczynając w dowolnym miejscu pierścienia.",
+            "Kto pierwszy powie słowo, zabiera kartę. Kolor na jej rewersie wskazuje, który pierścień trzeba odczytać na następnej karcie.",
           howToPlayStep5:
-            "Kto pierwszy powie wszystkie trzy słowa, zatrzymuje kartę. Gdy stos się skończy, wygrywa gracz z największą liczbą kart.",
+            "Jeśli dwóch lub więcej graczy powie je jednocześnie, kartę odkłada się na bok, a o następną walczą tylko oni. Zwycięzca bierze obie.",
+          howToPlayStep6: "Wygrywa pierwszy gracz, który zbierze 10 kart.",
           createFirstCard: "Utwórz pierwszą kartę",
           watchVideo: "Obejrzyj film z wyjaśnieniem gry",
           videoFromYoutube: "Odtwarzany z YouTube",
