@@ -6,6 +6,12 @@ import { CardBackground } from "./CardBackground";
 import { Card as CardType, WordIndex } from "../types";
 import { useTranslation } from "react-i18next";
 
+// Middle of each colored band of CardBackground on a 340px card. Its radial gradient stops are percentages of
+// the half diagonal (170px * √2) and the outer band reaches the edge of the card
+const OUTER_RING_RADIUS = (0.53 * 170 * Math.SQRT2 + 170) / 2;
+const MIDDLE_RING_RADIUS = ((0.35 + 0.53) / 2) * 170 * Math.SQRT2;
+const INNER_RING_RADIUS = ((0.17 + 0.35) / 2) * 170 * Math.SQRT2;
+
 type CardFrontProps = {
   index?: number;
   card: CardType;
@@ -45,21 +51,21 @@ export const CardFront = ({
 
         <CircularWord
           word={card.words[0].word}
-          radius={8.6}
+          radius={OUTER_RING_RADIUS}
           fontSize={2}
           fontColor={wordColor(0)}
           rotationDeg={card.words[0].rotationDeg}
         />
         <CircularWord
           word={card.words[1].word}
-          radius={6.1}
+          radius={MIDDLE_RING_RADIUS}
           fontSize={2}
           fontColor={wordColor(1)}
           rotationDeg={card.words[1].rotationDeg}
         />
         <CircularWord
           word={card.words[2].word}
-          radius={3.6}
+          radius={INNER_RING_RADIUS}
           fontSize={2}
           fontColor={wordColor(2)}
           rotationDeg={card.words[2].rotationDeg}
