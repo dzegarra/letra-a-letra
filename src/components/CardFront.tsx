@@ -3,7 +3,6 @@ import clsx from "clsx";
 import fontColorContrast from "font-color-contrast";
 import { CircularWord } from "./CircularWord";
 import { CardBackground } from "./CardBackground";
-import { RingHighlight } from "./RingHighlight";
 import { Card as CardType, WordIndex } from "../types";
 import { useTranslation } from "react-i18next";
 
@@ -13,7 +12,7 @@ type CardFrontProps = {
   hideIndex?: boolean;
   /** Called when the card is tapped. When present, a blank card also shows a hint inviting to write on it */
   onEdit?: () => void;
-  /** Outlines the ring of the word being edited */
+  /** Keeps the ring of the word being edited in color and fades the other two */
   highlightWord?: WordIndex;
 } & ComponentProps<"div">;
 
@@ -28,6 +27,13 @@ export const CardFront = ({
 }: CardFrontProps) => {
   const { t } = useTranslation();
   const isBlank = card.words.every(({ word }) => word.trim() === "");
+  const isFaded = (wordIndex: WordIndex) => highlightWord !== undefined && highlightWord !== wordIndex;
+  const ringColor = (wordIndex: WordIndex) =>
+    isFaded(wordIndex)
+      ? `color-mix(in srgb, ${card.words[wordIndex].color} 15%, #e2e8f0)`
+      : card.words[wordIndex].color;
+  const wordColor = (wordIndex: WordIndex) =>
+    isFaded(wordIndex) ? "#94a3b8" : fontColorContrast(card.words[wordIndex].color);
 
   return (
     <div className={clsx("h-[340px] w-[340px] relative select-none", className)} style={style}>
@@ -35,32 +41,27 @@ export const CardFront = ({
         className={clsx("relative w-full h-full flex justify-center", { "cursor-pointer": onEdit })}
         onClick={onEdit}
       >
-        <CardBackground
-          size="340px"
-          color1={card.words[0].color}
-          color2={card.words[1].color}
-          color3={card.words[2].color}
-        />
+        <CardBackground size="340px" color1={ringColor(0)} color2={ringColor(1)} color3={ringColor(2)} />
 
         <CircularWord
           word={card.words[0].word}
           radius={8.6}
           fontSize={2}
-          fontColor={fontColorContrast(card.words[0].color)}
+          fontColor={wordColor(0)}
           rotationDeg={card.words[0].rotationDeg}
         />
         <CircularWord
           word={card.words[1].word}
           radius={6.1}
           fontSize={2}
-          fontColor={fontColorContrast(card.words[1].color)}
+          fontColor={wordColor(1)}
           rotationDeg={card.words[1].rotationDeg}
         />
         <CircularWord
           word={card.words[2].word}
           radius={3.6}
           fontSize={2}
-          fontColor={fontColorContrast(card.words[2].color)}
+          fontColor={wordColor(2)}
           rotationDeg={card.words[2].rotationDeg}
         />
 
@@ -68,10 +69,6 @@ export const CardFront = ({
           <span className="text-4xl font-bold text-white absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2">
             {index + 1}
           </span>
-        )}
-
-        {highlightWord !== undefined && (
-          <RingHighlight index={highlightWord} className="absolute inset-0 w-full h-full pointer-events-none" />
         )}
 
         {onEdit && isBlank && (
