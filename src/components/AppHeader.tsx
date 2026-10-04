@@ -10,6 +10,7 @@ import {
   MobileOutlined,
   MoreOutlined,
   PrinterOutlined,
+  QuestionCircleOutlined,
   UploadOutlined,
 } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
@@ -24,6 +25,7 @@ import { languages } from "../constants";
 import { NewProjectPopConfirm } from "./NewProjectPopConfirm";
 import { useCardLength } from "../hooks/useCardLength";
 import { useInstallPrompt } from "../hooks/useInstallPrompt";
+import { GameIntro } from "./GameIntro";
 
 type AppHeaderProps = {
   viewMode: ViewMode;
@@ -43,6 +45,7 @@ export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: Ap
   const isPhone = !screens.sm;
   const [modal, modalContextHolder] = Modal.useModal();
   const [isColorsModalOpen, setIsColorsModalOpen] = useState(false);
+  const [isHowToPlayOpen, setIsHowToPlayOpen] = useState(false);
 
   const exportData = useCallback(() => {
     const { cards, rearDesign, customRearImage } = useCardsStore.getState();
@@ -75,6 +78,8 @@ export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: Ap
   }, [modal, t, deleteAllCards]);
 
   const moreMenuItems: MenuProps["items"] = [
+    { key: "howToPlay", label: t("howToPlay"), icon: <QuestionCircleOutlined /> },
+    { type: "divider" },
     { key: "newProject", label: t("newProject"), icon: <FormatPainterOutlined />, disabled: cardsLength === 0 },
     { key: "export", label: t("export"), icon: <DownloadOutlined /> },
     { key: "import", label: t("import"), icon: <UploadOutlined /> },
@@ -90,6 +95,7 @@ export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: Ap
 
   const handleMoreMenuClick: MenuProps["onClick"] = ({ key }) => {
     if (key.startsWith("lang:")) i18n.changeLanguage(key.slice("lang:".length));
+    else if (key === "howToPlay") setIsHowToPlayOpen(true);
     else if (key === "newProject") confirmNewProject();
     else if (key === "export") exportData();
     else if (key === "import") importFile();
@@ -136,6 +142,18 @@ export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: Ap
         <ColorsChanger />
       </Modal>
 
+      <Modal
+        centered
+        title={t("howToPlay")}
+        width={720}
+        footer={null}
+        open={isHowToPlayOpen}
+        onCancel={() => setIsHowToPlayOpen(false)}
+        destroyOnClose
+      >
+        <GameIntro />
+      </Modal>
+
       <Segmented
         value={viewMode}
         onChange={setViewMode}
@@ -153,6 +171,10 @@ export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: Ap
       <Space>
         {showSecondaryInline ? (
           <>
+            <Button onClick={() => setIsHowToPlayOpen(true)} icon={<QuestionCircleOutlined />}>
+              {t("howToPlay")}
+            </Button>
+
             {cardsLength > 0 && (
               <NewProjectPopConfirm>
                 <Button icon={<FormatPainterOutlined />}>{t("newProject")}</Button>

@@ -34,3 +34,9 @@ export const languages = [
   { label: "Español", key: "es" },
   { label: "Polski", key: "pl" },
 ];
+
+/** YouTube videos that explain the game, by language. Languages without one just skip the video */
+export const howToPlayVideos: Partial<Record<string, string>> = {
+  en: "WTTEoSTIEXg",
+  es: "gGX3avQoT1Q",
+};

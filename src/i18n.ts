@@ -20,6 +20,24 @@ i18n
     resources: {
       en: {
         translation: {
+          howToPlay: "How to play",
+          welcomeTitle: "Welcome to Letra a letra",
+          welcomeDescription:
+            "Create round word cards, print them and play to find the words hidden among the letters.",
+          educationalPurpose:
+            "This is a project for educational purposes. It is meant above all for language classes: playing with words students have just learned helps them memorize vocabulary.",
+          howToPlayStep1:
+            "Write three words on each card, for example the vocabulary of the lesson, and print the PDF. Cut out the cards.",
+          howToPlayStep2: "Shuffle the cards and put them face down in a pile.",
+          howToPlayStep3: "Turn over the top card. Every player looks for its three words at the same time.",
+          howToPlayStep4:
+            "Each ring hides one word: its letters go one after another, without spaces, clockwise, starting anywhere on the ring.",
+          howToPlayStep5:
+            "Whoever says all three words first keeps the card. When the pile runs out, the player with the most cards wins.",
+          createFirstCard: "Create the first card",
+          watchVideo: "Watch the video explaining the game",
+          videoFromYoutube: "It plays from YouTube",
+          howToPlayVideo: "Video explaining how to play",
           tapARing: "Tap a ring to choose its color",
           otherColor: "Other color",
           suggestedColors: "Suggested",
@@ -112,6 +130,24 @@ i18n
       },
       es: {
         translation: {
+          howToPlay: "Cómo se juega",
+          welcomeTitle: "Te damos la bienvenida a Letra a letra",
+          welcomeDescription:
+            "Crea tarjetas redondas con palabras, imprímelas y juega a encontrar las palabras escondidas entre las letras.",
+          educationalPurpose:
+            "Este proyecto tiene fines educativos. Está pensado sobre todo para clases de idiomas: jugar con las palabras que se acaban de aprender ayuda a los estudiantes a memorizar vocabulario.",
+          howToPlayStep1:
+            "Escribe tres palabras en cada tarjeta, por ejemplo el vocabulario de la lección, e imprime el PDF. Recorta las tarjetas.",
+          howToPlayStep2: "Mezcla las tarjetas y ponlas boca abajo en un montón.",
+          howToPlayStep3: "Da la vuelta a la tarjeta de arriba. Todos los jugadores buscan sus tres palabras a la vez.",
+          howToPlayStep4:
+            "Cada anillo esconde una palabra: sus letras van seguidas, sin espacios, en el sentido de las agujas del reloj y empiezan en cualquier punto del anillo.",
+          howToPlayStep5:
+            "Quien diga primero las tres palabras se queda la tarjeta. Cuando se acaba el montón, gana quien tenga más tarjetas.",
+          createFirstCard: "Crear la primera tarjeta",
+          watchVideo: "Ver el video que explica el juego",
+          videoFromYoutube: "Se reproduce desde YouTube",
+          howToPlayVideo: "Video que explica cómo se juega",
           tapARing: "Toca un anillo para elegir su color",
           otherColor: "Otro color",
           suggestedColors: "Sugeridos",
@@ -205,6 +241,23 @@ i18n
       },
       pl: {
         translation: {
+          howToPlay: "Jak grać",
+          welcomeTitle: "Witaj w Letra a letra",
+          welcomeDescription: "Twórz okrągłe karty ze słowami, wydrukuj je i graj, szukając słów ukrytych wśród liter.",
+          educationalPurpose:
+            "Ten projekt ma cele edukacyjne. Jest przeznaczony przede wszystkim na lekcje języków obcych: zabawa świeżo poznanymi słowami pomaga uczniom zapamiętać słownictwo.",
+          howToPlayStep1:
+            "Wpisz trzy słowa na każdej karcie, na przykład słownictwo z lekcji, i wydrukuj PDF. Wytnij karty.",
+          howToPlayStep2: "Potasuj karty i połóż je w stosie rewersem do góry.",
+          howToPlayStep3: "Odwróć kartę z wierzchu. Wszyscy gracze jednocześnie szukają jej trzech słów.",
+          howToPlayStep4:
+            "Każdy pierścień kryje jedno słowo: jego litery idą jedna za drugą, bez spacji, zgodnie z ruchem wskazówek zegara, zaczynając w dowolnym miejscu pierścienia.",
+          howToPlayStep5:
+            "Kto pierwszy powie wszystkie trzy słowa, zatrzymuje kartę. Gdy stos się skończy, wygrywa gracz z największą liczbą kart.",
+          createFirstCard: "Utwórz pierwszą kartę",
+          watchVideo: "Obejrzyj film z wyjaśnieniem gry",
+          videoFromYoutube: "Odtwarzany z YouTube",
+          howToPlayVideo: "Film wyjaśniający, jak grać",
           tapARing: "Dotknij pierścienia, aby wybrać jego kolor",
           otherColor: "Inny kolor",
           suggestedColors: "Sugerowane",
