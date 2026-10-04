@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useRef } from "react";
+import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
 import { FloatButton } from "antd";
 import { motion, AnimatePresence } from "motion/react";
 import { PlusOutlined } from "@ant-design/icons";
@@ -6,6 +6,8 @@ import { useCardsStore } from "../store";
 import { CardFront } from "./CardFront";
 import { useTranslation } from "react-i18next";
 import { EmptyCards } from "./EmptyCards";
+import { CardEditor } from "./CardEditor";
+import { Card } from "../types";
 
 type PreviewViewProps = {
   scrollableContainer?: HTMLDivElement | null;
@@ -16,6 +18,33 @@ export const PreviewView = forwardRef<HTMLDivElement, PreviewViewProps>(({ scrol
   const addCard = useCardsStore((state) => state.addCard);
   const updateCard = useCardsStore((state) => state.updateCard);
   const lastCardsCountRef = useRef(-1);
+  const [editingId, setEditingId] = useState<string>();
+  const editingIndex = cards.findIndex((card) => card.id === editingId);
+  const editingCard = editingIndex === -1 ? undefined : cards[editingIndex];
+  const lastEditingIndexRef = useRef(0);
+  if (editingIndex !== -1) lastEditingIndexRef.current = editingIndex;
+
+  const closeEditor = useCallback(() => setEditingId(undefined), []);
+
+  const saveCard = useCallback(
+    (card: Card) => {
+      updateCard(card);
+      setEditingId(undefined);
+    },
+    [updateCard],
+  );
+
+  // Saves the card and moves on to the next one, creating a new card after the last one
+  const saveCardAndEditNext = useCallback(
+    (card: Card) => {
+      updateCard(card);
+      const { cards } = useCardsStore.getState();
+      const index = cards.findIndex(({ id }) => id === card.id);
+      if (index === cards.length - 1) addCard();
+      setEditingId(useCardsStore.getState().cards[index + 1]?.id);
+    },
+    [updateCard, addCard],
+  );
   const { t } = useTranslation();
 
   // Scroll to the bottom each time a new card is added
@@ -40,7 +69,7 @@ export const PreviewView = forwardRef<HTMLDivElement, PreviewViewProps>(({ scrol
                 exit={{ opacity: 0, scale: 0.5 }}
                 key={card.id}
               >
-                <CardFront index={index} card={card} onUpdate={updateCard} />
+                <CardFront index={index} card={card} onEdit={() => setEditingId(card.id)} />
               </motion.ul>
             ))}
           </AnimatePresence>
@@ -57,6 +86,14 @@ export const PreviewView = forwardRef<HTMLDivElement, PreviewViewProps>(({ scrol
           )}
         </div>
       </div>
+
+      <CardEditor
+        card={editingCard}
+        index={lastEditingIndexRef.current}
+        onSave={saveCard}
+        onSaveAndNext={saveCardAndEditNext}
+        onClose={closeEditor}
+      />
 
       <FloatButton.BackTop
         tooltip={t("moveToTheTop")}
