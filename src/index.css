@@ -7,3 +7,34 @@
         display: initial;
     }
 }
+/* PDF preview modal: grows with the window and fills the screen on small devices */
+.pdf-modal {
+    top: 24px;
+    padding-bottom: 0;
+}
+
+.pdf-modal .ant-modal-content {
+    display: flex;
+    flex-direction: column;
+    height: calc(100dvh - 48px);
+}
+
+.pdf-modal .ant-modal-body {
+    flex: 1;
+    min-height: 0;
+}
+
+@media (max-width: 639px) {
+    .pdf-modal {
+        top: 0;
+        width: 100vw !important;
+        max-width: 100vw !important;
+        margin: 0 !important;
+    }
+
+    .pdf-modal .ant-modal-content {
+        height: 100dvh;
+        border-radius: 0;
+        padding: 12px;
+    }
+}

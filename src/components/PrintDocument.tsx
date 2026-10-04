@@ -132,8 +132,9 @@ export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewPr
 
   return (
     <div className={clsx("relative overflow-hidden flex flex-col", className)} {...props}>
-      <div className="h-16 flex-none p-3 px-24">
+      <div className="h-16 flex-none p-3 sm:px-24">
         <Steps
+          responsive={false}
           items={[
             {
               title: t("preparingPages"),
@@ -154,13 +155,13 @@ export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewPr
           "overflow-hidden": renderingStatus === "process",
         })}
       >
-        <div className="flex flex-col flex-1 items-start gap-7 p-4" ref={pagesRef}>
+        <div className="flex flex-wrap justify-center items-start gap-7 p-4" ref={pagesRef}>
           {pages}
         </div>
       </div>
 
-      <div className="flex justify-between items-center gap-4 pt-3 px-3">
-        <Space size="middle">
+      <div className="flex flex-wrap justify-between items-center gap-4 pt-3 px-3">
+        <Space size="middle" wrap>
           <Typography.Text type="secondary">{t("pages", { count: pages.length })}</Typography.Text>
           <Tooltip title={t("duplexTooltip")}>
             <Checkbox checked={duplex} onChange={(e) => setDuplex(e.target.checked)} disabled={isBusy}>
@@ -199,7 +200,7 @@ export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewPr
             />
           </Space>
         </Space>
-        <Space>
+        <Space className="ml-auto">
           <Button type="default" onClick={onComplete} disabled={isBusy}>
             {t("cancel")}
           </Button>
