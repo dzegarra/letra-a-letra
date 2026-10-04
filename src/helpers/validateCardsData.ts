@@ -14,3 +14,16 @@ export const cardsSchema = z.array(
       .length(3),
   }),
 );
+
+/**
+ * Exported project. Older exports were just the array of cards, which is still accepted on import.
+ */
+export const projectSchema = z.object({
+  cards: cardsSchema,
+  rearDesign: z.string().optional(),
+  customRearImage: z
+    .string()
+    .regex(/^data:image\/(png|svg\+xml);base64,/)
+    .nullable()
+    .optional(),
+});

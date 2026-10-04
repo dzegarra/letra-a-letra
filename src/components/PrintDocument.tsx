@@ -1,7 +1,7 @@
 import { ComponentProps, useRef, useState, useCallback, useMemo, useEffect } from "react";
 import chunk from "lodash/chunk";
 import zip from "lodash/zip";
-import { Button, Checkbox, Collapse, Segmented, Select, Space, Tooltip, Typography } from "antd";
+import { Button, Checkbox, Collapse, Segmented, Space, Tooltip, Typography } from "antd";
 import { useCardsStore } from "../store";
 import { CardFront } from "./CardFront";
 import { calculateRearColors } from "../helpers/calculateRearColors";
@@ -14,7 +14,7 @@ import { bytesToPdf } from "../helpers/bytesToPdf";
 import { ColumnWidthOutlined, ZoomInOutlined, ZoomOutOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import { cardSizes, pageSizes } from "../constants";
-import { RearDesign, rearDesigns } from "../rearDesigns";
+import { RearDesignSelector } from "./RearDesignSelector";
 
 const minZoom = 0.2;
 const maxZoom = 2;
@@ -44,7 +44,6 @@ export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewPr
   const colors = useCardsStore((state) => state.colors);
   const cards = useCardsStore((state) => state.cards);
   const rearDesign = useCardsStore((state) => state.rearDesign);
-  const setRearDesign = useCardsStore((state) => state.setRearDesign);
   const { t } = useTranslation();
 
   const isBusy = renderingStatus === "process" || creatingPdfStatus === "process";
@@ -167,20 +166,7 @@ export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewPr
       </div>
       <div className="flex flex-col gap-2">
         <Typography.Text strong>{t("rearDesign")}</Typography.Text>
-        <Select<RearDesign>
-          value={rearDesign}
-          onChange={setRearDesign}
-          disabled={isBusy}
-          options={(Object.keys(rearDesigns) as RearDesign[]).map((design) => ({
-            value: design,
-            label: (
-              <Space size="small">
-                <CardRear color={colors[0]} design={design} className="!h-5 !w-5 align-middle" />
-                {t(`rearDesign_${design}`)}
-              </Space>
-            ),
-          }))}
-        />
+        <RearDesignSelector disabled={isBusy} />
       </div>
       <div className="flex flex-col gap-1">
         <Checkbox checked={duplex} onChange={(e) => setDuplex(e.target.checked)} disabled={isBusy}>
