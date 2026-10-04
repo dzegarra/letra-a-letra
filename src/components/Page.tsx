@@ -1,13 +1,7 @@
 import clsx from "clsx";
 import { ComponentProps, useEffect, useRef, useState } from "react";
 import html2canvas from "html2canvas";
-
-const pageSizes = {
-  a4: {
-    w: 2480,
-    h: 3508,
-  },
-};
+import { pageSizes } from "../constants";
 
 type PageProps = ComponentProps<"div"> & {
   format: keyof typeof pageSizes;

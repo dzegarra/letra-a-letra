@@ -35,6 +35,9 @@ declare module "i18next" {
         displayCardNumber: string;
         cancel: string;
         startCreatingPdf: string;
+        zoomIn: string;
+        zoomOut: string;
+        fitToWidth: string;
         pages: string;
         inner: string;
         middle: string;

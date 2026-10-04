@@ -1,4 +1,4 @@
-import { ComponentProps, useRef, useState, useCallback, useMemo } from "react";
+import { ComponentProps, useRef, useState, useCallback, useMemo, useEffect } from "react";
 import chunk from "lodash/chunk";
 import zip from "lodash/zip";
 import { Button, Checkbox, Segmented, Select, Space, Steps, StepsProps, Tooltip, Typography } from "antd";
@@ -11,10 +11,25 @@ import html2canvas from "html2canvas";
 import clsx from "clsx";
 import { PageSizes, PDFDocument } from "pdf-lib";
 import { bytesToPdf } from "../helpers/bytesToPdf";
-import { DownloadOutlined, LoadingOutlined, SettingOutlined } from "@ant-design/icons";
+import {
+  ColumnWidthOutlined,
+  DownloadOutlined,
+  LoadingOutlined,
+  SettingOutlined,
+  ZoomInOutlined,
+  ZoomOutOutlined,
+} from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
-import { cardSizes } from "../constants";
+import { cardSizes, pageSizes } from "../constants";
 import { RearDesign, rearDesigns } from "../rearDesigns";
+
+const minZoom = 0.2;
+const maxZoom = 2;
+const zoomStep = 0.1;
+// Width of an A4 page plus the horizontal padding around the pages (p-4), in CSS pixels
+const pagesWidthPx = (pageSizes.a4.w / 10) * (96 / 25.4) + 32;
+
+const clampZoom = (zoom: number) => Math.min(maxZoom, Math.max(minZoom, Math.round(zoom * 100) / 100));
 
 type PreviewViewProps = ComponentProps<"div"> & {
   onComplete: () => void;
@@ -27,6 +42,10 @@ export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewPr
   const [creatingPdfStatus, setCreatingPdfStatus] = useState<StepsProps["status"]>("wait");
   const [cardSize, setCardSize] = useState<keyof typeof cardSizes>("S");
   const pagesRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [fitZoom, setFitZoom] = useState(1);
+  // null until the user picks a zoom, the preview then fits the width without going over the real size
+  const [chosenZoom, setChosenZoom] = useState<number | null>(null);
   const colors = useCardsStore((state) => state.colors);
   const cards = useCardsStore((state) => state.cards);
   const rearDesign = useCardsStore((state) => state.rearDesign);
@@ -34,6 +53,15 @@ export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewPr
   const { t } = useTranslation();
 
   const isBusy = renderingStatus === "process" || creatingPdfStatus === "process";
+  const zoom = chosenZoom ?? Math.min(1, fitZoom);
+
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+    const observer = new ResizeObserver(() => setFitZoom(clampZoom(container.clientWidth / pagesWidthPx)));
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, []);
 
   const pages = useMemo(() => {
     const cardsGroupedBySix = chunk(cards, 6);
@@ -150,13 +178,52 @@ export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewPr
         />
       </div>
 
-      <div
-        className={clsx("flex-1 overflow-y-auto bg-gray-200", {
-          "overflow-hidden": renderingStatus === "process",
-        })}
-      >
-        <div className="flex flex-wrap [justify-content:safe_center] items-start gap-7 p-4" ref={pagesRef}>
-          {pages}
+      <div className="relative flex-1 min-h-0">
+        <div
+          ref={scrollContainerRef}
+          className={clsx("h-full overflow-y-auto bg-gray-200", {
+            "overflow-hidden": renderingStatus === "process",
+          })}
+        >
+          {/* The pages are captured at their real size, so the zoom is dropped while they are being rendered */}
+          <div
+            className="flex flex-wrap [justify-content:safe_center] items-start gap-7 p-4"
+            style={{ zoom: renderingStatus === "process" ? 1 : zoom }}
+            ref={pagesRef}
+          >
+            {pages}
+          </div>
+        </div>
+
+        <div className="absolute bottom-3 right-5 flex items-center gap-1 rounded-md bg-white p-1 shadow-md">
+          <Tooltip title={t("zoomOut")}>
+            <Button
+              type="text"
+              size="small"
+              icon={<ZoomOutOutlined />}
+              onClick={() => setChosenZoom(clampZoom(zoom - zoomStep))}
+              disabled={isBusy || zoom <= minZoom}
+            />
+          </Tooltip>
+          <Typography.Text className="w-11 text-center tabular-nums">{Math.round(zoom * 100)}%</Typography.Text>
+          <Tooltip title={t("zoomIn")}>
+            <Button
+              type="text"
+              size="small"
+              icon={<ZoomInOutlined />}
+              onClick={() => setChosenZoom(clampZoom(zoom + zoomStep))}
+              disabled={isBusy || zoom >= maxZoom}
+            />
+          </Tooltip>
+          <Tooltip title={t("fitToWidth")}>
+            <Button
+              type="text"
+              size="small"
+              icon={<ColumnWidthOutlined />}
+              onClick={() => setChosenZoom(fitZoom)}
+              disabled={isBusy}
+            />
+          </Tooltip>
         </div>
       </div>
 

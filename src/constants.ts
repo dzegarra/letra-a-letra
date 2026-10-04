@@ -21,3 +21,10 @@ export const wordLengthsMax: Record<(typeof wordPositionName)[number], [number, 
   middle: [7, 10, 13],
   inner: [5, 7, 9],
 } as const;
+
+export const pageSizes = {
+  a4: {
+    w: 2480,
+    h: 3508,
+  },
+};
