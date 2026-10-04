@@ -2,12 +2,10 @@ import { ComponentProps, useState } from "react";
 import clsx from "clsx";
 import fontColorContrast from "font-color-contrast";
 import { motion, AnimatePresence } from "motion/react";
-import { Button } from "antd";
 import { CircularWord } from "./CircularWord";
 import { CardBackground } from "./CardBackground";
 import { ConfirmForm } from "./ConfigForm";
 import { Card as CardType } from "../types";
-import { CardDeletePopConfirm } from "./CardDeletePopConfirm";
 import { useTranslation } from "react-i18next";
 
 type CardFrontProps = {
@@ -75,7 +73,7 @@ export const CardFront = ({ index, card, hideIndex = false, className, onUpdate 
 
       {onUpdate && (
         <AnimatePresence>
-          {editVisible ? (
+          {editVisible && (
             <motion.ul
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -89,17 +87,6 @@ export const CardFront = ({ index, card, hideIndex = false, className, onUpdate 
                 onClose={() => setEditVisible(false)}
               />
             </motion.ul>
-          ) : (
-            <div className="flex gap-1 opacity-0 hover:opacity-100 print:hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ">
-              <Button shape="circle" variant="text" title={t("edit")} onClick={() => setEditVisible(true)}>
-                ✏️
-              </Button>
-              <CardDeletePopConfirm card={card} placement="left">
-                <Button shape="circle" variant="text" title={t("deleteCard")}>
-                  🗑️
-                </Button>
-              </CardDeletePopConfirm>
-            </div>
           )}
         </AnimatePresence>
       )}

@@ -8,7 +8,6 @@ import {
   FormatPainterOutlined,
   MobileOutlined,
   MoreOutlined,
-  PlusOutlined,
   PrinterOutlined,
   UploadOutlined,
 } from "@ant-design/icons";
@@ -23,7 +22,6 @@ import { languages } from "../constants";
 import { NewProjectPopConfirm } from "./NewProjectPopConfirm";
 import { useCardLength } from "../hooks/useCardLength";
 import { useInstallPrompt } from "../hooks/useInstallPrompt";
-import { useIsDesktop } from "../hooks/useIsDesktop";
 
 type AppHeaderProps = {
   viewMode: ViewMode;
@@ -34,12 +32,10 @@ type AppHeaderProps = {
 export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: AppHeaderProps) => {
   const cardsLength = useCardLength();
   const importCards = useCardsStore((store) => store.importCards);
-  const addCard = useCardsStore((store) => store.addCard);
   const deleteAllCards = useCardsStore((store) => store.deleteAllCards);
   const { t, i18n } = useTranslation();
   const { canInstall, install } = useInstallPrompt();
   const screens = Grid.useBreakpoint();
-  const isDesktop = useIsDesktop();
   // Secondary actions only fit as buttons on very wide screens; below that they go in a "more" menu
   const showSecondaryInline = screens.xl === true;
   const isPhone = !screens.sm;
@@ -115,12 +111,6 @@ export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: Ap
       {modalContextHolder}
 
       <Space>
-        {isDesktop && (
-          <Button onClick={addCard} icon={<PlusOutlined />}>
-            {t("addCard")}
-          </Button>
-        )}
-
         <Tooltip title={t("generatePdfTooltip")}>
           <Button onClick={onDownloadPdf} icon={<PrinterOutlined />} type="primary" aria-label={t("generatePdf")}>
             {!isPhone && t("generatePdf")}

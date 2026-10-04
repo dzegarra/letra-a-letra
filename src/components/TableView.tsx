@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { FloatButton, Table, TableProps } from "antd";
+import { Table, TableProps } from "antd";
 import { useTranslation } from "react-i18next";
 import { PlusOutlined } from "@ant-design/icons";
 import { Card, WordIndex } from "../types";
@@ -8,7 +8,6 @@ import { wordPositionName } from "../constants";
 import { useCardsStore } from "../store";
 import { EmptyCards } from "./EmptyCards";
 import { TableActionsCell } from "./TableActionsCell";
-import { useIsDesktop } from "../hooks/useIsDesktop";
 
 type TableViewProps = Omit<
   TableProps<Card>,
@@ -60,7 +59,6 @@ export const TableView = (props: TableViewProps) => {
   const updateCardWord = useCardsStore((state) => state.updateCardWord);
   const addCard = useCardsStore((state) => state.addCard);
   const { t } = useTranslation();
-  const isDesktop = useIsDesktop();
 
   const columnsFinal = useMemo(
     () =>
@@ -96,14 +94,17 @@ export const TableView = (props: TableViewProps) => {
           size="small"
           sticky
           scroll={{ x: 720 }}
+          footer={() => (
+            <button
+              type="button"
+              onClick={addCard}
+              className="w-full rounded border-2 border-dashed border-slate-300 py-2 text-slate-400 hover:border-blue-400 hover:text-blue-500 hover:bg-blue-50/50 transition-colors"
+            >
+              <PlusOutlined /> {t("addNewCard")}
+            </button>
+          )}
           {...props}
         />
-      )}
-
-      {!isDesktop && (
-        <FloatButton.Group shape="circle" style={{ insetInlineEnd: 24 }}>
-          <FloatButton type="primary" tooltip={t("addNewCard")} icon={<PlusOutlined />} onClick={addCard} />
-        </FloatButton.Group>
       )}
     </>
   );

@@ -20,7 +20,6 @@ i18n
     resources: {
       en: {
         translation: {
-          addCard: "Add card",
           more: "More",
           language: "Language",
           inputWord: "Type a word",
@@ -80,7 +79,6 @@ i18n
       },
       es: {
         translation: {
-          addCard: "Agregar tarjeta",
           more: "Más",
           language: "Idioma",
           inputWord: "Escribe una palabra",
@@ -141,7 +139,6 @@ i18n
       },
       pl: {
         translation: {
-          addCard: "Dodaj kartę",
           more: "Więcej",
           language: "Język",
           inputWord: "Wpisz słowo",
