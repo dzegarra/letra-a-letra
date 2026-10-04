@@ -20,6 +20,7 @@ type CardsStore = {
   deleteCardById: (cardId: Card["id"]) => void;
   deleteAllCards: () => void;
   addCard: () => void;
+  moveCard: (fromIndex: number, toIndex: number) => void;
   changeColorArIndex: (color: string, index: WordIndex) => void;
   changeColors: (colors: CardColors) => void;
   importCards: (cards: Card[]) => void;
@@ -83,6 +84,14 @@ export const useCardsStore = create<CardsStore>()(
         set(({ cards, colors }) => ({
           cards: [...cards, generateCard(colors)],
         }));
+      },
+      moveCard: (fromIndex, toIndex) => {
+        set(({ cards }) => {
+          const newCards = [...cards];
+          const [card] = newCards.splice(fromIndex, 1);
+          newCards.splice(toIndex, 0, card);
+          return { cards: newCards };
+        });
       },
       changeColorArIndex: (newColor, colorIndex) => {
         set(({ cards, colors }) => ({

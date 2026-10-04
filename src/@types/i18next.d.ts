@@ -25,6 +25,7 @@ declare module "i18next" {
         edit: string;
         ok: string;
         addNewCard: string;
+        dragToReorder: string;
         changeColors: string;
         moveToTheTop: string;
         colorsOfTheCards: string;
