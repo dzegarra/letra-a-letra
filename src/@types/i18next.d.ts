@@ -92,6 +92,19 @@ declare module "i18next" {
         shuffleRotation: string;
         wordTight: string;
         wordTooLong: string;
+        howToPlay: string;
+        welcomeTitle: string;
+        welcomeDescription: string;
+        educationalPurpose: string;
+        howToPlayStep1: string;
+        howToPlayStep2: string;
+        howToPlayStep3: string;
+        howToPlayStep4: string;
+        howToPlayStep5: string;
+        createFirstCard: string;
+        watchVideo: string;
+        videoFromYoutube: string;
+        howToPlayVideo: string;
       };
     };
   }
