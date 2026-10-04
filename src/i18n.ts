@@ -75,6 +75,9 @@ i18n
           rearDesign_plain: "Plain",
           install: "Install",
           installTooltip: "Installs the webapp on this device so it can be opened like an app, even offline",
+          updateAvailable: "New version available",
+          updateAvailableDescription: "Reload to start using the latest version of Letra a letra.",
+          update: "Reload",
         },
       },
       es: {
@@ -135,6 +138,9 @@ i18n
           install: "Instalar",
           installTooltip:
             "Instala la webapp en este dispositivo para abrirla como una aplicación, incluso sin conexión",
+          updateAvailable: "Nueva versión disponible",
+          updateAvailableDescription: "Recarga para empezar a usar la última versión de Letra a letra.",
+          update: "Recargar",
         },
       },
       pl: {
@@ -196,6 +202,9 @@ i18n
           install: "Zainstaluj",
           installTooltip:
             "Instaluje aplikację na tym urządzeniu, aby można było ją otwierać jak zwykłą aplikację, także offline",
+          updateAvailable: "Dostępna nowa wersja",
+          updateAvailableDescription: "Odśwież, aby zacząć korzystać z najnowszej wersji Letra a letra.",
+          update: "Odśwież",
         },
       },
     },
