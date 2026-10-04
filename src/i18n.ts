@@ -36,7 +36,7 @@ i18n
             "Whoever says the word first takes the card. The color on its back tells which ring to read on the next card.",
           howToPlayStep5:
             "If two or more players say it at the same time, the card is set aside and only they play for the next one. The winner takes both.",
-          howToPlayStep6: "The first player to collect 10 cards wins.",
+          howToPlayStep6: "When the pile runs out, the player with the most cards wins.",
           createFirstCard: "Create the first card",
           watchVideo: "Watch the video explaining the game",
           videoFromYoutube: "It plays from YouTube",
@@ -149,7 +149,7 @@ i18n
             "Quien dice primero la palabra se lleva la tarjeta. El color de su reverso indica qué anillo hay que leer en la siguiente.",
           howToPlayStep5:
             "Si dos o más jugadores la dicen a la vez, se aparta la tarjeta y solo ellos compiten por la siguiente. El ganador se lleva las dos.",
-          howToPlayStep6: "Gana el primero que reúne 10 tarjetas.",
+          howToPlayStep6: "Cuando se acaba el montón, gana quien tenga más tarjetas.",
           createFirstCard: "Crear la primera tarjeta",
           watchVideo: "Ver el video que explica el juego",
           videoFromYoutube: "Se reproduce desde YouTube",
@@ -262,7 +262,7 @@ i18n
             "Kto pierwszy powie słowo, zabiera kartę. Kolor na jej rewersie wskazuje, który pierścień trzeba odczytać na następnej karcie.",
           howToPlayStep5:
             "Jeśli dwóch lub więcej graczy powie je jednocześnie, kartę odkłada się na bok, a o następną walczą tylko oni. Zwycięzca bierze obie.",
-          howToPlayStep6: "Wygrywa pierwszy gracz, który zbierze 10 kart.",
+          howToPlayStep6: "Gdy stos się skończy, wygrywa gracz z największą liczbą kart.",
           createFirstCard: "Utwórz pierwszą kartę",
           watchVideo: "Obejrzyj film z wyjaśnieniem gry",
           videoFromYoutube: "Odtwarzany z YouTube",
