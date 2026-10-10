@@ -1,5 +1,5 @@
 import { ComponentProps, Dispatch, SetStateAction, useCallback, useState } from "react";
-import { Button, Dropdown, Grid, Layout, MenuProps, Modal, Segmented, Space, Tooltip } from "antd";
+import { Button, ConfigProvider, Dropdown, Grid, Layout, MenuProps, Modal, Segmented, Space, Tooltip } from "antd";
 import {
   AppstoreOutlined,
   BgColorsOutlined,
@@ -27,6 +27,13 @@ import { useCardLength } from "../hooks/useCardLength";
 import { useInstallPrompt } from "../hooks/useInstallPrompt";
 import { GameIntro } from "./GameIntro";
 
+// The default disabled look is dark-on-transparent, which disappears on the dark header
+const disabledOnDarkHeader = {
+  colorBgContainerDisabled: "rgba(255, 255, 255, 0.12)",
+  colorTextDisabled: "rgba(255, 255, 255, 0.45)",
+  colorBorder: "rgba(255, 255, 255, 0.25)",
+};
+
 type AppHeaderProps = {
   viewMode: ViewMode;
   setViewMode: Dispatch<SetStateAction<ViewMode>>;
@@ -49,6 +56,8 @@ export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: Ap
 
   const exportData = useCallback(() => {
     const { cards, rearDesign, customRearImage } = useCardsStore.getState();
+    // An exported project without cards would be an empty file
+    if (cards.length === 0) return;
     jsonToFile({ cards, rearDesign, customRearImage }, "project-export");
   }, []);
 
@@ -81,7 +90,13 @@ export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: Ap
     { key: "howToPlay", label: t("howToPlay"), icon: <QuestionCircleOutlined /> },
     { type: "divider" },
     { key: "newProject", label: t("newProject"), icon: <FormatPainterOutlined />, disabled: cardsLength === 0 },
-    { key: "export", label: t("export"), icon: <DownloadOutlined /> },
+    {
+      key: "export",
+      label: t("export"),
+      icon: <DownloadOutlined />,
+      disabled: cardsLength === 0,
+      title: cardsLength === 0 ? t("exportDisabledTooltip") : undefined,
+    },
     { key: "import", label: t("import"), icon: <UploadOutlined /> },
     ...(canInstall ? [{ key: "install", label: t("install"), icon: <MobileOutlined /> }] : []),
     { type: "divider" },
@@ -185,10 +200,12 @@ export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: Ap
               </NewProjectPopConfirm>
             )}
 
-            <Tooltip title={t("exportTooltip")}>
-              <Button onClick={exportData} icon={<DownloadOutlined />}>
-                {t("export")}
-              </Button>
+            <Tooltip title={cardsLength === 0 ? t("exportDisabledTooltip") : t("exportTooltip")}>
+              <ConfigProvider theme={cardsLength === 0 ? { token: disabledOnDarkHeader } : undefined}>
+                <Button onClick={exportData} icon={<DownloadOutlined />} disabled={cardsLength === 0}>
+                  {t("export")}
+                </Button>
+              </ConfigProvider>
             </Tooltip>
 
             <Tooltip title={t("importTooltip")}>
