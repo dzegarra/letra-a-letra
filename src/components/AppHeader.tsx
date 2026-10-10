@@ -7,8 +7,8 @@ import {
   DownloadOutlined,
   FlagOutlined,
   FormatPainterOutlined,
+  MenuOutlined,
   MobileOutlined,
-  MoreOutlined,
   PrinterOutlined,
   QuestionCircleOutlined,
   UploadOutlined,
@@ -262,16 +262,23 @@ export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: Ap
             <LangSelector />
           </>
         ) : (
-          <Dropdown
-            trigger={["click"]}
-            placement="bottomRight"
-            menu={{ items: moreMenuItems, onClick: handleMoreMenuClick }}
-          >
-            <Button icon={<MoreOutlined />} aria-label={t("more")} />
-          </Dropdown>
+          <>
+            <CardsCount count={cardsLength} compact={isPhone} />
+
+            {/* The menu goes last, in the corner where people look for it, and with a label when there is room */}
+            <Dropdown
+              trigger={["click"]}
+              placement="bottomRight"
+              menu={{ items: moreMenuItems, onClick: handleMoreMenuClick }}
+            >
+              <Button icon={<MenuOutlined />} aria-label={t("more")}>
+                {!isPhone && t("more")}
+              </Button>
+            </Dropdown>
+          </>
         )}
 
-        <CardsCount count={cardsLength} compact={isPhone} />
+        {showSecondaryInline && <CardsCount count={cardsLength} />}
       </Space>
     </Layout.Header>
   );
