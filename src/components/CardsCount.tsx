@@ -12,19 +12,13 @@ export const CardsCount = ({ count, compact = false }: CardsCountProps) => {
 
   return (
     <Tooltip title={t("totalNumberOfCards")} placement="bottomRight">
+      {/* Plain text on the header, so it reads as information and not as one more button */}
       <Flex
-        style={{
-          padding: "4px 12px",
-          minWidth: compact ? undefined : "90px",
-          display: "flex",
-          flexDirection: "column",
-          gap: "4px",
-          backgroundColor: "white",
-          borderRadius: "4px",
-          cursor: "default",
-        }}
+        vertical
+        gap={4}
+        style={{ minWidth: compact ? undefined : "64px", color: "white", cursor: "default" }}
       >
-        {!compact && <span className="leading-none text-gray-500 text-xs">{t("cards")}</span>}
+        {!compact && <span className="leading-none text-xs text-white/60">{t("cards")}</span>}
         <span className="leading-none text-lg">
           <CopyOutlined /> {count}
         </span>
