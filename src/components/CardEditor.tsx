@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Button, Drawer, Grid, Input, InputRef, Modal, Tooltip } from "antd";
 import { DeleteOutlined, SyncOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
@@ -9,6 +9,9 @@ import { randomRotationDeg } from "../helpers/randomRotationDeg";
 import { CardFront } from "./CardFront";
 import { CardDeletePopConfirm } from "./CardDeletePopConfirm";
 import { WordCounterTag } from "./WordCounterTag";
+import { RepeatedWordWarning } from "./RepeatedWordWarning";
+import { findWordPlaces, getRepetition } from "../helpers/findRepeatedWords";
+import { useCardsStore } from "../store";
 
 type CardEditorProps = {
   /** The card being edited. The editor is open while there is one */
@@ -83,6 +86,11 @@ const CardEditorForm = ({ card, isPhone, onSave, onSaveAndNext, onClose }: CardE
   const [draft, setDraft] = useState(card);
   const [activeIndex, setActiveIndex] = useState<WordIndex>(() => firstEmptyWord(card));
   const inputRefs = useRef<(InputRef | null)[]>([]);
+  const cards = useCardsStore((state) => state.cards);
+
+  // Compare the words being typed with the rest of the project
+  const cardIndex = cards.findIndex(({ id }) => id === draft.id);
+  const wordPlaces = useMemo(() => findWordPlaces(cards.map((c) => (c.id === draft.id ? draft : c))), [cards, draft]);
 
   // Focus the first empty word once the dialog has opened (or when moving on to the next card)
   useEffect(() => {
@@ -145,6 +153,7 @@ const CardEditorForm = ({ card, isPhone, onSave, onSaveAndNext, onClose }: CardE
             const [recommended, tight] = wordLengthsMax[position];
             const warning =
               word.length > tight ? t("wordTooLong") : word.length > recommended ? t("wordTight") : undefined;
+            const repetition = getRepetition(wordPlaces, word, cardIndex, index);
             return (
               <label key={index} className="block">
                 <span className="flex items-center gap-2 mb-1 text-sm font-medium text-slate-700">
@@ -166,6 +175,7 @@ const CardEditorForm = ({ card, isPhone, onSave, onSaveAndNext, onClose }: CardE
                   onFocus={() => setActiveIndex(index)}
                   onChange={(evt) => changeWord(index, evt.target.value)}
                   onPressEnter={() => pressEnter(index)}
+                  status={repetition ? "warning" : undefined}
                   suffix={<WordCounterTag word={word} position={position} showMax className="me-0" />}
                 />
                 {warning && (
@@ -173,6 +183,7 @@ const CardEditorForm = ({ card, isPhone, onSave, onSaveAndNext, onClose }: CardE
                     {warning}
                   </span>
                 )}
+                {repetition && <RepeatedWordWarning repetition={repetition} />}
               </label>
             );
           })}
