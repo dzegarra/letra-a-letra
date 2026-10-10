@@ -92,6 +92,8 @@ declare module "i18next" {
         shuffleRotation: string;
         wordTight: string;
         wordTooLong: string;
+        repeatedWordInCards: string;
+        repeatedWordInThisCard: string;
         howToPlay: string;
         welcomeTitle: string;
         welcomeDescription: string;

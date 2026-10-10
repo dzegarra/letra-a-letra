@@ -20,6 +20,7 @@ import { useCardsStore } from "../store";
 import { EmptyCards } from "./EmptyCards";
 import { TableActionsCell } from "./TableActionsCell";
 import { DragHandle, SortableRow } from "./SortableRow";
+import { findWordPlaces, getRepetition } from "../helpers/findRepeatedWords";
 
 type TableViewProps = Omit<
   TableProps<Card>,
@@ -78,6 +79,7 @@ export const TableView = (props: TableViewProps) => {
   const addCard = useCardsStore((state) => state.addCard);
   const moveCard = useCardsStore((state) => state.moveCard);
   const { t } = useTranslation();
+  const wordPlaces = useMemo(() => findWordPlaces(cards), [cards]);
 
   const columnsFinal = useMemo(
     () =>
@@ -85,8 +87,14 @@ export const TableView = (props: TableViewProps) => {
         ...column,
         title: t(column.title as (typeof wordPositionName)[number]),
         onCell: [1, 2, 3].includes(index)
-          ? (card: Card) => ({
+          ? (card: Card, rowIndex?: number) => ({
               cardWord: card.words[column.key as number].word,
+              repetition: getRepetition(
+                wordPlaces,
+                card.words[column.key as number].word,
+                rowIndex ?? cards.indexOf(card),
+                column.key as WordIndex,
+              ),
               wordPosition: wordPositionName[column.key as WordIndex],
               updateCardWord: (word: string) => {
                 updateCardWord(card.id, column.key as WordIndex, word);
@@ -94,7 +102,7 @@ export const TableView = (props: TableViewProps) => {
             })
           : undefined,
       })),
-    [t, updateCardWord],
+    [t, updateCardWord, wordPlaces, cards],
   );
 
   const sensors = useSensors(
