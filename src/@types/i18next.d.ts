@@ -7,7 +7,7 @@ declare module "i18next" {
       custom: {
         export: string;
         exportTooltip: string;
-        exportDisabledTooltip: string;
+        noCardsTooltip: string;
         import: string;
         importTooltip: string;
         generatePdf: string;

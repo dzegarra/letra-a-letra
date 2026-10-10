@@ -29,9 +29,14 @@ import { GameIntro } from "./GameIntro";
 
 // The default disabled look is dark-on-transparent, which disappears on the dark header
 const disabledOnDarkHeader = {
-  colorBgContainerDisabled: "rgba(255, 255, 255, 0.12)",
-  colorTextDisabled: "rgba(255, 255, 255, 0.45)",
-  colorBorder: "rgba(255, 255, 255, 0.25)",
+  token: {
+    colorBgContainerDisabled: "rgba(255, 255, 255, 0.12)",
+    colorTextDisabled: "rgba(255, 255, 255, 0.45)",
+  },
+  components: {
+    Button: { borderColorDisabled: "rgba(255, 255, 255, 0.25)" },
+    Segmented: { trackBg: "rgba(255, 255, 255, 0.12)", itemSelectedBg: "rgba(255, 255, 255, 0.2)" },
+  },
 };
 
 type AppHeaderProps = {
@@ -50,6 +55,9 @@ export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: Ap
   // Secondary actions only fit as buttons on very wide screens; below that they go in a "more" menu
   const showSecondaryInline = screens.xl === true;
   const isPhone = !screens.sm;
+  // Without cards there is nothing to print, recolor, list or export
+  const hasNoCards = cardsLength === 0;
+  const disabledTheme = hasNoCards ? disabledOnDarkHeader : undefined;
   const [modal, modalContextHolder] = Modal.useModal();
   const [isColorsModalOpen, setIsColorsModalOpen] = useState(false);
   const [isHowToPlayOpen, setIsHowToPlayOpen] = useState(false);
@@ -87,15 +95,17 @@ export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: Ap
   }, [modal, t, deleteAllCards]);
 
   const moreMenuItems: MenuProps["items"] = [
-    { key: "howToPlay", label: t("howToPlay"), icon: <QuestionCircleOutlined /> },
-    { type: "divider" },
-    { key: "newProject", label: t("newProject"), icon: <FormatPainterOutlined />, disabled: cardsLength === 0 },
+    // The empty project already shows how to play
+    ...(hasNoCards
+      ? []
+      : [{ key: "howToPlay", label: t("howToPlay"), icon: <QuestionCircleOutlined /> }, { type: "divider" as const }]),
+    { key: "newProject", label: t("newProject"), icon: <FormatPainterOutlined />, disabled: hasNoCards },
     {
       key: "export",
       label: t("export"),
       icon: <DownloadOutlined />,
-      disabled: cardsLength === 0,
-      title: cardsLength === 0 ? t("exportDisabledTooltip") : undefined,
+      disabled: hasNoCards,
+      title: hasNoCards ? t("noCardsTooltip") : undefined,
     },
     { key: "import", label: t("import"), icon: <UploadOutlined /> },
     ...(canInstall ? [{ key: "install", label: t("install"), icon: <MobileOutlined /> }] : []),
@@ -134,17 +144,32 @@ export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: Ap
     >
       {modalContextHolder}
 
-      <Space>
-        <Tooltip title={t("generatePdfTooltip")}>
-          <Button onClick={onDownloadPdf} icon={<PrinterOutlined />} type="primary" aria-label={t("generatePdf")}>
-            {!isPhone && t("generatePdf")}
-          </Button>
-        </Tooltip>
+      <ConfigProvider theme={disabledTheme}>
+        <Space>
+          <Tooltip title={hasNoCards ? t("noCardsTooltip") : t("generatePdfTooltip")}>
+            <Button
+              onClick={onDownloadPdf}
+              icon={<PrinterOutlined />}
+              type="primary"
+              aria-label={t("generatePdf")}
+              disabled={hasNoCards}
+            >
+              {!isPhone && t("generatePdf")}
+            </Button>
+          </Tooltip>
 
-        <Button onClick={() => setIsColorsModalOpen(true)} icon={<BgColorsOutlined />} aria-label={t("changeColors")}>
-          {screens.md && t("changeColors")}
-        </Button>
-      </Space>
+          <Tooltip title={hasNoCards ? t("noCardsTooltip") : undefined}>
+            <Button
+              onClick={() => setIsColorsModalOpen(true)}
+              icon={<BgColorsOutlined />}
+              aria-label={t("changeColors")}
+              disabled={hasNoCards}
+            >
+              {screens.md && t("changeColors")}
+            </Button>
+          </Tooltip>
+        </Space>
+      </ConfigProvider>
 
       <Modal
         centered
@@ -173,36 +198,48 @@ export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: Ap
         <GameIntro />
       </Modal>
 
-      <Segmented
-        value={viewMode}
-        onChange={setViewMode}
-        options={[
-          {
-            value: "preview",
-            label: isPhone ? undefined : t("preview"),
-            title: t("preview"),
-            icon: <AppstoreOutlined />,
-          },
-          { value: "table", label: isPhone ? undefined : t("table"), title: t("table"), icon: <BarsOutlined /> },
-        ]}
-      />
+      <ConfigProvider theme={disabledTheme}>
+        <Tooltip title={hasNoCards ? t("noCardsTooltip") : undefined}>
+          <Segmented
+            value={viewMode}
+            onChange={setViewMode}
+            disabled={hasNoCards}
+            options={[
+              {
+                value: "preview",
+                label: isPhone ? undefined : t("preview"),
+                title: hasNoCards ? undefined : t("preview"),
+                icon: <AppstoreOutlined />,
+              },
+              {
+                value: "table",
+                label: isPhone ? undefined : t("table"),
+                title: hasNoCards ? undefined : t("table"),
+                icon: <BarsOutlined />,
+              },
+            ]}
+          />
+        </Tooltip>
+      </ConfigProvider>
 
       <Space>
         {showSecondaryInline ? (
           <>
-            <Button onClick={() => setIsHowToPlayOpen(true)} icon={<QuestionCircleOutlined />}>
-              {t("howToPlay")}
-            </Button>
+            {!hasNoCards && (
+              <Button onClick={() => setIsHowToPlayOpen(true)} icon={<QuestionCircleOutlined />}>
+                {t("howToPlay")}
+              </Button>
+            )}
 
-            {cardsLength > 0 && (
+            {!hasNoCards && (
               <NewProjectPopConfirm>
                 <Button icon={<FormatPainterOutlined />}>{t("newProject")}</Button>
               </NewProjectPopConfirm>
             )}
 
-            <Tooltip title={cardsLength === 0 ? t("exportDisabledTooltip") : t("exportTooltip")}>
-              <ConfigProvider theme={cardsLength === 0 ? { token: disabledOnDarkHeader } : undefined}>
-                <Button onClick={exportData} icon={<DownloadOutlined />} disabled={cardsLength === 0}>
+            <Tooltip title={hasNoCards ? t("noCardsTooltip") : t("exportTooltip")}>
+              <ConfigProvider theme={disabledTheme}>
+                <Button onClick={exportData} icon={<DownloadOutlined />} disabled={hasNoCards}>
                   {t("export")}
                 </Button>
               </ConfigProvider>
