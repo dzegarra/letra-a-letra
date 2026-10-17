@@ -56,10 +56,10 @@ export const CardEditor = ({ card, index, onSave, onSaveAndNext, onClose }: Card
         open={!!card}
         onClose={onClose}
         placement="bottom"
-        height="auto"
+        size="auto"
         title={title}
         styles={{ body: { padding: 16 } }}
-        destroyOnClose
+        destroyOnHidden
       >
         {content}
       </Drawer>
@@ -67,7 +67,7 @@ export const CardEditor = ({ card, index, onSave, onSaveAndNext, onClose }: Card
   }
 
   return (
-    <Modal open={!!card} onCancel={onClose} title={title} footer={null} width={680} destroyOnClose centered>
+    <Modal open={!!card} onCancel={onClose} title={title} footer={null} width={680} destroyOnHidden centered>
       {content}
     </Modal>
   );

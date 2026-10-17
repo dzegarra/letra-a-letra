@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef } from "react";
 
 export const useDebounce = (callback: (...args: any[]) => any, delay: number) => {
-  const handlerRef = useRef<number>();
+  const handlerRef = useRef<number | undefined>(undefined);
 
   const debouncedCallback = useCallback(
     (...args: unknown[]) => {

@@ -142,7 +142,7 @@ export const ColorsChanger = ({ className, ...props }: ColorsChangerProps) => {
               key={`${a}-${b}`}
               type="warning"
               showIcon
-              message={t("similarRings", { first: ringName(a).toLowerCase(), second: ringName(b).toLowerCase() })}
+              title={t("similarRings", { first: ringName(a).toLowerCase(), second: ringName(b).toLowerCase() })}
             />
           ))}
         </Flex>
