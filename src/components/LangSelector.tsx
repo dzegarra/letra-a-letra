@@ -19,7 +19,8 @@ export const LangSelector = () => {
         onClick: handleMenuClick,
       }}
     >
-      <Button>
+      {/* Tighter than a regular button so it still fits beside the cards count on xl screens */}
+      <Button style={{ paddingInline: 10 }}>
         {(i18n.resolvedLanguage ?? "en").toLocaleUpperCase()}
         <FlagOutlined />
       </Button>

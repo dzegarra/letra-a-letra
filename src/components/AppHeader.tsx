@@ -1,5 +1,5 @@
 import { ComponentProps, Dispatch, SetStateAction, useCallback, useState } from "react";
-import { Button, ConfigProvider, Dropdown, Grid, Layout, MenuProps, Modal, Segmented, Space, Tooltip } from "antd";
+import { Button, ConfigProvider, Divider, Dropdown, Grid, Layout, MenuProps, Modal, Segmented, Space, Tooltip } from "antd";
 import {
   AppstoreOutlined,
   BgColorsOutlined,
@@ -137,7 +137,7 @@ export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: Ap
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        gap: isPhone ? 8 : 16,
+        gap: isPhone ? 8 : 12,
         padding: isPhone ? "0 12px" : "0 24px",
       }}
       {...props}
@@ -259,6 +259,11 @@ export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: Ap
               </Tooltip>
             )}
 
+            {/* The count is information, not an action: set it apart from the buttons, before the corner control */}
+            <Divider type="vertical" style={{ height: 32, marginInline: 4, borderColor: "rgba(255, 255, 255, 0.25)" }} />
+
+            <CardsCount count={cardsLength} />
+
             <LangSelector />
           </>
         ) : (
@@ -277,8 +282,6 @@ export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: Ap
             </Dropdown>
           </>
         )}
-
-        {showSecondaryInline && <CardsCount count={cardsLength} />}
       </Space>
     </Layout.Header>
   );
