@@ -1,6 +1,6 @@
 import { ComponentProps } from "react";
 import clsx from "clsx";
-import fontColorContrast from "font-color-contrast";
+import { fontColorContrast } from "../helpers/fontColorContrast";
 import { CircularWord } from "./CircularWord";
 import { CardBackground } from "./CardBackground";
 import { Card as CardType, WordIndex } from "../types";
