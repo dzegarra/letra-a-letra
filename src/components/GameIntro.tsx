@@ -37,7 +37,7 @@ export const GameIntro = ({ showTitle = false, className, ...props }: GameIntroP
 
   return (
     <div className={clsx("flex flex-col gap-6", className)} {...props}>
-      <Alert type="info" showIcon icon={<ReadOutlined />} message={t("educationalPurpose")} />
+      <Alert type="info" showIcon icon={<ReadOutlined />} title={t("educationalPurpose")} />
 
       <div className="flex flex-col sm:flex-row items-center gap-6">
         {/* The sample card keeps its real size for the words to fit, and is shrunk visually */}

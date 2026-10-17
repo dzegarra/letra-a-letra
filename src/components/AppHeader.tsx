@@ -185,7 +185,7 @@ export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: Ap
         footer={null}
         open={isHowToPlayOpen}
         onCancel={() => setIsHowToPlayOpen(false)}
-        destroyOnClose
+        destroyOnHidden
         // Only the content scrolls, so the title stays in sight
         styles={{
           body: { maxHeight: "calc(100dvh - 160px)", overflowY: "auto", marginInline: -24, paddingInline: 24 },
