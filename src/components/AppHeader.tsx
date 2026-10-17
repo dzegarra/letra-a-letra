@@ -1,5 +1,5 @@
 import { ComponentProps, Dispatch, SetStateAction, useCallback, useState } from "react";
-import { Button, ConfigProvider, Divider, Dropdown, Grid, Layout, MenuProps, Modal, Segmented, Space, Tooltip } from "antd";
+import { Button, ConfigProvider, Dropdown, Grid, Layout, MenuProps, Modal, Segmented, Space, Tooltip } from "antd";
 import {
   AppstoreOutlined,
   BgColorsOutlined,
@@ -20,9 +20,7 @@ import { jsonToFile } from "../helpers/jsonToFile";
 import { CardsCount } from "./CardsCount";
 import { ColorsChanger } from "./ColorsChanger";
 import { useCardsStore } from "../store";
-import { LangSelector } from "./LangSelector";
 import { languages } from "../constants";
-import { NewProjectPopConfirm } from "./NewProjectPopConfirm";
 import { useCardLength } from "../hooks/useCardLength";
 import { useInstallPrompt } from "../hooks/useInstallPrompt";
 import { GameIntro } from "./GameIntro";
@@ -52,8 +50,6 @@ export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: Ap
   const { t, i18n } = useTranslation();
   const { canInstall, install } = useInstallPrompt();
   const screens = Grid.useBreakpoint();
-  // Secondary actions only fit as buttons on very wide screens; below that they go in a "more" menu
-  const showSecondaryInline = screens.xl === true;
   const isPhone = !screens.sm;
   // Without cards there is nothing to print, recolor, list or export
   const hasNoCards = cardsLength === 0;
@@ -137,7 +133,7 @@ export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: Ap
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        gap: isPhone ? 8 : 12,
+        gap: isPhone ? 8 : 16,
         padding: isPhone ? "0 12px" : "0 24px",
       }}
       {...props}
@@ -223,65 +219,18 @@ export const AppHeader = ({ onDownloadPdf, viewMode, setViewMode, ...props }: Ap
       </ConfigProvider>
 
       <Space>
-        {showSecondaryInline ? (
-          <>
-            {!hasNoCards && (
-              <Button onClick={() => setIsHowToPlayOpen(true)} icon={<QuestionCircleOutlined />}>
-                {t("howToPlay")}
-              </Button>
-            )}
+        <CardsCount count={cardsLength} compact={isPhone} />
 
-            {!hasNoCards && (
-              <NewProjectPopConfirm>
-                <Button icon={<FormatPainterOutlined />}>{t("newProject")}</Button>
-              </NewProjectPopConfirm>
-            )}
-
-            <Tooltip title={hasNoCards ? t("noCardsTooltip") : t("exportTooltip")}>
-              <ConfigProvider theme={disabledTheme}>
-                <Button onClick={exportData} icon={<DownloadOutlined />} disabled={hasNoCards}>
-                  {t("export")}
-                </Button>
-              </ConfigProvider>
-            </Tooltip>
-
-            <Tooltip title={t("importTooltip")}>
-              <Button onClick={importFile} icon={<UploadOutlined />}>
-                {t("import")}
-              </Button>
-            </Tooltip>
-
-            {canInstall && (
-              <Tooltip title={t("installTooltip")}>
-                <Button onClick={install} icon={<MobileOutlined />}>
-                  {t("install")}
-                </Button>
-              </Tooltip>
-            )}
-
-            {/* The count is information, not an action: set it apart from the buttons, before the corner control */}
-            <Divider type="vertical" style={{ height: 32, marginInline: 4, borderColor: "rgba(255, 255, 255, 0.25)" }} />
-
-            <CardsCount count={cardsLength} />
-
-            <LangSelector />
-          </>
-        ) : (
-          <>
-            <CardsCount count={cardsLength} compact={isPhone} />
-
-            {/* The menu goes last, in the corner where people look for it, and with a label when there is room */}
-            <Dropdown
-              trigger={["click"]}
-              placement="bottomRight"
-              menu={{ items: moreMenuItems, onClick: handleMoreMenuClick }}
-            >
-              <Button icon={<MenuOutlined />} aria-label={t("more")}>
-                {!isPhone && t("more")}
-              </Button>
-            </Dropdown>
-          </>
-        )}
+        {/* The menu goes last, in the corner where people look for it, and with a label when there is room */}
+        <Dropdown
+          trigger={["click"]}
+          placement="bottomRight"
+          menu={{ items: moreMenuItems, onClick: handleMoreMenuClick }}
+        >
+          <Button icon={<MenuOutlined />} aria-label={t("more")}>
+            {!isPhone && t("more")}
+          </Button>
+        </Dropdown>
       </Space>
     </Layout.Header>
   );

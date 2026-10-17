@@ -16,7 +16,7 @@ export const CardsCount = ({ count, compact = false }: CardsCountProps) => {
       <Flex
         vertical
         gap={4}
-        style={{ color: "white", cursor: "default" }}
+        style={{ minWidth: compact ? undefined : "64px", color: "white", cursor: "default" }}
       >
         {!compact && <span className="leading-none text-xs text-white/60">{t("cards")}</span>}
         <span className="leading-none text-lg">
