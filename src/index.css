@@ -1,6 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@layer theme, base, antd, components, utilities;
+@import "tailwindcss";
 
 @layer base {
     img {
@@ -37,4 +36,11 @@
         border-radius: 0;
         padding: 12px;
     }
+}
+
+/* Header buttons sit on a 64px line box; centering their space items keeps them vertically centered
+   now that antd's icon styles (not Tailwind's preflight) decide the inline baseline */
+.ant-layout-header .ant-space-item {
+    display: flex;
+    align-items: center;
 }

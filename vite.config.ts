@@ -1,11 +1,13 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
+import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react(),
+    tailwindcss(),
     // Makes the webapp installable and usable offline
     VitePWA({
       // Wait for the user to accept the update notice before activating a new version
