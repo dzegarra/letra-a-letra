@@ -11,9 +11,9 @@ export const EditableContext = createContext<FormInstance<Card> | null>(null);
 export const wordPositionName = ["outer", "middle", "inner"] as const;
 
 export const cardSizes = {
-  S: "scale-100",
-  M: "scale-110",
-  L: "scale-125",
+  S: "scale(1)",
+  M: "scale(1.1)",
+  L: "scale(1.25)",
 } as const;
 
 export const wordLengthsMax: Record<(typeof wordPositionName)[number], [number, number, number]> = {

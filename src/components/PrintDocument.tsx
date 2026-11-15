@@ -72,7 +72,7 @@ export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewPr
               card={card}
               index={nextCardIndex++}
               hideIndex={!showCardNumber}
-              className={cardSizes[cardSize]}
+              style={{ transform: cardSizes[cardSize] }}
             />
           ))}
         </div>
@@ -88,7 +88,12 @@ export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewPr
           style={{ direction: "rtl" }}
         >
           {colors.map((color, index) => (
-            <CardRear key={`rear-card-${index++}`} color={color} design={rearDesign} className={cardSizes[cardSize]} />
+            <CardRear
+              key={`rear-card-${index++}`}
+              color={color}
+              design={rearDesign}
+              style={{ transform: cardSizes[cardSize] }}
+            />
           ))}
         </div>
       </Page>
