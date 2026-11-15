@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { ComponentProps, useEffect, useRef, useState } from "react";
-import html2canvas from "html2canvas";
+import { captureElementAsCanvas } from "../helpers/captureElementAsCanvas";
 import { pageSizes } from "../constants";
 
 type PageProps = ComponentProps<"div"> & {
@@ -19,7 +19,7 @@ export const Page = ({ children, className, contentClassname, format, replaceWit
 
   useEffect(() => {
     if (replaceWithScreenshot && canvasRef.current) {
-      html2canvas(canvasRef.current).then((canvas) => {
+      captureElementAsCanvas(canvasRef.current).then((canvas) => {
         setScreenshot(canvas.toDataURL("image/png"));
       });
     }

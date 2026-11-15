@@ -7,7 +7,7 @@ import { CardFront } from "./CardFront";
 import { calculateRearColors } from "../helpers/calculateRearColors";
 import { Page } from "./Page";
 import { CardRear } from "./CardRear";
-import html2canvas from "html2canvas";
+import { captureElementAsCanvas } from "../helpers/captureElementAsCanvas";
 import clsx from "clsx";
 import { PageSizes, PDFDocument } from "pdf-lib";
 import { bytesToPdf } from "../helpers/bytesToPdf";
@@ -106,13 +106,15 @@ export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewPr
       await new Promise((resolve) => setTimeout(resolve, 500));
       try {
         const pdfDoc = await PDFDocument.create();
-        screenshots.forEach(async (screenshot) => {
-          const page = pdfDoc.addPage(PageSizes.A4);
-          const imgData = screenshot.toDataURL("image/png");
-          const img = await pdfDoc.embedPng(imgData);
-          const { width, height } = page.getSize();
-          page.drawImage(img, { x: 0, y: 0, width, height });
-        });
+        await Promise.all(
+          screenshots.map(async (screenshot) => {
+            const page = pdfDoc.addPage(PageSizes.A4);
+            const imgData = screenshot.toDataURL("image/png");
+            const img = await pdfDoc.embedPng(imgData);
+            const { width, height } = page.getSize();
+            page.drawImage(img, { x: 0, y: 0, width, height });
+          }),
+        );
         const pdfBytes = await pdfDoc.save();
         bytesToPdf(pdfBytes, "letra-a-letra");
 
@@ -135,7 +137,7 @@ export const PrintDocument = ({ className, onComplete, ...props }: PreviewViewPr
 
         const promises = Array.from(pagesRef.current.childNodes).map(async (node) => {
           if (node instanceof HTMLElement) {
-            return html2canvas(node);
+            return captureElementAsCanvas(node);
           }
           return null;
         });
